@@ -10,6 +10,9 @@ import { SalesDataService } from './sales-data.service';
 import { SalesData2Service } from './sales-data2.service';
 import { InitCapsPipe } from './shared/init-caps.pipe';
 import {LoginModule} from './login/login.module';
+import { MusicRoutingModule } from './music/music-routing.module';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import {LoginModule} from './login/login.module';
   ],
   imports: [
     BrowserModule,
-    LoginModule
+    LoginModule,
+    FormsModule,
+    HttpModule,
+    MusicRoutingModule
   ],
   providers: [SalesDataService, SalesData2Service],
   bootstrap: [AppComponent]
