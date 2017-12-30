@@ -15,9 +15,9 @@ export class MusicService {
     
     getPerformances(){
         return this._http.get(this._url)
-        .map((response: Response) =><IPerformance[]>response.json().performanceSongs);
+        .map((response: Response) =><IPerformance[]>response.json().performanceSongs)
         // .do( data => console.log('All: ' + JSON.stringify(data)))
-        // .catch(this.handleError);
+        .catch(this.handleError);
       
     }
     private handleError(err: HttpErrorResponse){
