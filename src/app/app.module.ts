@@ -9,22 +9,34 @@ import { SearchBoxDirective } from './search-box.directive';
 import { SalesDataService } from './sales-data.service';
 import { SalesData2Service } from './sales-data2.service';
 import { InitCapsPipe } from './shared/init-caps.pipe';
-import {LoginModule} from './login/login.module';
+
+import { RouterModule } from '@angular/router';
+import { MusicComponent } from './music/music.component';
+import {HttpClientModule} from '@angular/common/http';
+import { MusicService } from './music/music.service';
+import {HttpModule} from '@angular/http';
 
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    HttpModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      {path: "", component: MusicComponent },
+    {path: "music/:id", component: MusicComponent}
+    ])
+  ],
   declarations: [
     AppComponent,
     CustomerComponent,
     OrdersComponent,
     SearchBoxDirective,
-    InitCapsPipe
+    InitCapsPipe,
+    MusicComponent,
+
   ],
-  imports: [
-    BrowserModule,
-    LoginModule
-  ],
-  providers: [SalesDataService, SalesData2Service],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

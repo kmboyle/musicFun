@@ -4,73 +4,16 @@
         Kevin Bizzoyle Welcome to {{ title }}!
     </h1>
 </div>
-
-<div class='row'>
-    <div class='col-md-6'>
-        <h2>Green Jam</h2>
-        <h3><i>12.09.17</i></h3>
-        <audio controls>
-        <source src='../assets/Floyds_Jam/Green_Jam.mp3' type='audio/mp3'>
-      </audio>
+<div class="navbar">
+    <div class="dropdown">
+        <button class="dropbtn">Select Folder 
+            <i class="fa fa-caret-down"></i>
+          </button>
+        <div class="dropdown-content">
+            <a [routerLink]="['/music/0']">Dec. 9, 2017</a>
+            <a [routerLink]="['/music/1']">Dec. 23, 2017</a>
+        </div>
     </div>
 </div>
 
-<div class='row'>
-    <div class='col-md-6'>
-        <h2>Marx Jam</h2>
-        <h3><i>12.09.17</i></h3>
-        <audio controls>
-        <source src='../assets/Floyds_Jam/Marx_Jam.mp3' type='audio/mp3'>
-      </audio>
-    </div>
-</div>
-
-<div class='row'>
-    <div class='col-md-6'>
-        <h2>Pawn Jam</h2>
-        <h3><i>12.09.17</i></h3>
-        <audio controls>
-        <source src='../assets/Floyds_Jam/Pawn_Shop_Jam.mp3' type='audio/mp3'>
-      </audio>
-    </div>
-</div>
-
-<div class='row'>
-    <div class='col-md-6'>
-        <h2>Piece Of Mind Jam</h2>
-        <h3><i>12.09.17</i></h3>
-        <audio controls>
-        <source src='../assets/Floyds_Jam/Piece_Of_Mind_Jam.mp3' type='audio/mp3'>
-      </audio>
-    </div>
-</div>
-
-<div class='row'>
-    <div class='col-md-6'>
-        <h2>Say It Ain't So Jam</h2>
-        <h3><i>12.09.17</i></h3>
-        <audio controls>
-        <source src='../assets/Floyds_Jam/Say_It_Aint_Jam.mp3' type='audio/mp3'>
-      </audio>
-    </div>
-</div>
-
-<div class='row'>
-    <div class='col-md-6'>
-        <h2>Simple Man Jam</h2>
-        <h3><i>12.09.17</i></h3>
-        <audio controls>
-        <source src='../assets/Floyds_Jam/Simple_Jam.mp3' type='audio/mp3'>
-      </audio>
-    </div>
-</div>
-
-<div class='row'>
-    <div class='col-md-6'>
-        <h2>Wanna Fall Jam</h2>
-        <h3><i>12.09.17</i></h3>
-        <audio controls>
-        <source src='../assets/Floyds_Jam/Wanna_Fall_Jam.mp3' type='audio/mp3'>
-      </audio>
-    </div>
-</div>
+<router-outlet></router-outlet>
