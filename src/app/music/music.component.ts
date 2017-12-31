@@ -15,10 +15,13 @@ export class MusicComponent implements OnInit {
     performances: IPerformance[];
     errorMessage: string;
     private id: any;
-    
+    performanceSongs: string;
+
   constructor(private _route: ActivatedRoute, private _musicService: MusicService) {
    if(! this.performances){
-     this.performances=[]
+     this.performances=[
+     ];
+     this.performanceSongs = '';
    }
    }
 
