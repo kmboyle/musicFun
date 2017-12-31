@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-//import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import {IPerformance} from './music';
 import { MusicService } from './music.service';
 import {Observable} from 'rxjs/Observable';
@@ -14,18 +14,21 @@ export class MusicComponent implements OnInit {
     date: string = "Date number";
     performances: IPerformance[];
     errorMessage: string;
+    private id: any;
     
-  constructor(private _musicService: MusicService) {
-   
-     //console.log(this._route.snapshot.paramMap.get('id'));
+  constructor(private _route: ActivatedRoute, private _musicService: MusicService) {
+   if(! this.performances){
+     this.performances=[]
+   }
    }
 
   ngOnInit(): void {
-
       this._musicService.getPerformances()
-      .subscribe(performances => this.performances = performances, error=>this.errorMessage = <any>error);
-     // let id = +this._route.snapshot.paramMap.get('id')
-     // this.date += `: ${id}`;
-      //console.log(this.performances);
+      .subscribe(
+        performances => {
+          this.performances = performances;
+        }, 
+        error=>this.errorMessage = <any>error);
     }
 }
+

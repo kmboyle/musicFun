@@ -6,22 +6,25 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
 import {IPerformance} from './music';
 
 @Injectable()
 export class MusicService {
+    [x: string]: any;
     private _url = 'api/performances/music.json';
-    constructor(private _http: Http){}
+    constructor(private _http: HttpClient){}
     
-    getPerformances(){
-        return this._http.get(this._url)
-        .map((response: Response) =><IPerformance[]>response.json().performanceSongs)
-        // .do( data => console.log('All: ' + JSON.stringify(data)))
+    getPerformances(): Observable<IPerformance[]>{
+        return this._http.get<IPerformance[]>(this._url)
+        .do( data => console.log('All: ' + JSON.stringify(data)))
         .catch(this.handleError);
       
     }
+
     private handleError(err: HttpErrorResponse){
         console.log(err.message);
         return Observable.throw(err.error.message);
     }
+    
 }

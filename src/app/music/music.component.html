@@ -1,6 +1,6 @@
 <h1>{{date}}</h1>
 
-<table class='table' *ngIf='performances && performances.length'>
+<table class='table' *ngIf='performances.performanceSongs && performances.performanceSongs.length'>
     <thead>
         <tr>
             <th>
@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor='let performance of performances'>
+        <tr *ngFor='let performance of performances.performanceSongs'>
 
             <td>{{performance.title}}</td>
             <td><audio controls>

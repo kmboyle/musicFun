@@ -15,6 +15,7 @@ import { MusicComponent } from './music/music.component';
 import {HttpClientModule} from '@angular/common/http';
 import { MusicService } from './music/music.service';
 import {HttpModule} from '@angular/http';
+import { MusicPerformanceComponent } from './music/music-performance.component';
 
 
 @NgModule({
@@ -23,18 +24,18 @@ import {HttpModule} from '@angular/http';
     HttpModule,
     HttpClientModule,
     RouterModule.forRoot([
-      {path: "", component: MusicComponent },
-    {path: "music/:id", component: MusicComponent}
+      {path: "home", component: MusicComponent },
+      {path: "music/:id", component: MusicPerformanceComponent},
+      {path: '', redirectTo: 'home', pathMatch: 'full'},
+      {path: '**', redirectTo: 'home', pathMatch: 'full'}
+      
     ])
   ],
   declarations: [
     AppComponent,
-    CustomerComponent,
-    OrdersComponent,
-    SearchBoxDirective,
     InitCapsPipe,
     MusicComponent,
-
+    MusicPerformanceComponent
   ],
 
   bootstrap: [AppComponent]
