@@ -27,6 +27,7 @@ export class MusicPerformanceComponent implements OnInit {
   performance: IPerformance[];
   errorMessage: string;
   setDate: string;
+  performanceSongs: string;
 
 
   constructor(private _route: ActivatedRoute,
@@ -34,7 +35,8 @@ export class MusicPerformanceComponent implements OnInit {
               private _musicService: MusicService) {
     // console.log(this._route.snapshot.paramMap.get('id'));
     if(! this.performance){
-        this.performance=[]
+        this.performance=[];
+        this.performanceSongs = '';
    }
 }
 
