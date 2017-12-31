@@ -9,7 +9,7 @@ import { MusicService } from './music.service';
   
   template: `<h1>{{this.pageTitle}}</h1>
   <table>
-  <tr *ngFor='let set of performance.performanceSongs'>
+  <tr *ngFor='let set of performance'>
 
             <td *ngIf='set.performanceId == this.pageTitle'>{{set.title}}</td>
             <td *ngIf='set.performanceId == this.pageTitle'><audio controls>

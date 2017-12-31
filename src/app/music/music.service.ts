@@ -21,7 +21,17 @@ export class MusicService {
         .catch(this.handleError);
       
     }
-
+    getPerformance(id: any): Observable<IPerformance[]>{
+        console.log(id);
+        return this.getPerformances()
+        .map((performances: IPerformance[])=>{
+            performances=> performances.filter(performances=>
+                {performances.performanceId === this.id;
+                console.log(performances);
+            });
+        })
+        .catch(this.handleError);
+    }
     private handleError(err: HttpErrorResponse){
         console.log(err.message);
         return Observable.throw(err.error.message);

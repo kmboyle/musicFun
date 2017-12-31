@@ -19,8 +19,7 @@ export class MusicComponent implements OnInit {
 
   constructor(private _route: ActivatedRoute, private _musicService: MusicService) {
    if(! this.performances){
-     this.performances=[
-     ];
+     this.performances=[];
      this.performanceSongs = '';
    }
    }
@@ -30,6 +29,7 @@ export class MusicComponent implements OnInit {
       .subscribe(
         performances => {
           this.performances = performances;
+          console.log(this.performances);
         }, 
         error=>this.errorMessage = <any>error);
     }

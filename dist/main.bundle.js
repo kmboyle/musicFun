@@ -167,6 +167,7 @@ var MusicPerformanceComponent = (function () {
         // console.log(this._route.snapshot.paramMap.get('id'));
         if (!this.performance) {
             this.performance = [];
+            this.performanceSongs = '';
         }
     }
     MusicPerformanceComponent.prototype.ngOnInit = function () {
@@ -183,7 +184,7 @@ var MusicPerformanceComponent = (function () {
     };
     MusicPerformanceComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            template: "<h1>{{this.pageTitle}}</h1>\n  <table>\n  <tr *ngFor='let set of performance.performanceSongs'>\n\n            <td *ngIf='set.performanceId == this.pageTitle'>{{set.title}}</td>\n            <td *ngIf='set.performanceId == this.pageTitle'><audio controls>\n                            <source [src]='set.src' type='audio/mp3'>\n                            </audio>\n            </td>\n\n        </tr>\n  </table>\n  <button (click)='onBack()'>Take me home</button>",
+            template: "<h1>{{this.pageTitle}}</h1>\n  <table>\n  <tr *ngFor='let set of performance'>\n\n            <td *ngIf='set.performanceId == this.pageTitle'>{{set.title}}</td>\n            <td *ngIf='set.performanceId == this.pageTitle'><audio controls>\n                            <source [src]='set.src' type='audio/mp3'>\n                            </audio>\n            </td>\n\n        </tr>\n  </table>\n  <button (click)='onBack()'>Take me home</button>",
             styleUrls: []
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
@@ -200,7 +201,7 @@ var MusicPerformanceComponent = (function () {
 /***/ "../../../../../src/app/music/music.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1>{{date}}</h1>\r\n\r\n<table class='table' *ngIf='performances.performanceSongs && performances.performanceSongs.length'>\r\n    <thead>\r\n        <tr>\r\n            <th>\r\n                Song Name\r\n            </th>\r\n            <th>\r\n                Song Data\r\n            </th>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <tr *ngFor='let performance of performances.performanceSongs'>\r\n\r\n            <td>{{performance.title}}</td>\r\n            <td><audio controls>\r\n                            <source [src]='performance.src' type='audio/mp3'>\r\n                            </audio>\r\n            </td>\r\n\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n\r\n\r\n<!-- <div class='row'>\r\n    <div class='col-md-6'>\r\n        <h2>Green Jam</h2>\r\n        <h3><i>12.09.17</i></h3>\r\n        <audio controls>\r\n        <source src='../assets/Floyds_Jam/Green_Jam.mp3' type='audio/mp3'>\r\n      </audio>\r\n    </div>\r\n</div>\r\n\r\n<div class='row'>\r\n    <div class='col-md-6'>\r\n        <h2>Marx Jam</h2>\r\n        <h3><i>12.09.17</i></h3>\r\n        <audio controls>\r\n        <source src='../assets/Floyds_Jam/Marx_Jam.mp3' type='audio/mp3'>\r\n      </audio>\r\n    </div>\r\n</div>\r\n\r\n<div class='row'>\r\n    <div class='col-md-6'>\r\n        <h2>Pawn Jam</h2>\r\n        <h3><i>12.09.17</i></h3>\r\n        <audio controls>\r\n        <source src='../assets/Floyds_Jam/Pawn_Shop_Jam.mp3' type='audio/mp3'>\r\n      </audio>\r\n    </div>\r\n</div>\r\n\r\n<div class='row'>\r\n    <div class='col-md-6'>\r\n        <h2>Piece Of Mind Jam</h2>\r\n        <h3><i>12.09.17</i></h3>\r\n        <audio controls>\r\n        <source src='../assets/Floyds_Jam/Piece_Of_Mind_Jam.mp3' type='audio/mp3'>\r\n      </audio>\r\n    </div>\r\n</div>\r\n\r\n<div class='row'>\r\n    <div class='col-md-6'>\r\n        <h2>Say It Ain't So Jam</h2>\r\n        <h3><i>12.09.17</i></h3>\r\n        <audio controls>\r\n        <source src='../assets/Floyds_Jam/Say_It_Aint_Jam.mp3' type='audio/mp3'>\r\n      </audio>\r\n    </div>\r\n</div>\r\n\r\n<div class='row'>\r\n    <div class='col-md-6'>\r\n        <h2>Simple Man Jam</h2>\r\n        <h3><i>12.09.17</i></h3>\r\n        <audio controls>\r\n        <source src='../assets/Floyds_Jam/Simple_Jam.mp3' type='audio/mp3'>\r\n      </audio>\r\n    </div>\r\n</div>\r\n\r\n<div class='row'>\r\n    <div class='col-md-6'>\r\n        <h2>Wanna Fall Jam</h2>\r\n        <h3><i>12.09.17</i></h3>\r\n        <audio controls>\r\n        <source src='../assets/Floyds_Jam/Wanna_Fall_Jam.mp3' type='audio/mp3'>\r\n      </audio>\r\n    </div>\r\n</div> -->"
+module.exports = "<h1>{{date}}</h1>\r\n\r\n<table class='table' *ngIf='performances'>\r\n    <thead>\r\n        <tr>\r\n            <th>\r\n                Song Name\r\n            </th>\r\n            <th>\r\n                Song Data\r\n            </th>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <tr *ngFor=' let performance of performances'>\r\n\r\n            <td>{{performance.title}}</td>\r\n            <td><audio controls>\r\n                            <source [src]='performance.src ' type='audio/mp3 '>\r\n                            </audio>\r\n            </td>\r\n\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n\r\n\r\n<!-- <div class='row '>\r\n    <div class='col-md-6 '>\r\n        <h2>Green Jam</h2>\r\n        <h3><i>12.09.17</i></h3>\r\n        <audio controls>\r\n        <source src='../assets/Floyds_Jam/Green_Jam.mp3 ' type='audio/mp3 '>\r\n      </audio>\r\n    </div>\r\n</div>\r\n\r\n<div class='row '>\r\n    <div class='col-md-6 '>\r\n        <h2>Marx Jam</h2>\r\n        <h3><i>12.09.17</i></h3>\r\n        <audio controls>\r\n        <source src='../assets/Floyds_Jam/Marx_Jam.mp3 ' type='audio/mp3 '>\r\n      </audio>\r\n    </div>\r\n</div>\r\n\r\n<div class='row '>\r\n    <div class='col-md-6 '>\r\n        <h2>Pawn Jam</h2>\r\n        <h3><i>12.09.17</i></h3>\r\n        <audio controls>\r\n        <source src='../assets/Floyds_Jam/Pawn_Shop_Jam.mp3 ' type='audio/mp3 '>\r\n      </audio>\r\n    </div>\r\n</div>\r\n\r\n<div class='row '>\r\n    <div class='col-md-6 '>\r\n        <h2>Piece Of Mind Jam</h2>\r\n        <h3><i>12.09.17</i></h3>\r\n        <audio controls>\r\n        <source src='../assets/Floyds_Jam/Piece_Of_Mind_Jam.mp3 ' type='audio/mp3 '>\r\n      </audio>\r\n    </div>\r\n</div>\r\n\r\n<div class='row '>\r\n    <div class='col-md-6 '>\r\n        <h2>Say It Ain't So Jam</h2>\r\n    <h3><i>12.09.17</i></h3>\r\n    <audio controls>\r\n        <source src='../assets/Floyds_Jam/Say_It_Aint_Jam.mp3' type='audio/mp3'>\r\n      </audio>\r\n    </div>\r\n    </div>\r\n\r\n    <div class='row'>\r\n        <div class='col-md-6'>\r\n            <h2>Simple Man Jam</h2>\r\n            <h3><i>12.09.17</i></h3>\r\n            <audio controls>\r\n        <source src='../assets/Floyds_Jam/Simple_Jam.mp3' type='audio/mp3'>\r\n      </audio>\r\n        </div>\r\n    </div>\r\n\r\n    <div class='row'>\r\n        <div class='col-md-6'>\r\n            <h2>Wanna Fall Jam</h2>\r\n            <h3><i>12.09.17</i></h3>\r\n            <audio controls>\r\n        <source src='../assets/Floyds_Jam/Wanna_Fall_Jam.mp3' type='audio/mp3'>\r\n      </audio>\r\n        </div>\r\n    </div> -->"
 
 /***/ }),
 
@@ -241,6 +242,7 @@ var MusicComponent = (function () {
         this._musicService.getPerformances()
             .subscribe(function (performances) {
             _this.performances = performances;
+            console.log(_this.performances);
         }, function (error) { return _this.errorMessage = error; });
     };
     MusicComponent = __decorate([
@@ -295,6 +297,18 @@ var MusicService = (function () {
     MusicService.prototype.getPerformances = function () {
         return this._http.get(this._url)
             .do(function (data) { return console.log('All: ' + JSON.stringify(data)); })
+            .catch(this.handleError);
+    };
+    MusicService.prototype.getPerformance = function (id) {
+        var _this = this;
+        console.log(id);
+        return this.getPerformances()
+            .map(function (performances) {
+            (function (performances) { return performances.filter(function (performances) {
+                performances.performanceId === _this.id;
+                console.log(performances);
+            }); });
+        })
             .catch(this.handleError);
     };
     MusicService.prototype.handleError = function (err) {

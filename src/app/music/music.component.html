@@ -1,6 +1,6 @@
 <h1>{{date}}</h1>
 
-<table class='table' *ngIf='performances.performanceSongs && performances.performanceSongs.length'>
+<table class='table' *ngIf='performances'>
     <thead>
         <tr>
             <th>
@@ -12,11 +12,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor='let performance of performances.performanceSongs'>
+        <tr *ngFor=' let performance of performances'>
 
             <td>{{performance.title}}</td>
             <td><audio controls>
-                            <source [src]='performance.src' type='audio/mp3'>
+                            <source [src]='performance.src ' type='audio/mp3 '>
                             </audio>
             </td>
 
@@ -25,72 +25,72 @@
 </table>
 
 
-<!-- <div class='row'>
-    <div class='col-md-6'>
+<!-- <div class='row '>
+    <div class='col-md-6 '>
         <h2>Green Jam</h2>
         <h3><i>12.09.17</i></h3>
         <audio controls>
-        <source src='../assets/Floyds_Jam/Green_Jam.mp3' type='audio/mp3'>
+        <source src='../assets/Floyds_Jam/Green_Jam.mp3 ' type='audio/mp3 '>
       </audio>
     </div>
 </div>
 
-<div class='row'>
-    <div class='col-md-6'>
+<div class='row '>
+    <div class='col-md-6 '>
         <h2>Marx Jam</h2>
         <h3><i>12.09.17</i></h3>
         <audio controls>
-        <source src='../assets/Floyds_Jam/Marx_Jam.mp3' type='audio/mp3'>
+        <source src='../assets/Floyds_Jam/Marx_Jam.mp3 ' type='audio/mp3 '>
       </audio>
     </div>
 </div>
 
-<div class='row'>
-    <div class='col-md-6'>
+<div class='row '>
+    <div class='col-md-6 '>
         <h2>Pawn Jam</h2>
         <h3><i>12.09.17</i></h3>
         <audio controls>
-        <source src='../assets/Floyds_Jam/Pawn_Shop_Jam.mp3' type='audio/mp3'>
+        <source src='../assets/Floyds_Jam/Pawn_Shop_Jam.mp3 ' type='audio/mp3 '>
       </audio>
     </div>
 </div>
 
-<div class='row'>
-    <div class='col-md-6'>
+<div class='row '>
+    <div class='col-md-6 '>
         <h2>Piece Of Mind Jam</h2>
         <h3><i>12.09.17</i></h3>
         <audio controls>
-        <source src='../assets/Floyds_Jam/Piece_Of_Mind_Jam.mp3' type='audio/mp3'>
+        <source src='../assets/Floyds_Jam/Piece_Of_Mind_Jam.mp3 ' type='audio/mp3 '>
       </audio>
     </div>
 </div>
 
-<div class='row'>
-    <div class='col-md-6'>
+<div class='row '>
+    <div class='col-md-6 '>
         <h2>Say It Ain't So Jam</h2>
-        <h3><i>12.09.17</i></h3>
-        <audio controls>
+    <h3><i>12.09.17</i></h3>
+    <audio controls>
         <source src='../assets/Floyds_Jam/Say_It_Aint_Jam.mp3' type='audio/mp3'>
       </audio>
     </div>
-</div>
+    </div>
 
-<div class='row'>
-    <div class='col-md-6'>
-        <h2>Simple Man Jam</h2>
-        <h3><i>12.09.17</i></h3>
-        <audio controls>
+    <div class='row'>
+        <div class='col-md-6'>
+            <h2>Simple Man Jam</h2>
+            <h3><i>12.09.17</i></h3>
+            <audio controls>
         <source src='../assets/Floyds_Jam/Simple_Jam.mp3' type='audio/mp3'>
       </audio>
+        </div>
     </div>
-</div>
 
-<div class='row'>
-    <div class='col-md-6'>
-        <h2>Wanna Fall Jam</h2>
-        <h3><i>12.09.17</i></h3>
-        <audio controls>
+    <div class='row'>
+        <div class='col-md-6'>
+            <h2>Wanna Fall Jam</h2>
+            <h3><i>12.09.17</i></h3>
+            <audio controls>
         <source src='../assets/Floyds_Jam/Wanna_Fall_Jam.mp3' type='audio/mp3'>
       </audio>
-    </div>
-</div> -->
+        </div>
+    </div> -->
