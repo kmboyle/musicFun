@@ -14,16 +14,16 @@ export class MusicComponent implements OnInit {
     date: string = "Date number";
     performances: IPerformance[];
     errorMessage: string;
+    keys: Array<string>;
     private id: any;
-    performanceSongs: string;
+    @Input() filteredSongs: Array<IPerformance>;
 
   constructor(private _route: ActivatedRoute, private _musicService: MusicService) {
    if(! this.performances){
      this.performances=[];
-     this.performanceSongs = '';
+     this.filteredSongs = [];
    }
    }
-
   ngOnInit(): void {
       this._musicService.getPerformances()
       .subscribe(
@@ -32,6 +32,10 @@ export class MusicComponent implements OnInit {
           console.log(this.performances);
         }, 
         error=>this.errorMessage = <any>error);
+
+        this.performances.forEach((performance)=>{
+          this.keys = Object.keys(performance);
+        })
     }
 }
 

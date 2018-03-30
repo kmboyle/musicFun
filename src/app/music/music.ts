@@ -1,4 +1,6 @@
 export interface IPerformance {    
-        performanceSongs: Array<any>,
+        title: string,
+        src: string,
+        performanceId: string
       
     }

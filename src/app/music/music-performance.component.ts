@@ -42,11 +42,11 @@ export class MusicPerformanceComponent implements OnInit {
 
   ngOnInit() {
     
-    //because the param is a string, add a + to convert the param string to a numeric id
-    let id= this._route.snapshot.paramMap.get('id');
-    this._musicService.getPerformances()
-      .subscribe(performance => this.performance = performance, error=>this.errorMessage=<any>error)
-    this.pageTitle = `${id}`;
+    // //because the param is a string, add a + to convert the param string to a numeric id
+    // let id= this._route.snapshot.paramMap.get('id');
+    // this._musicService.getPerformances()
+    //   .subscribe(performance => this.performance = performance, error=>this.errorMessage=<any>error)
+    // this.pageTitle = `${id}`;
     
     }
 

@@ -4,8 +4,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { SalesDataService } from './sales-data.service';
-import { SalesData2Service } from './sales-data2.service';
 import { InitCapsPipe } from './shared/init-caps.pipe';
 
 import { RouterModule } from '@angular/router';
@@ -22,11 +20,10 @@ import { MusicPerformanceComponent } from './music/music-performance.component';
     HttpModule,
     HttpClientModule,
     RouterModule.forRoot([
-      {path: "home", component: MusicComponent },
-      {path: "music/:id", component: MusicPerformanceComponent},
+      {path: "home", component: AppComponent },
+      // {path: "music/:id", component: MusicPerformanceComponent},
       {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: '**', redirectTo: 'home', pathMatch: 'full'}
-      
     ])
   ],
   declarations: [

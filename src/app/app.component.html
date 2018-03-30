@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
     <h1>
-        Kevin Bizzoyle Welcome to {{ title }}!
+        Music Forever
     </h1>
 </div>
 <div class="navbar">
@@ -10,10 +10,10 @@
             <i class="fa fa-caret-down"></i>
           </button>
         <div class="dropdown-content">
-            <a [routerLink]="['music/12.09.2017']">Dec. 9, 2017</a>
-            <a [routerLink]="['music/12.23.2017']">Dec. 23, 2017</a>
+            <a (click)='filterShow("12.09.2017")'>Dec. 9, 2017</a>
+            <a (click)='filterShow("12.23.2017")'>Dec. 23, 2017</a>
         </div>
     </div>
 </div>
 
-<router-outlet></router-outlet>
+<app-music [filteredSongs]='musicComponent'></app-music>
