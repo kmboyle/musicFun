@@ -30,12 +30,14 @@ export class MusicComponent implements OnInit {
         performances => {
           this.performances = performances;
           console.log(this.performances);
+          this.performances.forEach((performance)=>{
+            this.keys = Object.keys(performance);
+          })
+          console.log(this.keys);
         }, 
         error=>this.errorMessage = <any>error);
 
-        this.performances.forEach((performance)=>{
-          this.keys = Object.keys(performance);
-        })
+     
     }
 }
 

@@ -3,18 +3,17 @@
 <table class='table' *ngIf='performances'>
     <thead>
         <tr>
-            <th *ngFor='let title of keys'>
+            <th *ngFor='let title of keys'>{{title | uppercase}}</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor=' let performance of filteredSongs'>
-            <td>{{performance.performanceId}}</td>
             <td>{{performance.title}}</td>
             <td><audio controls>
                             <source [src]='performance.src ' type='audio/mp3 '>
                             </audio>
             </td>
-
+            <td>{{performance.date}}</td>
         </tr>
     </tbody>
 </table>

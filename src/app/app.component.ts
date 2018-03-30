@@ -15,14 +15,14 @@ export class AppComponent {
   songs: any;
   errorMessage:string;
   @ViewChild(MusicComponent)
-  private musicComponent: MusicComponent;
+  public musicComponent: MusicComponent;
   
   constructor(private _musicService: MusicService){}
   
   filterShow(id:string) {
     
     this._musicService.getPerformances().subscribe(songs=>{
-      this.songs = songs.filter(song=>song.performanceId === id);
+      this.songs = songs.filter(song=>song.date === id);
       this.musicComponent = this.songs;
     });
   }
