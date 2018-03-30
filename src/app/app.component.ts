@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MusicService } from './music/music.service';
 import { MusicComponent } from './music/music.component';
 import {IPerformance} from './music/music';
+import { MatFormFieldControl  } from "@angular/material/form-field";
 
 @Component({
   selector: 'app-root',

@@ -12,6 +12,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { MusicService } from './music/music.service';
 import {HttpModule} from '@angular/http';
 import { MusicPerformanceComponent } from './music/music-performance.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
 
 
 @NgModule({
@@ -19,6 +21,8 @@ import { MusicPerformanceComponent } from './music/music-performance.component';
     BrowserModule,
     HttpModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
     RouterModule.forRoot([
       {path: "home", component: AppComponent },
       // {path: "music/:id", component: MusicPerformanceComponent},
