@@ -82,4 +82,9 @@
 
 .dropdown:hover .dropdown-content {
     display: block;
+    cursor: pointer;
+}
+
+.searchBar {
+    float: right;
 }
