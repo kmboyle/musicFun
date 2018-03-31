@@ -19,10 +19,9 @@ export class MusicComponent implements OnInit {
     @Input() filteredSongs: Array<IPerformance>;
 
   constructor(private _route: ActivatedRoute, private _musicService: MusicService) {
-   if(! this.performances){
-     this.performances=[];
-     this.filteredSongs = [];
-   }
+    this._musicService.getPerformances().subscribe(songs=>{
+      this.filteredSongs = songs;
+    });
    }
   ngOnInit(): void {
       this._musicService.getPerformances()

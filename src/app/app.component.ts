@@ -18,12 +18,20 @@ export class AppComponent {
   @ViewChild(MusicComponent)
   public musicComponent: MusicComponent;
   
-  constructor(private _musicService: MusicService){}
+  constructor(private _musicService: MusicService){
+
+  }
   
   filterShow(id:string) {
     
     this._musicService.getPerformances().subscribe(songs=>{
       this.songs = songs.filter(song=>song.date === id);
+      this.musicComponent = this.songs;
+    });
+  }
+  searchFilter(event:any){
+    this._musicService.getPerformances().subscribe(songs=>{
+      this.songs = songs.filter(song=>song.title.toLowerCase().includes(event.target.value.toLowerCase()));
       this.musicComponent = this.songs;
     });
   }
