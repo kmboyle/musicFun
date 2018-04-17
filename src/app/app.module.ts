@@ -24,9 +24,9 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     MaterialModule,
     RouterModule.forRoot([
-      {path: "home", component: AppComponent },
+      {path: '', component: AppComponent },
       // {path: "music/:id", component: MusicPerformanceComponent},
-      {path: '', redirectTo: 'home', pathMatch: 'full'},
+      // {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: '**', redirectTo: 'home', pathMatch: 'full'}
     ])
   ],
@@ -36,6 +36,7 @@ import { MaterialModule } from './material.module';
     MusicComponent,
     MusicPerformanceComponent
   ],
+  exports: [MaterialModule],
 
   bootstrap: [AppComponent]
 })

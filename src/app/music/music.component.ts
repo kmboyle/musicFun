@@ -8,10 +8,10 @@ import 'rxjs/add/operator/catch';
 @Component({
   selector: 'app-music',
   templateUrl: './music.component.html',
-  //styleUrls: ['./music.component.css']
+  // styleUrls: ['./music.component.css']
 })
 export class MusicComponent implements OnInit {
-    date: string = "Date number";
+    date = 'Date number';
     performances: IPerformance[];
     errorMessage: string;
     keys: Array<string>;
@@ -19,7 +19,7 @@ export class MusicComponent implements OnInit {
     @Input() filteredSongs: Array<IPerformance>;
 
   constructor(private _route: ActivatedRoute, private _musicService: MusicService) {
-    this._musicService.getPerformances().subscribe(songs=>{
+    this._musicService.getPerformances().subscribe(songs => {
       this.filteredSongs = songs;
     });
    }
@@ -28,11 +28,11 @@ export class MusicComponent implements OnInit {
       .subscribe(
         performances => {
           this.performances = performances;
-          this.performances.forEach((performance)=>{
+          this.performances.forEach((performance) => {
           this.keys = Object.keys(performance);
-          })
-        }, 
-        error=>this.errorMessage = <any>error);
+          });
+        },
+        error => this.errorMessage = <any>error);
     }
 }
 
