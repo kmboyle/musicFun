@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AppComponent } from './app.component';
 
@@ -16,6 +18,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
+export const firebaseConfig = {
+  apiKey: 'AIzaSyB6p3dOXyEWZDIwMSUOTEej-6cSaPlE8LI',
+  authDomain: 'awesomeness-a47d9.firebaseapp.com',
+  databaseURL: 'https://awesomeness-a47d9.firebaseio.com',
+  projectId: 'awesomeness-a47d9',
+  storageBucket: 'awesomeness-a47d9.appspot.com',
+  messagingSenderId: '154832084236'
+};
+
 
 @NgModule({
   imports: [
@@ -30,7 +41,10 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
       // {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: '**', redirectTo: 'home', pathMatch: 'full'}
     ]),
-    [Ng4LoadingSpinnerModule.forRoot()]
+    [Ng4LoadingSpinnerModule.forRoot()],
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   declarations: [
     AppComponent,

@@ -5,11 +5,17 @@ import {IPerformance} from './models/music';
 import { MatFormFieldControl  } from '@angular/material/form-field';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Observable';
+import * as firebase from 'firebase/app';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [MusicService]
+  providers: [MusicService, AngularFirestore]
 })
 export class AppComponent {
   title = 'app';
@@ -18,9 +24,12 @@ export class AppComponent {
   errorMessage: string;
   @ViewChild(MusicComponent)
   public musicComponent: MusicComponent;
+  items: Observable<any[]>;
 
   constructor(private _musicService: MusicService,
-              private spinnerService: Ng4LoadingSpinnerService) {
+              private spinnerService: Ng4LoadingSpinnerService,
+              private db: AngularFirestore) {
+                this.items = db.collection('items').valueChanges();
               }
   filterShow(id: string) {
     this._musicService.getPerformances().subscribe(songs => {
