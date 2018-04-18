@@ -29,7 +29,6 @@ export class AppComponent {
     });
   }
   myTimer() {
-    console.log(this.musicComponent);
     if (this.musicComponent['length'] === 0) {
       this.spinnerService.show();
       setTimeout(() => {
