@@ -11,7 +11,7 @@ import { MusicService } from './music.service';
   <table>
   <tr *ngFor='let set of performance'>
 
-            <td *ngIf='set.date == this.pageTit{{ '>{{set.t }}le}}</td>
+            <td *ngIf='set.date == this.pageTitle'>{{ set.title }}</td>
             <td *ngIf='set.date == this.pageTitle'><audio controls>
                             <source [src]='set.src' type='audio/mp3'>
                             </audio>
