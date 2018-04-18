@@ -5,14 +5,15 @@ import { Router } from '@angular/router';
 import {IPerformance} from '../models/music';
 import { MusicService } from './music.service';
 
+
 @Component({
 
   template: `<h1>{{ this.pageTitle }}</h1>
   <table>
   <tr *ngFor='let set of performance'>
 
-            <td *ngIf='set.date == this.pageTitle'>{{ set.title }}</td>
-            <td *ngIf='set.date == this.pageTitle'><audio controls>
+            <td>{{set.title}}</td>
+            <td><audio controls>
                             <source [src]='set.src' type='audio/mp3'>
                             </audio>
             </td>
@@ -33,21 +34,18 @@ export class MusicPerformanceComponent implements OnInit {
   constructor(private _route: ActivatedRoute,
               private _router: Router,
               private _musicService: MusicService) {
-    // console.log(this._route.snapshot.paramMap.get('id'));
-    if (! this.performance) {
-        this.performance = [];
-        this.performanceSongs = '';
-   }
+
 }
 
   ngOnInit() {
-
-    // //because the param is a string, add a + to convert the param string to a numeric id
-    // let id= this._route.snapshot.paramMap.get('id');
-    // this._musicService.getPerformances()
-    //   .subscribe(performance => this.performance = performance, error=>this.errorMessage=<any>error)
-    // this.pageTitle = `${id}`;
-
+    
+    //because the param is a string, add a + to convert the param string to a numeric id
+    let id= +this._route.snapshot.paramMap.get('id');
+    this._musicService.getPerformances()
+      .subscribe(performance => {
+        this.performance = performance.filter(pfm => pfm.id === id);
+        this.pageTitle = `${id} ${performance[0].title} ${performance[0].date}`;
+      }, error=>this.errorMessage=<any>error)
     }
 
 // to route with code, import the router and use it's navigate method

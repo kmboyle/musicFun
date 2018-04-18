@@ -26,6 +26,7 @@ export const firebaseConfig = {
   storageBucket: 'awesomeness-a47d9.appspot.com',
   messagingSenderId: '154832084236'
 };
+import { FileUploadComponent } from './music/file-upload.component';
 
 
 @NgModule({
@@ -35,22 +36,23 @@ export const firebaseConfig = {
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    RouterModule.forRoot([
-      {path: '', component: AppComponent },
-      // {path: "music/:id", component: MusicPerformanceComponent},
-      // {path: '', redirectTo: 'home', pathMatch: 'full'},
-      {path: '**', redirectTo: 'home', pathMatch: 'full'}
-    ]),
     [Ng4LoadingSpinnerModule.forRoot()],
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    RouterModule.forRoot([ {path: "home", component: MusicComponent},
+    {path: "music/:id", component: MusicPerformanceComponent},
+    {path: "newSong", component: FileUploadComponent},
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: '**', redirectTo: 'home', pathMatch: 'full'} ]),
+
   ],
   declarations: [
     AppComponent,
     InitCapsPipe,
     MusicComponent,
-    MusicPerformanceComponent
+    MusicPerformanceComponent,
+    FileUploadComponent
   ],
   exports: [MaterialModule],
 
