@@ -11,7 +11,6 @@ import 'rxjs/add/operator/catch';
   // styleUrls: ['./music.component.css']
 })
 export class MusicComponent implements OnInit {
-    date = 'Date number';
     performances: IPerformance[];
     errorMessage: string;
     keys: Array<string>;

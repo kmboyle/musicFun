@@ -14,6 +14,7 @@ import {HttpModule} from '@angular/http';
 import { MusicPerformanceComponent } from './music/music-performance.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MaterialModule } from './material.module';
       // {path: "music/:id", component: MusicPerformanceComponent},
       // {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: '**', redirectTo: 'home', pathMatch: 'full'}
-    ])
+    ]),
+    [Ng4LoadingSpinnerModule.forRoot()]
   ],
   declarations: [
     AppComponent,
