@@ -18,11 +18,11 @@ export class AppComponent {
   @ViewChild(MusicComponent)
   public musicComponent: MusicComponent;
 
-  constructor(private _musicService: MusicService){
+  constructor(private _musicService: MusicService) {
 
   }
 
-  filterShow(id:string) {
+  filterShow(id: string) {
 
     this._musicService.getPerformances().subscribe(songs => {
       this.songs = songs.filter(song => song.date === id);

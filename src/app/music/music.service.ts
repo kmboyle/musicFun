@@ -12,19 +12,16 @@ import {IPerformance} from '../models/music';
 @Injectable()
 export class MusicService {
     private _url = 'api/performances/music.json';
-    constructor(private _http: HttpClient){}
-    
-    getPerformances(): Observable<IPerformance[]>{
+    constructor(private _http: HttpClient) {}
+    getPerformances(): Observable<IPerformance[]> {
         return this._http.get<IPerformance[]>(this._url)
         .do( data => {})
         .catch(this.handleError);
-      
     }
-    getPerformance(id:string) {
+    getPerformance(id: string) {
     }
-    private handleError(err: HttpErrorResponse){
+    private handleError(err: HttpErrorResponse) {
         console.log(err.message);
         return Observable.throw(err.error.message);
     }
-    
 }

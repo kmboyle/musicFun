@@ -23,7 +23,7 @@ import { MusicService } from './music.service';
   styleUrls: []
 })
 export class MusicPerformanceComponent implements OnInit {
-  pageTitle: string = '';
+  pageTitle = '';
   performance: IPerformance[];
   errorMessage: string;
   setDate: string;
@@ -34,8 +34,8 @@ export class MusicPerformanceComponent implements OnInit {
               private _router: Router,
               private _musicService: MusicService) {
     // console.log(this._route.snapshot.paramMap.get('id'));
-    if(! this.performance){
-        this.performance=[];
+    if (! this.performance) {
+        this.performance = [];
         this.performanceSongs = '';
    }
 }
@@ -50,7 +50,7 @@ export class MusicPerformanceComponent implements OnInit {
 
     }
 
-//to route with code, import the router and use it's navigate method
+// to route with code, import the router and use it's navigate method
   onBack(): void {
     this._router.navigate(['/home']);
   }
