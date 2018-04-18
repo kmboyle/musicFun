@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
-import {IPerformance} from './music';
+import {IPerformance} from '../models/music';
 
 @Injectable()
 export class MusicService {

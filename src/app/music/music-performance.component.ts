@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
-import {IPerformance} from './music';
+import {IPerformance} from '../models/music';
 import { MusicService } from './music.service';
 
 @Component({
-  
-  template: `<h1>{{this.pageTitle}}</h1>
+
+  template: `<h1>{{ this.pageTitle }}</h1>
   <table>
   <tr *ngFor='let set of performance'>
 
-            <td *ngIf='set.date == this.pageTitle'>{{set.title}}</td>
+            <td *ngIf='set.date == this.pageTit{{ '>{{set.t }}le}}</td>
             <td *ngIf='set.date == this.pageTitle'><audio controls>
                             <source [src]='set.src' type='audio/mp3'>
                             </audio>
@@ -41,13 +41,13 @@ export class MusicPerformanceComponent implements OnInit {
 }
 
   ngOnInit() {
-    
+
     // //because the param is a string, add a + to convert the param string to a numeric id
     // let id= this._route.snapshot.paramMap.get('id');
     // this._musicService.getPerformances()
     //   .subscribe(performance => this.performance = performance, error=>this.errorMessage=<any>error)
     // this.pageTitle = `${id}`;
-    
+
     }
 
 //to route with code, import the router and use it's navigate method
