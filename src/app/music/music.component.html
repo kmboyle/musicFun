@@ -1,7 +1,5 @@
 <ng4-loading-spinner></ng4-loading-spinner>
-<div class='row'>
-    <h2>Song List</h2>
-</div>
+
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
     <h1>
@@ -34,11 +32,14 @@
         <input matInput placeholder="Search" (keyup)="searchFilter($event)">
     </mat-form-field>
 </div>
+<div *ngIf='errorMessage'>{{errorMesage}}</div>
 <div>
 </div>
 
-<h1>{{date}}</h1>
->>>>>>> Stashed changes
+<div class='row'>
+    <h2>Song List</h2>
+</div>
+
 
 <table class='table' *ngIf='filteredSongs'>
     <thead>
