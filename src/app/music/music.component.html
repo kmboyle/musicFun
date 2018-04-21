@@ -32,29 +32,28 @@
         <input matInput placeholder="Search" (keyup)="searchFilter($event)">
     </mat-form-field>
 </div>
-<div *ngIf='errorMessage'>{{errorMesage}}</div>
 <div>
 </div>
 
 <div class='row'>
     <h2>Song List</h2>
 </div>
-
+<div *ngIf='errorMessage'>{{errorMessage}}</div>
 
 <table class='table' *ngIf='filteredSongs'>
-    <thead>
+    <!-- <thead>
         <tr>
             <th *ngFor='let title of keys'>{{title | uppercase}}</th>
         </tr>
-    </thead>
+    </thead> -->
     <tbody>
-        <tr *ngFor='let performance of filteredSongs' (click)="routeToSongPage($event)">
-            <td class="songName {{performance.id}}">{{performance.id}}</td>
+        <tr *ngFor='let performance of filteredSongs let i = index' (click)="routeToSongPage($event)">
+            <td class="songName {{performance.id}}">{{i+1}}</td>
             <td class="songName {{performance.title}}">{{performance.title}}</td>
-            <td><audio controls>
+            <!-- <td><audio controls>
                             <source [src]='performance.src ' type='audio/mp3 '>
                             </audio>
-            </td>
+            </td> -->
             <td>{{performance.date}}</td>
         </tr>
     </tbody>

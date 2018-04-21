@@ -44,7 +44,8 @@ export class MusicPerformanceComponent implements OnInit {
     this._musicService.getPerformances()
       .subscribe(performance => {
         this.performance = performance.filter(pfm => pfm.id === id);
-        this.pageTitle = `${id} ${performance[0].title} ${performance[0].date}`;
+        console.log(this.performance);
+        this.pageTitle = `${this.performance[0].title} ${this.performance[0].date}`;
       }, error=>this.errorMessage=<any>error)
     }
 
