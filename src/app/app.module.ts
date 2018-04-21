@@ -17,6 +17,8 @@ import { MusicPerformanceComponent } from './music/music-performance.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import * as firebase from 'firebase/app';
+
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyB6p3dOXyEWZDIwMSUOTEej-6cSaPlE8LI',
