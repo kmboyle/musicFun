@@ -65,6 +65,7 @@ export class FileService {
             }, () => {
             // Upload completed successfully, now we can get the download URL
             const downloadURL = uploadTask.snapshot.downloadURL;
+            console.log(downloadURL);
             });
 
 

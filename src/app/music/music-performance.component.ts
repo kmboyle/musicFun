@@ -18,13 +18,14 @@ import { FileService } from '../services/file-mgmt.service';
                             <source [src]='set.src' type='audio/mp3'>
                             </audio>
             </td>
-
+            <button (click)='getDownload(set)'>Download</button>
         </tr>
   </table>
-  <button (click)='downloadFile(set)'></button>
-  <img id="myimg">Song URL</img>
+ 
+  <img src={{songURL}} id="myimg">
   <button (click)='onBack()'>Take me home</button>`,
-  styleUrls: []
+  styleUrls: [],
+  providers: [FileService]
 })
 export class MusicPerformanceComponent implements OnInit {
   pageTitle = '';
@@ -33,6 +34,7 @@ export class MusicPerformanceComponent implements OnInit {
   setDate: string;
   performanceSongs: string;
   id: number;
+  songURL: string;
 
 
   constructor(private _route: ActivatedRoute,
@@ -54,8 +56,12 @@ export class MusicPerformanceComponent implements OnInit {
       }, error=>this.errorMessage=<any>error)
     }
   getDownload(song: Array<IPerformance>) {
+    
 
-    this.fileService.downloadFile(song);
+    this.fileService.downloadFile(song).subscribe(url=>{
+      this.songURL = url;
+      console.log(this.songURL);
+    });
   }
 
 // to route with code, import the router and use it's navigate method
