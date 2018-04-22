@@ -28,7 +28,7 @@ export const firebaseConfig = {
   storageBucket: 'awesomeness-a47d9.appspot.com',
   messagingSenderId: '154832084236'
 };
-import { FileUploadComponent } from './music/file-upload.component';
+import { FileMgmtComponent } from './music/file-mgmt.component';
 
 
 @NgModule({
@@ -44,7 +44,7 @@ import { FileUploadComponent } from './music/file-upload.component';
     AngularFireAuthModule,
     RouterModule.forRoot([ {path: "home", component: MusicComponent},
     {path: "music/:id", component: MusicPerformanceComponent},
-    {path: "newSong", component: FileUploadComponent},
+    {path: "newSong", component: FileMgmtComponent},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '**', redirectTo: 'home', pathMatch: 'full'} ]),
 
@@ -54,7 +54,7 @@ import { FileUploadComponent } from './music/file-upload.component';
     InitCapsPipe,
     MusicComponent,
     MusicPerformanceComponent,
-    FileUploadComponent
+    FileMgmtComponent
   ],
   exports: [MaterialModule],
 

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import {IPerformance} from '../models/music';
 import { MusicService } from './music.service';
-import { FileService } from '../services/file-upload.service';
+import { FileService } from '../services/file-mgmt.service';
 
 @Component({
     template: `<div class="form-group">
@@ -17,7 +17,7 @@ import { FileService } from '../services/file-upload.service';
 <button (click)="back()">Back</button>`,
 providers: [FileService]
 })
-export class FileUploadComponent implements OnInit {
+export class FileMgmtComponent implements OnInit {
 
     fileToUpload: File = null;
     
