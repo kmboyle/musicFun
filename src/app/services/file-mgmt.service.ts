@@ -6,6 +6,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { FirebaseApp } from 'angularfire2';
+import { IPerformance } from "../models/music";
 
 @Injectable()
 
@@ -74,7 +75,7 @@ export class FileService {
             "src": `../assets/addedSongs/${fileToUpload.name}`,
             'date':new Date()
             }
-            data[data["length"]] =newSongObject;
+            data[data["length"]] = newSongObject;
             console.log(data);
         })
 
@@ -82,5 +83,31 @@ export class FileService {
         //   .post(endpoint, formData, { headers: yourHeadersConfig })
         //   .map(() => { return true; })
         //   .catch((e) => this.handleError(e));
+    }
+    downloadFile(fileToDownload: Array<IPerformance>): Observable<string> {
+        console.log(fileToDownload);
+        let urlFile;
+
+        this.storageRef.child(`Songs/${fileToDownload[0].title}`).getDownloadURL().then((url:string) => {
+          
+            // // This can be downloaded directly:
+            // const xhr = new XMLHttpRequest();
+            // xhr.responseType = 'blob';
+            // xhr.onload = (event) => {
+            //   const blob = xhr.response;
+            // };
+            // xhr.open('GET', url);
+            // xhr.send();
+          
+            // // Or inserted into an <img> element:
+            // const img = document.getElementById('myimg');
+            // img.src = url;
+            urlFile = url;
+           
+          }).catch((error:string) => {
+            // Handle any errors
+            console.log(error);
+          });
+          return Observable.of(urlFile);
     }
 }

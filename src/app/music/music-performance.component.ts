@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import {IPerformance} from '../models/music';
 import { MusicService } from './music.service';
+import { FileService } from '../services/file-mgmt.service';
 
 
 @Component({
@@ -20,6 +21,8 @@ import { MusicService } from './music.service';
 
         </tr>
   </table>
+  <button (click)='downloadFile(set)'></button>
+  <img id="myimg">Song URL</img>
   <button (click)='onBack()'>Take me home</button>`,
   styleUrls: []
 })
@@ -29,25 +32,31 @@ export class MusicPerformanceComponent implements OnInit {
   errorMessage: string;
   setDate: string;
   performanceSongs: string;
+  id: number;
 
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
-              private _musicService: MusicService) {
+              private _musicService: MusicService,
+              private fileService: FileService) {
 
 }
 
   ngOnInit() {
     
     //because the param is a string, add a + to convert the param string to a numeric id
-    let id= +this._route.snapshot.paramMap.get('id');
+    this.id= +this._route.snapshot.paramMap.get('id');
     this._musicService.getPerformances()
       .subscribe(performance => {
-        this.performance = performance.filter(pfm => pfm.id === id);
+        this.performance = performance.filter(pfm => pfm.id === this.id);
         console.log(this.performance);
         this.pageTitle = `${this.performance[0].title} ${this.performance[0].date}`;
       }, error=>this.errorMessage=<any>error)
     }
+  getDownload(song: Array<IPerformance>) {
+
+    this.fileService.downloadFile(song);
+  }
 
 // to route with code, import the router and use it's navigate method
   onBack(): void {
