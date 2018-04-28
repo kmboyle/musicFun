@@ -85,11 +85,11 @@ export class FileService {
         //   .map(() => { return true; })
         //   .catch((e) => this.handleError(e));
     }
-    downloadFile(fileToDownload: Array<IPerformance>): Observable<string> {
+    downloadFile(fileToDownload:any): Observable<string> {
         console.log(fileToDownload);
         let urlFile;
 
-        this.storageRef.child(`Songs/${fileToDownload[0].title}`).getDownloadURL().then((url:string) => {
+        this.storageRef.child(`Songs/${fileToDownload}`).getDownloadURL().then((url:string) => {
           
             // // This can be downloaded directly:
             // const xhr = new XMLHttpRequest();
@@ -104,6 +104,7 @@ export class FileService {
             // const img = document.getElementById('myimg');
             // img.src = url;
             urlFile = url;
+            console.log(urlFile)
            
           }).catch((error:string) => {
             // Handle any errors

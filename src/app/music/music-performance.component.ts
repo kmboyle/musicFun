@@ -22,12 +22,13 @@ import { FileService } from '../services/file-mgmt.service';
         </tr>
   </table>
  
-  <img src={{songURL}} id="myimg">
+  <img *ngIf="linkSrc" src="{{linkSrc}}" id="myimg">
   <button (click)='onBack()'>Take me home</button>`,
   styleUrls: [],
   providers: [FileService]
 })
 export class MusicPerformanceComponent implements OnInit {
+  linkSrc: string;
   pageTitle = '';
   performance: IPerformance[];
   errorMessage: string;
@@ -35,7 +36,7 @@ export class MusicPerformanceComponent implements OnInit {
   performanceSongs: string;
   id: number;
   songURL: string;
-
+ 
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
@@ -55,12 +56,12 @@ export class MusicPerformanceComponent implements OnInit {
         this.pageTitle = `${this.performance[0].title} ${this.performance[0].date}`;
       }, error=>this.errorMessage=<any>error)
     }
-  getDownload(song: Array<IPerformance>) {
-    
-
-    this.fileService.downloadFile(song).subscribe(url=>{
-      this.songURL = url;
-      console.log(this.songURL);
+  getDownload(song: any) {
+    console.log(song.src.split('/')[song.src.split('/').length-1]);
+    const songFileName = song.src.split('/')[song.src.split('/').length-1];
+    this.fileService.downloadFile(songFileName).subscribe(url=> {
+      
+      this.linkSrc = url;
     });
   }
 
