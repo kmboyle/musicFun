@@ -8,14 +8,14 @@
         </h1>
     </div>
     <div class="navbar">
-        <div class="dropdown">
-            <button class="dropbtn">Select Folder 
+        <div ngbDropdown class="d-inline-block dropdown">
+            <button id="dropdownBasic1" ngbDropdownToggle class="dropbtn">Select Folder 
             <i class="fa fa-caret-down"></i>
           </button>
-            <div class="dropdown-content">
-                <a (click)='filterShow("ALL")'>Show All</a>
-                <a (click)='filterShow("12.09.2017")'>Dec. 9, 2017</a>
-                <a (click)='filterShow("12.23.2017")'>Dec. 23, 2017</a>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-content">
+                <button class="dropdown-item" (click)='filterShow("ALL")'>Show All</button>
+                <button class="dropdown-item" (click)='filterShow("12.09.2017")'>Dec. 9, 2017</button>
+                <button class="dropdown-item" (click)='filterShow("12.23.2017")'>Dec. 23, 2017</button>
             </div>
         </div>
         <div class="dropdown">

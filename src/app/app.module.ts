@@ -52,7 +52,6 @@ import { FileMgmtComponent } from './music/file-mgmt.component';
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '**', redirectTo: 'home', pathMatch: 'full'} ]),
     NgbModule.forRoot()
-
   ],
   declarations: [
     AppComponent,

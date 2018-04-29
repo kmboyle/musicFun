@@ -23,7 +23,6 @@
             "../node_modules/bootstrap/dist/css/bootstrap.min.css"
         ],
         "scripts": [
-            "../node_modules/jquery/dist/jquery.min.js",
             "../tether-1.3.3/dist/js/tether.min.js",
             "../node_modules/bootstrap/dist/js/bootstrap.min.js"
         ],

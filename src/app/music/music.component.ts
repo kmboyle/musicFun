@@ -7,7 +7,9 @@ import 'rxjs/add/operator/catch';
 import { MatFormFieldControl  } from "@angular/material/form-field";
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @Component({
   selector: 'app-music',
