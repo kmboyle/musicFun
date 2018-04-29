@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 
@@ -31,6 +33,7 @@ export const firebaseConfig = {
 import { FileMgmtComponent } from './music/file-mgmt.component';
 
 
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -41,12 +44,14 @@ import { FileMgmtComponent } from './music/file-mgmt.component';
     [Ng4LoadingSpinnerModule.forRoot()],
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
+    AngularFirestoreModule,
     AngularFireAuthModule,
     RouterModule.forRoot([ {path: "home", component: MusicComponent},
     {path: "music/:id", component: MusicPerformanceComponent},
     {path: "newSong", component: FileMgmtComponent},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '**', redirectTo: 'home', pathMatch: 'full'} ]),
+    NgbModule.forRoot()
 
   ],
   declarations: [

@@ -12,25 +12,18 @@ import { IPerformance } from "../models/music";
 
 export class FileService {
     storageRef:any;
-    constructor(private http:HttpClient){
-        this.storageRef = firebase.storage().ref();
-        console.log(this.storageRef);
+    constructor(private http:HttpClient, private firebaseApp: FirebaseApp){
+        this.storageRef = firebaseApp.storage().ref();
     }
     test:boolean=true;
 
     postFile(fileToUpload: File): Observable<boolean> {
-        const endpoint = 'api/performances/music.json';
-        const formData: FormData = new FormData();
-        formData.append('fileKey', fileToUpload, fileToUpload.name);
-        console.log(fileToUpload);
         // Create the file metadata
         const metadata = {
         contentType: 'audio/mp3'
         };
 
         const uploadTask = this.storageRef.child(`Songs/${fileToUpload.name}`).put(fileToUpload, metadata);
-        console.log(uploadTask);
-
         // Listen for state changes, errors, and completion of the upload.
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot:any) => {
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -69,16 +62,16 @@ export class FileService {
             });
 
 
-        this.http.get(endpoint).subscribe(data => {
-            const newSongObject = {
-            "id": +`${data["length"] + 1}`,
-            "title": `${fileToUpload.name.split('.')[0]}`,
-            "src": `../assets/addedSongs/${fileToUpload.name}`,
-            'date':new Date()
-            }
-            data[data["length"]] = newSongObject;
-            console.log(data);
-        })
+        // this.http.get(endpoint).subscribe(data => {
+        //     const newSongObject = {
+        //     "id": +`${data["length"] + 1}`,
+        //     "title": `${fileToUpload.name.split('.')[0]}`,
+        //     "src": `../assets/addedSongs/${fileToUpload.name}`,
+        //     'date':new Date()
+        //     }
+        //     data[data["length"]] = newSongObject;
+        //     console.log(data);
+        // })
 
         return Observable.of(this.test);
         //   .post(endpoint, formData, { headers: yourHeadersConfig })

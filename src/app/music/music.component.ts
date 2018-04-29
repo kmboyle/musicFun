@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import { MatFormFieldControl  } from "@angular/material/form-field";
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-music',
@@ -26,21 +27,28 @@ export class MusicComponent implements OnInit {
     constructor(private _route: Router,
                 private _musicService: MusicService,
                 private spinnerService: Ng4LoadingSpinnerService,
-                private db: AngularFirestore) {
+                private db: AngularFirestore,
+                private modalService: NgbModal) {
+                  db.firestore.settings({timestampsInSnapshots:true});
                   this.items = db.collection('items').valueChanges();
+                  console.log(this.items);
                 }
   ngOnInit(): void {
     this._musicService.getPerformances()
     .subscribe(
       performances => {
         this.filteredSongs = performances;
-        console.log(this.filteredSongs);
         this.filteredSongs.forEach((performance)=>{
         this.keys = Object.keys(performance);
         });
       },
       error => this.errorMessage = <any>error);
   }
+
+  open(content:any) {
+    this.modalService.open(content);
+  }
+  
   
     myTimer() {
       if (this.filteredSongs['length'] === 0) {
@@ -72,7 +80,6 @@ export class MusicComponent implements OnInit {
     }
     routeToSongPage(event:any) {  
       this.songName = this.filteredSongs.filter(song=>song.title === event.target.innerHTML)
-      console.log(this.songName);
       this._route.navigate(['music/', this.songName[0].id]);
 
     }
