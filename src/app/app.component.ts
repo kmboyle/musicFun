@@ -5,7 +5,7 @@ import {IPerformance} from './models/music';
 import { MatFormFieldControl  } from '@angular/material/form-field';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
-import { AngularFirestore } from 'angularfire2/firestore';
+
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
@@ -15,7 +15,7 @@ import * as firebase from 'firebase/app';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [MusicService, AngularFirestore]
+  providers: [MusicService]
 })
 export class AppComponent {
   title = 'app';

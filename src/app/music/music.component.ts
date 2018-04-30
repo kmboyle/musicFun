@@ -6,7 +6,6 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import { MatFormFieldControl  } from "@angular/material/form-field";
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { AngularFirestore } from 'angularfire2/firestore';
 import { NgbModal, NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -29,11 +28,10 @@ export class MusicComponent implements OnInit {
     constructor(private _route: Router,
                 private _musicService: MusicService,
                 private spinnerService: Ng4LoadingSpinnerService,
-                private db: AngularFirestore,
                 private modalService: NgbModal) {
-                  db.firestore.settings({timestampsInSnapshots:true});
-                  this.items = db.collection('items').valueChanges();
-                  console.log(this.items);
+                  // db.firestore.settings({timestampsInSnapshots:true});
+                  // this.items = db.collection('items').valueChanges();
+                  // console.log(this.items);
                 }
   ngOnInit(): void {
     this._musicService.getPerformances()

@@ -27,38 +27,27 @@
             </div>
         </div>
     </div>
-    <div class="searchBar">
-        <i class="material-icons">search</i>
-        <mat-form-field>
-            <input matInput placeholder="Search" (keyup)="searchFilter($event)">
-        </mat-form-field>
-    </div>
-    <div>
-    </div>
-
-    <div class='col-md-12'>
-        <h2>Song List</h2>
+    <div class="row">
+        <div class='col-md-9'>
+            <h2>Song List</h2>
+        </div>
+        <div class="col-md-3 searchBar">
+            <i class="material-icons">search</i>
+            <mat-form-field>
+                <input matInput placeholder="Search" (keyup)="searchFilter($event)">
+            </mat-form-field>
+        </div>
     </div>
     <div *ngIf='errorMessage' [ngStyle]="{'color':'red'}">{{errorMessage}}</div>
-
-    <table class='table' *ngIf='filteredSongs'>
-        <!-- <thead>
-        <tr>
-            <th *ngFor='let title of keys'>{{title | uppercase}}</th>
-        </tr>
-    </thead> -->
-        <tbody>
-            <tr *ngFor='let performance of filteredSongs let i = index' (click)="routeToSongPage($event)">
-                <td class="songName {{performance.id}}">{{i+1}}</td>
-                <td class="songName {{performance.title}}">{{performance.title}}</td>
-                <!-- <td><audio controls>
-                            <source [src]='performance.src ' type='audio/mp3 '>
-                            </audio>
-            </td> -->
-                <td>{{performance.date}}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class='table' *ngIf='filteredSongs'>
+            <tbody>
+                <tr *ngFor='let performance of filteredSongs let i = index' (click)="routeToSongPage($event)">
+                    <td class="songName {{performance.id}}">{{i+1}}</td>
+                    <td class="songName {{performance.title}}">{{performance.title}}</td>
+                    <td>{{performance.date}}</td>
+                </tr>
+            </tbody>
+        </table>
     <!-- <div *ngFor='let item of items'>{{item}}</div> -->
     <ng-template #content let-c="close" let-d="dismiss">
         <div class="modal-header">
