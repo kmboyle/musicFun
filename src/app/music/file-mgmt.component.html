@@ -1,0 +1,10 @@
+<div class="container">
+        <div class="form-group">
+            <label for="file">Choose File</label>
+            <input type="file"
+                id="file"
+                (change)="handleFileInput($event.target.files)">
+                <button (click)="uploadFileToActivity()">Upload</button>
+        </div>
+        <button (click)="back()">Back</button>
+        </div>

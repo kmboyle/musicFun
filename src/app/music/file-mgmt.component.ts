@@ -7,15 +7,8 @@ import { MusicService } from './music.service';
 import { FileService } from '../services/file-mgmt.service';
 
 @Component({
-    template: `<div class="form-group">
-    <label for="file">Choose File</label>
-    <input type="file"
-           id="file"
-           (change)="handleFileInput($event.target.files)">
-           <button (click)="uploadFileToActivity()">Upload</button>
-</div>
-<button (click)="back()">Back</button>`,
-providers: [FileService]
+    templateUrl:'./file-mgmt.component.html',
+    providers: [FileService]
 })
 export class FileMgmtComponent implements OnInit {
 

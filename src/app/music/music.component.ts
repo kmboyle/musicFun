@@ -7,8 +7,7 @@ import 'rxjs/add/operator/catch';
 import { MatFormFieldControl  } from "@angular/material/form-field";
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgbModal, NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
-
-
+import {MatMenuModule} from '@angular/material/menu';
 
 @Component({
   selector: 'app-music',
