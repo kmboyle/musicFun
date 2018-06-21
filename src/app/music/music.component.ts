@@ -4,7 +4,7 @@ import {IPerformance} from '../models/music';
 import { MusicService } from './music.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
-import { MatFormFieldControl  } from "@angular/material/form-field";
+import { MatFormFieldControl  } from '@angular/material/form-field';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgbModal, NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
 import {MatMenuModule} from '@angular/material/menu';
@@ -18,8 +18,8 @@ export class MusicComponent implements OnInit {
     performances: IPerformance[];
     errorMessage: string;
     keys: Array<string>;
-    songName:object;
-    songs:any;
+    songName: object;
+    songs: any;
     private id: any;
     filteredSongs: Array<IPerformance>;
     items: Observable<any[]>;
@@ -37,18 +37,20 @@ export class MusicComponent implements OnInit {
     .subscribe(
       performances => {
         this.filteredSongs = performances;
-        this.filteredSongs.forEach((performance)=>{
+        this.filteredSongs.forEach((performance) => {
         this.keys = Object.keys(performance);
         });
       },
       error => this.errorMessage = <any>error);
   }
+  // resovling ng-template error [Angular] Member function is not callable
+  trigger(callback: any, ...args: any[]) {
+    return callback(...args);
+  }
 
-  open(content:any) {
+  open(content: any) {
     this.modalService.open(content);
   }
-  
-  
     myTimer() {
       if (this.filteredSongs['length'] === 0) {
         this.spinnerService.show();
@@ -66,23 +68,22 @@ export class MusicComponent implements OnInit {
         this.myTimer();
       });
     }
-    filterShow(id:string) {
-     
-      this._musicService.getPerformances().subscribe(songs=>{
+    filterShow(id: string): void {
+      this._musicService.getPerformances().subscribe(songs => {
         if (id === 'ALL') {
           return this.filteredSongs = songs;
         } else {
-          this.songs = songs.filter(song=>song.date === id);
+          this.songs = songs.filter(song => song.date === id);
         this.filteredSongs = this.songs;
         }
       });
     }
-    routeToSongPage(event:any) {  
-      this.songName = this.filteredSongs.filter(song=>song.title === event.target.innerHTML)
+    routeToSongPage(event: any): void {
+      this.songName = this.filteredSongs.filter(song => song.title === event.target.innerHTML);
       this._route.navigate(['music/', this.songName[0].id]);
 
     }
-    addSong(){
+    addSong() {
       this._route.navigate(['newSong']);
     }
 }

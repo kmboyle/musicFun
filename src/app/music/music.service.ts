@@ -11,7 +11,7 @@ import {IPerformance} from '../models/music';
 
 @Injectable()
 export class MusicService {
-    private _url = 'api/performances/music.json';
+    private _url = 'api/songs';
     constructor(private _http: HttpClient) {}
     getPerformances(): Observable<IPerformance[]> {
         return this._http.get<IPerformance[]>(this._url)

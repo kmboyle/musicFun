@@ -31,6 +31,8 @@ export const firebaseConfig = {
   messagingSenderId: '154832084236'
 };
 import { FileMgmtComponent } from './music/file-mgmt.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 
@@ -50,7 +52,8 @@ import { FileMgmtComponent } from './music/file-mgmt.component';
     {path: "newSong", component: FileMgmtComponent},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '**', redirectTo: 'home', pathMatch: 'full'} ]),
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   declarations: [
     AppComponent,

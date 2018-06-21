@@ -4,7 +4,7 @@
 <div class='container'>
     <div class="title">
         <h1>
-            Music Forever
+            Music Forever Reigns
         </h1>
     </div>
     <div class="navbar">
@@ -54,7 +54,7 @@
     <ng-template #content let-c="close" let-d="dismiss">
         <div class="modal-header">
             <h4 class="modal-title">Modal title</h4>
-            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <button type="button" class="close" aria-label="Close" (click)="trigger(c)">
         <span aria-hidden="true">&times;</span>
       </button>
         </div>
@@ -62,9 +62,7 @@
             <p>One fine body&hellip;</p>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+            <button type="button" class="btn btn-outline-dark" (click)="trigger(c)">Close</button>
         </div>
     </ng-template>
-
-    <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
 </div>

@@ -1,21 +1,21 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs/Observable";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { FirebaseApp } from 'angularfire2';
-import { IPerformance } from "../models/music";
+import { IPerformance } from '../models/music';
 
 @Injectable()
 
 export class FileService {
-    storageRef:any;
-    constructor(private http:HttpClient, private firebaseApp: FirebaseApp){
+    storageRef: any;
+    constructor(private http: HttpClient, private firebaseApp: FirebaseApp) {
         this.storageRef = firebaseApp.storage().ref();
     }
-    test:boolean=true;
+    test= true;
 
     postFile(fileToUpload: File): Observable<boolean> {
         // Create the file metadata
@@ -25,7 +25,7 @@ export class FileService {
 
         const uploadTask = this.storageRef.child(`Songs/${fileToUpload.name}`).put(fileToUpload, metadata);
         // Listen for state changes, errors, and completion of the upload.
-        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot:any) => {
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: any) => {
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log('Upload is ' + progress + '% done');
@@ -37,7 +37,7 @@ export class FileService {
                 console.log('Upload is running');
                 break;
             }
-            }, (error:any) => {
+            }, (error: any) => {
 
             // A full list of error codes is available at
             // https://firebase.google.com/docs/storage/web/handle-errors
@@ -78,12 +78,12 @@ export class FileService {
         //   .map(() => { return true; })
         //   .catch((e) => this.handleError(e));
     }
-    downloadFile(fileToDownload:any): Observable<string> {
+    downloadFile(fileToDownload: any): Observable<string> {
         console.log(fileToDownload);
         let urlFile;
 
-        this.storageRef.child(`Songs/${fileToDownload}`).getDownloadURL().then((url:string) => {
-          
+        this.storageRef.child(`Songs/${fileToDownload}`).getDownloadURL().then((url: string) => {
+
             // // This can be downloaded directly:
             // const xhr = new XMLHttpRequest();
             // xhr.responseType = 'blob';
@@ -92,14 +92,14 @@ export class FileService {
             // };
             // xhr.open('GET', url);
             // xhr.send();
-          
+
             // // Or inserted into an <img> element:
             // const img = document.getElementById('myimg');
             // img.src = url;
             urlFile = url;
-            console.log(urlFile)
-           
-          }).catch((error:string) => {
+            console.log(urlFile);
+
+          }).catch((error: string) => {
             // Handle any errors
             console.log(error);
           });
