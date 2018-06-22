@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
-import {IPerformance} from '../models/music';
+import {IPerformance} from '../models/music-interface';
 import { MusicService } from './music.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';

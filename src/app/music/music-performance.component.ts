@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
-import {IPerformance} from '../models/music';
+import {IPerformance} from '../models/music-interface';
 import { MusicService } from './music.service';
 import { FileService } from '../services/file-mgmt.service';
 
@@ -13,7 +13,7 @@ import { FileService } from '../services/file-mgmt.service';
   <table>
   <tr *ngFor='let set of performance'>
 
-            <td>{{set.title}}</td>
+            <td>{{ set.title }}</td>
             <td><audio controls>
                             <source [src]='set.src' type='audio/mp3'>
                             </audio>
@@ -21,7 +21,7 @@ import { FileService } from '../services/file-mgmt.service';
             <button (click)='getDownload(set)'>Download</button>
         </tr>
   </table>
- 
+
   <img *ngIf="linkSrc" src="{{linkSrc}}" id="myimg">
   <button (click)='onBack()'>Take me home</button>`,
   styleUrls: [],
@@ -36,7 +36,6 @@ export class MusicPerformanceComponent implements OnInit {
   performanceSongs: string;
   id: number;
   songURL: string;
- 
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
@@ -46,21 +45,20 @@ export class MusicPerformanceComponent implements OnInit {
 }
 
   ngOnInit() {
-    
-    //because the param is a string, add a + to convert the param string to a numeric id
-    this.id= +this._route.snapshot.paramMap.get('id');
+    // because the param is a string, add a + to convert the param string to a numeric id
+    this.id = +this._route.snapshot.paramMap.get('id');
     this._musicService.getPerformances()
       .subscribe(performance => {
         this.performance = performance.filter(pfm => pfm.id === this.id);
         console.log(this.performance);
         this.pageTitle = `${this.performance[0].title} ${this.performance[0].date}`;
-      }, error=>this.errorMessage=<any>error)
+      }, error => this.errorMessage = <any>error);
     }
   getDownload(song: any) {
-    console.log(song.src.split('/')[song.src.split('/').length-1]);
-    const songFileName = song.src.split('/')[song.src.split('/').length-1];
-    this.fileService.downloadFile(songFileName).subscribe(url=> {
-      
+    console.log(song.src.split('/')[song.src.split('/').length - 1]);
+    const songFileName = song.src.split('/')[song.src.split('/').length - 1];
+    this.fileService.downloadFile(songFileName).subscribe(url => {
+
       this.linkSrc = url;
     });
   }

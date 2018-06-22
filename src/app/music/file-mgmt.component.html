@@ -1,10 +1,20 @@
 <div class="container-fluid">
-        <div class="form-group">
-            <label for="file">Choose File</label>
-            <input type="file"
-                id="file"
-                (change)="handleFileInput($event.target.files)">
-                <button (click)="uploadFileToActivity()">Upload</button>
-        </div>
-        <button (click)="back()">Back</button>
-        </div>
+  <form [formGroup]='songForm'>
+    <div class='form-group'>
+      <label>Title</label>
+      <input type="text" class="form-control" formControlName="title"/>
+      <label>Source</label>
+      <input type="text" class="form-control" formControlName="src"/>
+      <label>Date</label>
+      <input type="text" class="form-control" formControlName="date"/>
+      <div class="form-group">
+          <label for="file">Choose File</label>
+          <input type="file"
+              id="file"
+              (change)="handleFileInput($event.target.files)"/>
+      </div>
+      <button class="btn btn-primary" (click)="back()">Back</button>
+      <button class="btn btn-primary" (click)="uploadFileToActivity()">Upload</button>
+    </div>
+  </form>
+</div>

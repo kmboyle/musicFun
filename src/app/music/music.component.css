@@ -60,11 +60,14 @@ tr:hover{
 /* Add a red background color to navbar links on hover */
 
 .navbar a:hover,
+.navbar .addSongBtn:hover,
 .dropdown-item:hover,
 .dropdown:hover .dropbtn {
     background-color: red;
 }
-
+.navbar .addSongBtn {
+    height: 4rem;
+}
 
 /* Dropdown content (hidden by default) */
 

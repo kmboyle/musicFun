@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -39,6 +40,7 @@ import { environment } from '../environments/environment';
 @NgModule({
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     HttpModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -47,9 +49,9 @@ import { environment } from '../environments/environment';
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    RouterModule.forRoot([ {path: "home", component: MusicComponent},
-    {path: "music/:id", component: MusicPerformanceComponent},
-    {path: "newSong", component: FileMgmtComponent},
+    RouterModule.forRoot([ {path: 'home', component: MusicComponent},
+    {path: 'music/:id', component: MusicPerformanceComponent},
+    {path: 'newSong', component: FileMgmtComponent},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '**', redirectTo: 'home', pathMatch: 'full'} ]),
     NgbModule.forRoot(),
