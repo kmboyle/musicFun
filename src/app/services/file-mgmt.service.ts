@@ -14,20 +14,25 @@ import { RequestOptions } from '@angular/http';
 export class FileService {
     storageRef: any;
     constructor(private http: HttpClient, private firebaseApp: FirebaseApp) {
-        this.storageRef = firebaseApp.storage().ref();
+       // this.storageRef = firebaseApp.storage().ref();
     }
     test = true;
 
-    postFile(fileToUpload: File): Observable<any> {
-        const headers = new HttpHeaders({
-                'contentType': 'audio/mp3'
-            });
+    // postFile(songName: String, fileToUpload: File): Observable<any> {
 
-        return this.http.post('/api/songs/newSong', fileToUpload, {headers}).catch(err => Observable.of({
-            'Error': err
-        }));
+    //     const headers = new HttpHeaders({
+    //             'contentType': 'multipart/form-data'
+    //         });
+    //     const body = {
+    //         name: songName,
+    //         song: fileToUpload
+    //     };
+    //     console.log(body);
+    //     this.http.post('/api/songs', {name: songName, song: fileToUpload}).catch(err => Observable.of({
+    //         'Error': err
+    //     }));
 
-    }
+    // }
     downloadFile(fileToDownload: any): Observable<string> {
         console.log(fileToDownload);
         let urlFile;

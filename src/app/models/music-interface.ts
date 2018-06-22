@@ -1,7 +1,8 @@
 export interface IPerformance {
         title: string;
-        src: string;
-        date: string;
-        id: number;
+        src?: string;
+        date?: string;
+        id?: number;
+        objectID?: number;
 
     }

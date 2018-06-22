@@ -3,7 +3,7 @@ util = require('util'),
 //Install express server
 express = require('express'),
 songRoute = require('./api/songRoutes'); 
-multer = require('multer');
+
 const app = express();
 const path = require('path');
 

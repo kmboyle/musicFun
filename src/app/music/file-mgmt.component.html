@@ -1,20 +1,24 @@
 <div class="container-fluid">
   <form [formGroup]='songForm'>
-    <div class='form-group'>
-      <label>Title</label>
-      <input type="text" class="form-control" formControlName="title"/>
+    <div class='uploadElement'>
+      <img class= 'bandImg' src='../../assets/band.jpeg'/>
+      <!-- 
       <label>Source</label>
       <input type="text" class="form-control" formControlName="src"/>
       <label>Date</label>
-      <input type="text" class="form-control" formControlName="date"/>
-      <div class="form-group">
+      <input type="text" class="form-control" formControlName="date"/> -->
+      <div class="form-group col-md-6">
+          <label>Song Title</label>
+          <input type="text" [ngClass]="{'is-invalid': errorMessage}" class="form-control mb-3" formControlName="title"/>
           <label for="file">Choose File</label>
-          <input type="file"
+          <input [ngClass]="{'is-invalid': errorMessage}" type="file"
               id="file"
               (change)="handleFileInput($event.target.files)"/>
+          <button class="btn btn-primary" (click)="back()">Back</button>
+          <button class="btn btn-primary" (click)="uploadFileToActivity()">Upload</button>
+          <div *ngIf ='errorMessage' class='invalid-feedback help-block'>{{ errorMessage }}</div>
+          <div *ngIf ='success' class='text-success'>{{ success }}</div>
       </div>
-      <button class="btn btn-primary" (click)="back()">Back</button>
-      <button class="btn btn-primary" (click)="uploadFileToActivity()">Upload</button>
     </div>
   </form>
 </div>

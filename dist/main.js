@@ -244,6 +244,17 @@ var MaterialModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/music/file-mgmt.component.css":
+/*!***********************************************!*\
+  !*** ./src/app/music/file-mgmt.component.css ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".bandImg{\r\n    padding-bottom: 2rem;\r\n    padding-top: 2rem;\r\n}\r\n"
+
+/***/ }),
+
 /***/ "./src/app/music/file-mgmt.component.html":
 /*!************************************************!*\
   !*** ./src/app/music/file-mgmt.component.html ***!
@@ -251,7 +262,7 @@ var MaterialModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\r\n  <form [formGroup]='songForm'>\r\n    <div class='form-group'>\r\n      <label>Title</label>\r\n      <input type=\"text\" class=\"form-control\" formControlName=\"title\"/>\r\n      <label>Source</label>\r\n      <input type=\"text\" class=\"form-control\" formControlName=\"src\"/>\r\n      <label>Date</label>\r\n      <input type=\"text\" class=\"form-control\" formControlName=\"date\"/>\r\n      <div class=\"form-group\">\r\n          <label for=\"file\">Choose File</label>\r\n          <input type=\"file\"\r\n              id=\"file\"\r\n              (change)=\"handleFileInput($event.target.files)\">\r\n              <button (click)=\"uploadFileToActivity()\">Upload</button>\r\n      </div>\r\n      <button class=\"btn btn-primary\" (click)=\"back()\">Back</button>\r\n      <button class=\"btn btn-primary\" (click)=\"addSong()\">Submit</button>\r\n    </div>\r\n  </form>\r\n</div>"
+module.exports = "<div class=\"container-fluid\">\r\n  <form [formGroup]='songForm'>\r\n    <div class='uploadElement'>\r\n      <img class= 'bandImg' src='../../assets/band.jpeg'/>\r\n      <!-- \r\n      <label>Source</label>\r\n      <input type=\"text\" class=\"form-control\" formControlName=\"src\"/>\r\n      <label>Date</label>\r\n      <input type=\"text\" class=\"form-control\" formControlName=\"date\"/> -->\r\n      <div class=\"form-group col-md-6\">\r\n          <label>Song Title</label>\r\n          <input type=\"text\" [ngClass]=\"{'is-invalid': errorMessage}\" class=\"form-control mb-3\" formControlName=\"title\"/>\r\n          <label for=\"file\">Choose File</label>\r\n          <input [ngClass]=\"{'is-invalid': errorMessage}\" type=\"file\"\r\n              id=\"file\"\r\n              (change)=\"handleFileInput($event.target.files)\"/>\r\n          <button class=\"btn btn-primary\" (click)=\"back()\">Back</button>\r\n          <button class=\"btn btn-primary\" (click)=\"uploadFileToActivity()\">Upload</button>\r\n          <div *ngIf ='errorMessage' class='invalid-feedback help-block'>{{ errorMessage }}</div>\r\n          <div *ngIf ='success' class='text-success'>{{ success }}</div>\r\n      </div>\r\n    </div>\r\n  </form>\r\n</div>"
 
 /***/ }),
 
@@ -267,8 +278,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileMgmtComponent", function() { return FileMgmtComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var _services_file_mgmt_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/file-mgmt.service */ "./src/app/services/file-mgmt.service.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/esm5/forms.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/esm5/http.js");
+/* harmony import */ var _services_file_mgmt_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/file-mgmt.service */ "./src/app/services/file-mgmt.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/esm5/forms.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -282,36 +294,57 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var FileMgmtComponent = /** @class */ (function () {
-    function FileMgmtComponent(fileUploadService, _router, fb) {
+    function FileMgmtComponent(fileUploadService, _router, fb, http) {
         this.fileUploadService = fileUploadService;
         this._router = _router;
         this.fb = fb;
+        this.http = http;
+        this.errorMessage = '';
+        this.success = '';
         this.fileToUpload = null;
+        this.createForm();
     }
-    FileMgmtComponent.prototype.ngOnInit = function () {
+    FileMgmtComponent.prototype.createForm = function () {
         this.songForm = this.fb.group({
-            title: '',
-            src: '',
-            date: '',
-            id: 0
+            title: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required]
         });
+    };
+    FileMgmtComponent.prototype.ngOnInit = function () {
     };
     FileMgmtComponent.prototype.handleFileInput = function (files) {
         this.fileToUpload = files.item(0);
         console.log(this.fileToUpload);
     };
     FileMgmtComponent.prototype.addSong = function () {
-        console.log(this.songForm);
+        console.log(this.songForm.controls);
         return false;
     };
     FileMgmtComponent.prototype.uploadFileToActivity = function () {
-        this.fileUploadService.postFile(this.fileToUpload).subscribe(function (data) {
-            // do something, if upload success
-            console.log(data);
-        }, function (error) {
-            console.log(error);
+        console.log(this.songForm.controls['title'].value);
+        if (this.songForm.invalid || !this.fileToUpload) {
+            return this.errorMessage = 'Please include a song name and a song file.';
+        }
+        console.log(this.fileToUpload);
+        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'contentType': 'multipart/form-data'
         });
+        this.http.post('/api/songs', { name: this.songForm.controls['title'].value, song: this.fileToUpload }, { headers: headers }).subscribe(function (data) {
+            console.log(data);
+        });
+        // this.fileUploadService.postFile(, this.fileToUpload).subscribe(data => {
+        //   // do something, if upload success
+        //   // this.success = 'Upload Success!';
+        //   if (data.Error) {
+        //       this.errorMessage = 'Sorry, Upload Failed.';
+        //   } else {
+        //     this.success = 'Upload Success!';
+        //   }
+        //   console.log(data);
+        //   }, error => {
+        //     console.log(error);
+        //   });
     };
     FileMgmtComponent.prototype.back = function () {
         this._router.navigate(['/home']);
@@ -319,9 +352,10 @@ var FileMgmtComponent = /** @class */ (function () {
     FileMgmtComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             template: __webpack_require__(/*! ./file-mgmt.component.html */ "./src/app/music/file-mgmt.component.html"),
-            providers: [_services_file_mgmt_service__WEBPACK_IMPORTED_MODULE_2__["FileService"]]
+            styles: [__webpack_require__(/*! ./file-mgmt.component.css */ "./src/app/music/file-mgmt.component.css")],
+            providers: [_services_file_mgmt_service__WEBPACK_IMPORTED_MODULE_3__["FileService"]]
         }),
-        __metadata("design:paramtypes", [_services_file_mgmt_service__WEBPACK_IMPORTED_MODULE_2__["FileService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"]])
+        __metadata("design:paramtypes", [_services_file_mgmt_service__WEBPACK_IMPORTED_MODULE_3__["FileService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], FileMgmtComponent);
     return FileMgmtComponent;
 }());
@@ -586,7 +620,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var MusicService = /** @class */ (function () {
     function MusicService(_http) {
         this._http = _http;
-        this._url = 'api/songs';
+        this._url = '/api/songs';
     }
     MusicService.prototype.getPerformances = function () {
         return this._http.get(this._url)
@@ -647,16 +681,21 @@ var FileService = /** @class */ (function () {
         this.http = http;
         this.firebaseApp = firebaseApp;
         this.test = true;
-        this.storageRef = firebaseApp.storage().ref();
+        // this.storageRef = firebaseApp.storage().ref();
     }
-    FileService.prototype.postFile = function (fileToUpload) {
-        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]({
-            'contentType': 'audio/mp3'
-        });
-        return this.http.post('/api/songs/newSong', fileToUpload, { headers: headers }).catch(function (err) { return rxjs_Observable__WEBPACK_IMPORTED_MODULE_1__["Observable"].of({
-            'Error': err
-        }); });
-    };
+    // postFile(songName: String, fileToUpload: File): Observable<any> {
+    //     const headers = new HttpHeaders({
+    //             'contentType': 'multipart/form-data'
+    //         });
+    //     const body = {
+    //         name: songName,
+    //         song: fileToUpload
+    //     };
+    //     console.log(body);
+    //     this.http.post('/api/songs', {name: songName, song: fileToUpload}).catch(err => Observable.of({
+    //         'Error': err
+    //     }));
+    // }
     FileService.prototype.downloadFile = function (fileToDownload) {
         console.log(fileToDownload);
         var urlFile;
