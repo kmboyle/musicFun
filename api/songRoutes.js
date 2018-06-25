@@ -20,17 +20,14 @@ songRoute.get('/', (req, res) => {
     let dbo; 
     MongoClient.connect(url, (err, client) => {
         console.log("Loading Songs!");
-        ;
         dbo = client.db(dbName);
-       
         const coll = dbo.collection('songs.files');
         coll.find().toArray((err,result) => {
             if (err) throw err;
-            console.log(result)
-            //dbo.close();
+            // console.log(result);
+            res.json(result);
         });
     });
-    res.json(songs);
 });
 
 

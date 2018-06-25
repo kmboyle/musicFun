@@ -13,7 +13,7 @@
             
         </button>
             <mat-menu #select="matMenu" class="dropdown-content">
-                    <a mat-menu-item class="dropdown-item" (click)='filterShow("ALL")'>Show All</a>
+                    <a mat-menu-item class="dropdown-item" (click)='filterShow("ALL")'>My Uploads</a>
                     <a mat-menu-item class="dropdown-item" (click)='filterShow("12.09.2017")'>Dec. 9, 2017</a>
                     <a mat-menu-item class="dropdown-item" (click)='filterShow("12.23.2017")'>Dec. 23, 2017</a>
             </mat-menu>
@@ -43,10 +43,10 @@
     <div *ngIf='errorMessage' [ngStyle]="{'color':'red'}">{{errorMessage}}</div>
         <table class='table' *ngIf='filteredSongs'>
             <tbody>
-                <tr *ngFor='let performance of filteredSongs let i = index' (click)="routeToSongPage($event)">
-                    <td class="songName {{performance.id}}">{{i+1}}</td>
-                    <td class="songName {{performance.title}}">{{performance.title}}</td>
-                    <td>{{performance.date}}</td>
+                <tr *ngFor='let song of filteredSongs let i=index' (click)="routeToSongPage($event)">
+                    <td class="songName {{song._id}}">{{i+1}}</td>
+                    <td class="songName {{song.filename}}">{{song.filename}}</td>
+                    <td>{{song.uploadDate}}</td>
                 </tr>
             </tbody>
         </table>

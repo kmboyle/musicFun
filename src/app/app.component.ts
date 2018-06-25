@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MusicService } from './music/music.service';
 import { MusicComponent } from './music/music.component';
-import {IPerformance} from './models/music-interface';
+import {ISong} from './models/music-interface';
 import { MatFormFieldControl  } from '@angular/material/form-field';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 

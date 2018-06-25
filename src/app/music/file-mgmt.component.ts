@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import {IPerformance} from '../models/music-interface';
+import {ISong} from '../models/music-interface';
 import {Song} from '../models/data-model';
 import { MusicService } from './music.service';
 import { FileService } from '../services/file-mgmt.service';

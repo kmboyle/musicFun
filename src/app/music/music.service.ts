@@ -7,14 +7,14 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
-import {IPerformance} from '../models/music-interface';
+import {ISong} from '../models/music-interface';
 
 @Injectable()
 export class MusicService {
     private _url = '/api/songs';
     constructor(private _http: HttpClient) {}
-    getPerformances(): Observable<IPerformance[]> {
-        return this._http.get<IPerformance[]>(this._url)
+    getSongs(): Observable<ISong[]> {
+        return this._http.get<ISong[]>(this._url)
         .do( data => {})
         .catch(this.handleError);
     }

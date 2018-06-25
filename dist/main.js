@@ -321,6 +321,7 @@ var FileMgmtComponent = /** @class */ (function () {
         return false;
     };
     FileMgmtComponent.prototype.uploadFileToActivity = function () {
+        var _this = this;
         if (this.songForm.invalid || !this.fileToUpload) {
             return this.errorMessage = 'Please include a song name and a song file.';
         }
@@ -329,8 +330,8 @@ var FileMgmtComponent = /** @class */ (function () {
         formData.append('name', this.songForm.controls['title'].value);
         console.log(formData);
         this.http.post('/api/songs', formData).subscribe(function (data) {
-            console.log(data);
-        });
+            _this.success = data['message'];
+        }, function (err) { return _this.errorMessage = 'Oops, something went wrong.'; });
         // this.fileUploadService.postFile(, this.fileToUpload).subscribe(data => {
         //   // do something, if upload success
         //   // this.success = 'Upload Success!';
@@ -392,38 +393,36 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var MusicPerformanceComponent = /** @class */ (function () {
     function MusicPerformanceComponent(_route, _router, _musicService, fileService) {
+        var _this = this;
         this._route = _route;
         this._router = _router;
         this._musicService = _musicService;
         this.fileService = fileService;
         this.pageTitle = '';
+        this.id = this._route.snapshot.paramMap.get('id');
+        this._musicService.getSongs()
+            .subscribe(function (songs) {
+            _this.songTrack = songs.filter(function (song) { return song._id === _this.id; });
+            console.log(_this.songTrack);
+            // this.pageTitle = `${this.songTrack[0].filename} ${this.songTrack[0].uploadDate}`;
+        }, function (error) { return _this.errorMessage = error; });
     }
     MusicPerformanceComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        // because the param is a string, add a + to convert the param string to a numeric id
-        this.id = +this._route.snapshot.paramMap.get('id');
-        this._musicService.getPerformances()
-            .subscribe(function (performance) {
-            _this.performance = performance.filter(function (pfm) { return pfm.id === _this.id; });
-            console.log(_this.performance);
-            _this.pageTitle = _this.performance[0].title + " " + _this.performance[0].date;
-        }, function (error) { return _this.errorMessage = error; });
     };
-    MusicPerformanceComponent.prototype.getDownload = function (song) {
-        var _this = this;
-        console.log(song.src.split('/')[song.src.split('/').length - 1]);
-        var songFileName = song.src.split('/')[song.src.split('/').length - 1];
-        this.fileService.downloadFile(songFileName).subscribe(function (url) {
-            _this.linkSrc = url;
-        });
-    };
+    // getDownload(song: any) {
+    //   console.log(song.src.split('/')[song.src.split('/').length - 1]);
+    //   const songFileName = song.src.split('/')[song.src.split('/').length - 1];
+    //   this.fileService.downloadFile(songFileName).subscribe(url => {
+    //     this.linkSrc = url;
+    //   });
+    // }
     // to route with code, import the router and use it's navigate method
     MusicPerformanceComponent.prototype.onBack = function () {
         this._router.navigate(['/home']);
     };
     MusicPerformanceComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            template: "<h1>{{ this.pageTitle }}</h1>\n  <table>\n  <tr *ngFor='let set of performance'>\n\n            <td>{{ set.title }}</td>\n            <td><audio controls>\n                            <source [src]='set.src' type='audio/mp3'>\n                            </audio>\n            </td>\n            <button (click)='getDownload(set)'>Download</button>\n        </tr>\n  </table>\n\n  <img *ngIf=\"linkSrc\" src=\"{{linkSrc}}\" id=\"myimg\">\n  <button (click)='onBack()'>Take me home</button>",
+            template: "<!-- <h1>{{ this.pageTitle }}</h1> -->\n  <table *ngIf=\"this.songTrack\">\n            <td>{{ this.songTrack[0].filename }}</td>\n            <!-- <td><audio controls>\n                             <source [src]='song.src' type='audio/mp3'>\n                             </audio>\n             </td>\n             <button (click)='getDownload(song)'>Download</button> -->\n  </table>\n\n  <img *ngIf=\"linkSrc\" src=\"{{linkSrc}}\" id=\"myimg\">\n  <button (click)='onBack()'>Take me home</button>",
             styleUrls: [],
             providers: [_services_file_mgmt_service__WEBPACK_IMPORTED_MODULE_3__["FileService"]]
         }),
@@ -457,7 +456,7 @@ module.exports = ".songName {\r\n    font-weight: bold;\r\n    font-size: 18px;\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ng4-loading-spinner></ng4-loading-spinner>\r\n\r\n<!--The content below is only a placeholder and can be replaced.-->\r\n<div class='container'>\r\n    <div class=\"title\">\r\n        <h1>\r\n            Music Forever Reigns\r\n        </h1>\r\n    </div>\r\n    <div class=\"navbar\">\r\n        <div class=\"dropdown\">\r\n            <button mat-button [matMenuTriggerFor]=\"select\" [ngStyle]=\"{'color':'white'}\" class=\"btn dropbtn dropdown-toggle\">Select Folder\r\n            \r\n        </button>\r\n            <mat-menu #select=\"matMenu\" class=\"dropdown-content\">\r\n                    <a mat-menu-item class=\"dropdown-item\" (click)='filterShow(\"ALL\")'>Show All</a>\r\n                    <a mat-menu-item class=\"dropdown-item\" (click)='filterShow(\"12.09.2017\")'>Dec. 9, 2017</a>\r\n                    <a mat-menu-item class=\"dropdown-item\" (click)='filterShow(\"12.23.2017\")'>Dec. 23, 2017</a>\r\n            </mat-menu>\r\n            </div>\r\n        <div class=\"dropdown\">\r\n            <button mat-button [ngStyle]=\"{'color':'white'}\" class=\"addSongBtn btn btn-lg\" (click)='addSong()'>Add Song \r\n                <!-- <i class=\"fa fa-caret-down\"></i> -->\r\n              </button>\r\n            <!-- <div class=\"dropdown-content\">\r\n                <mat-menu #add=\"matMenu\" class=\"dropdown-content\">\r\n                        <a  mat-menu-item class=\"dropdown-item\" (click)='addSong()'>Add a Song</a>\r\n                </mat-menu>\r\n            </div> -->\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class='col-md-9'>\r\n            <h2>Song List</h2>\r\n        </div>\r\n        <div class=\"col-md-3 searchBar\">\r\n            <i class=\"material-icons\">search</i>\r\n            <mat-form-field>\r\n                <input matInput placeholder=\"Search\" (keyup)=\"searchFilter($event)\">\r\n            </mat-form-field>\r\n        </div>\r\n    </div>\r\n    <div *ngIf='errorMessage' [ngStyle]=\"{'color':'red'}\">{{errorMessage}}</div>\r\n        <table class='table' *ngIf='filteredSongs'>\r\n            <tbody>\r\n                <tr *ngFor='let performance of filteredSongs let i = index' (click)=\"routeToSongPage($event)\">\r\n                    <td class=\"songName {{performance.id}}\">{{i+1}}</td>\r\n                    <td class=\"songName {{performance.title}}\">{{performance.title}}</td>\r\n                    <td>{{performance.date}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    <!-- <div *ngFor='let item of items'>{{item}}</div> -->\r\n    <ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n        <div class=\"modal-header\">\r\n            <h4 class=\"modal-title\">Modal title</h4>\r\n            <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"trigger(c)\">\r\n        <span aria-hidden=\"true\">&times;</span>\r\n      </button>\r\n        </div>\r\n        <div class=\"modal-body\">\r\n            <p>One fine body&hellip;</p>\r\n        </div>\r\n        <div class=\"modal-footer\">\r\n            <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"trigger(c)\">Close</button>\r\n        </div>\r\n    </ng-template>\r\n</div>"
+module.exports = "<ng4-loading-spinner></ng4-loading-spinner>\r\n\r\n<!--The content below is only a placeholder and can be replaced.-->\r\n<div class='container'>\r\n    <div class=\"title\">\r\n        <h1>\r\n            Music Forever Reigns\r\n        </h1>\r\n    </div>\r\n    <div class=\"navbar\">\r\n        <div class=\"dropdown\">\r\n            <button mat-button [matMenuTriggerFor]=\"select\" [ngStyle]=\"{'color':'white'}\" class=\"btn dropbtn dropdown-toggle\">Select Folder\r\n            \r\n        </button>\r\n            <mat-menu #select=\"matMenu\" class=\"dropdown-content\">\r\n                    <a mat-menu-item class=\"dropdown-item\" (click)='filterShow(\"ALL\")'>My Uploads</a>\r\n                    <a mat-menu-item class=\"dropdown-item\" (click)='filterShow(\"12.09.2017\")'>Dec. 9, 2017</a>\r\n                    <a mat-menu-item class=\"dropdown-item\" (click)='filterShow(\"12.23.2017\")'>Dec. 23, 2017</a>\r\n            </mat-menu>\r\n            </div>\r\n        <div class=\"dropdown\">\r\n            <button mat-button [ngStyle]=\"{'color':'white'}\" class=\"addSongBtn btn btn-lg\" (click)='addSong()'>Add Song \r\n                <!-- <i class=\"fa fa-caret-down\"></i> -->\r\n              </button>\r\n            <!-- <div class=\"dropdown-content\">\r\n                <mat-menu #add=\"matMenu\" class=\"dropdown-content\">\r\n                        <a  mat-menu-item class=\"dropdown-item\" (click)='addSong()'>Add a Song</a>\r\n                </mat-menu>\r\n            </div> -->\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class='col-md-9'>\r\n            <h2>Song List</h2>\r\n        </div>\r\n        <div class=\"col-md-3 searchBar\">\r\n            <i class=\"material-icons\">search</i>\r\n            <mat-form-field>\r\n                <input matInput placeholder=\"Search\" (keyup)=\"searchFilter($event)\">\r\n            </mat-form-field>\r\n        </div>\r\n    </div>\r\n    <div *ngIf='errorMessage' [ngStyle]=\"{'color':'red'}\">{{errorMessage}}</div>\r\n        <table class='table' *ngIf='filteredSongs'>\r\n            <tbody>\r\n                <tr *ngFor='let song of filteredSongs let i=index' (click)=\"routeToSongPage($event)\">\r\n                    <td class=\"songName {{song._id}}\">{{i+1}}</td>\r\n                    <td class=\"songName {{song.filename}}\">{{song.filename}}</td>\r\n                    <td>{{song.uploadDate}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    <!-- <div *ngFor='let item of items'>{{item}}</div> -->\r\n    <ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n        <div class=\"modal-header\">\r\n            <h4 class=\"modal-title\">Modal title</h4>\r\n            <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"trigger(c)\">\r\n        <span aria-hidden=\"true\">&times;</span>\r\n      </button>\r\n        </div>\r\n        <div class=\"modal-body\">\r\n            <p>One fine body&hellip;</p>\r\n        </div>\r\n        <div class=\"modal-footer\">\r\n            <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"trigger(c)\">Close</button>\r\n        </div>\r\n    </ng-template>\r\n</div>"
 
 /***/ }),
 
@@ -505,11 +504,11 @@ var MusicComponent = /** @class */ (function () {
     }
     MusicComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this._musicService.getPerformances()
-            .subscribe(function (performances) {
-            _this.filteredSongs = performances;
-            _this.filteredSongs.forEach(function (performance) {
-                _this.keys = Object.keys(performance);
+        this._musicService.getSongs()
+            .subscribe(function (songs) {
+            _this.filteredSongs = songs;
+            _this.filteredSongs.forEach(function (song) {
+                _this.keys = Object.keys(song);
             });
         }, function (error) { return _this.errorMessage = error; });
     };
@@ -537,27 +536,25 @@ var MusicComponent = /** @class */ (function () {
     MusicComponent.prototype.searchFilter = function (event) {
         var _this = this;
         this.errorMessage = '';
-        this._musicService.getPerformances().subscribe(function (songs) {
-            _this.songs = songs.filter(function (song) { return song.title.toLowerCase().includes(event.target.value.toLowerCase()); });
+        this._musicService.getSongs().subscribe(function (songs) {
+            _this.songs = songs.filter(function (song) { return song.filename.toLowerCase().includes(event.target.value.toLowerCase()); });
             _this.filteredSongs = _this.songs;
             _this.myTimer();
         });
     };
     MusicComponent.prototype.filterShow = function (id) {
-        var _this = this;
-        this._musicService.getPerformances().subscribe(function (songs) {
-            if (id === 'ALL') {
-                return _this.filteredSongs = songs;
-            }
-            else {
-                _this.songs = songs.filter(function (song) { return song.date === id; });
-                _this.filteredSongs = _this.songs;
-            }
+        this._musicService.getSongs().subscribe(function (songs) {
+            // if (id === 'ALL') {
+            //   return this.filteredSongs = songs;
+            // } else {
+            //   this.songs = songs.filter(song => song.date === id);
+            // this.filteredSongs = this.songs;
+            // }
         });
     };
     MusicComponent.prototype.routeToSongPage = function (event) {
-        this.songName = this.filteredSongs.filter(function (song) { return song.title === event.target.innerHTML; });
-        this._route.navigate(['music/', this.songName[0].id]);
+        this.songName = this.filteredSongs.filter(function (song) { return song.filename === event.target.innerHTML; });
+        this._route.navigate(['music/', this.songName[0]._id]);
     };
     MusicComponent.prototype.addSong = function () {
         this._route.navigate(['newSong']);
@@ -620,7 +617,7 @@ var MusicService = /** @class */ (function () {
         this._http = _http;
         this._url = '/api/songs';
     }
-    MusicService.prototype.getPerformances = function () {
+    MusicService.prototype.getSongs = function () {
         return this._http.get(this._url)
             .do(function (data) { })
             .catch(this.handleError);

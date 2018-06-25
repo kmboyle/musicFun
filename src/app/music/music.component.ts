@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
-import {IPerformance} from '../models/music-interface';
+import {ISong} from '../models/music-interface';
 import { MusicService } from './music.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -15,13 +15,13 @@ import {MatMenuModule} from '@angular/material/menu';
   styleUrls: ['./music.component.css']
 })
 export class MusicComponent implements OnInit {
-    performances: IPerformance[];
+    songs: ISong[];
     errorMessage: string;
     keys: Array<string>;
     songName: object;
-    songs: any;
+    // songs: any;
     private id: any;
-    filteredSongs: Array<IPerformance>;
+    filteredSongs: Array<ISong>;
     items: Observable<any[]>;
 
     constructor(private _route: Router,
@@ -33,12 +33,12 @@ export class MusicComponent implements OnInit {
                   // console.log(this.items);
                 }
   ngOnInit(): void {
-    this._musicService.getPerformances()
+    this._musicService.getSongs()
     .subscribe(
-      performances => {
-        this.filteredSongs = performances;
-        this.filteredSongs.forEach((performance) => {
-        this.keys = Object.keys(performance);
+      songs => {
+        this.filteredSongs = songs;
+        this.filteredSongs.forEach((song) => {
+        this.keys = Object.keys(song);
         });
       },
       error => this.errorMessage = <any>error);
@@ -62,25 +62,25 @@ export class MusicComponent implements OnInit {
     }
     searchFilter(event: any) {
       this.errorMessage = '';
-      this._musicService.getPerformances().subscribe(songs => {
-        this.songs = songs.filter(song => song.title.toLowerCase().includes(event.target.value.toLowerCase()));
+      this._musicService.getSongs().subscribe(songs => {
+        this.songs = songs.filter(song => song.filename.toLowerCase().includes(event.target.value.toLowerCase()));
         this.filteredSongs = this.songs;
         this.myTimer();
       });
     }
     filterShow(id: string): void {
-      this._musicService.getPerformances().subscribe(songs => {
-        if (id === 'ALL') {
-          return this.filteredSongs = songs;
-        } else {
-          this.songs = songs.filter(song => song.date === id);
-        this.filteredSongs = this.songs;
-        }
+      this._musicService.getSongs().subscribe(songs => {
+        // if (id === 'ALL') {
+        //   return this.filteredSongs = songs;
+        // } else {
+        //   this.songs = songs.filter(song => song.date === id);
+        // this.filteredSongs = this.songs;
+        // }
       });
     }
     routeToSongPage(event: any): void {
-      this.songName = this.filteredSongs.filter(song => song.title === event.target.innerHTML);
-      this._route.navigate(['music/', this.songName[0].id]);
+      this.songName = this.filteredSongs.filter(song => song.filename === event.target.innerHTML);
+      this._route.navigate(['music/', this.songName[0]._id]);
 
     }
     addSong() {

@@ -6,7 +6,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { FirebaseApp } from 'angularfire2';
-import { IPerformance } from '../models/music-interface';
+import { ISong} from '../models/music-interface';
 import { RequestOptions } from '@angular/http';
 
 @Injectable()

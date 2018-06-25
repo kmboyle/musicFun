@@ -1,8 +1,8 @@
-export interface IPerformance {
-        title: string;
-        src?: string;
-        date?: string;
-        id?: number;
-        objectID?: number;
-
+export interface ISong {
+    filename: string;
+    chunkSize: number;
+    length: number;
+    md5: string;
+    uploadDate: string;
+    _id: string;
     }
