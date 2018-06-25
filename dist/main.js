@@ -262,7 +262,7 @@ module.exports = ".bandImg{\r\n    padding-bottom: 2rem;\r\n    padding-top: 2re
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\r\n  <form [formGroup]='songForm'>\r\n    <div class='uploadElement'>\r\n      <img class= 'bandImg' src='../../assets/band.jpeg'/>\r\n      <!-- \r\n      <label>Source</label>\r\n      <input type=\"text\" class=\"form-control\" formControlName=\"src\"/>\r\n      <label>Date</label>\r\n      <input type=\"text\" class=\"form-control\" formControlName=\"date\"/> -->\r\n      <div class=\"form-group col-md-6\">\r\n          <label>Song Title</label>\r\n          <input type=\"text\" [ngClass]=\"{'is-invalid': errorMessage}\" class=\"form-control mb-3\" formControlName=\"title\"/>\r\n          <label for=\"file\">Choose File</label>\r\n          <input [ngClass]=\"{'is-invalid': errorMessage}\" type=\"file\"\r\n              id=\"file\"\r\n              (change)=\"handleFileInput($event.target.files)\"/>\r\n          <button class=\"btn btn-primary\" (click)=\"back()\">Back</button>\r\n          <button class=\"btn btn-primary\" (click)=\"uploadFileToActivity()\">Upload</button>\r\n          <div *ngIf ='errorMessage' class='invalid-feedback help-block'>{{ errorMessage }}</div>\r\n          <div *ngIf ='success' class='text-success'>{{ success }}</div>\r\n      </div>\r\n    </div>\r\n  </form>\r\n</div>"
+module.exports = "<div class=\"container-fluid\">\r\n  <form [formGroup]='songForm'>\r\n    <div class='uploadElement'>\r\n      <img class= 'bandImg' src='../../assets/band.jpeg'/>\r\n      <!-- \r\n      <label>Source</label>\r\n      <input type=\"text\" class=\"form-control\" formControlName=\"src\"/>\r\n      <label>Date</label>\r\n      <input type=\"text\" class=\"form-control\" formControlName=\"date\"/> -->\r\n      <div class=\"form-group col-md-6\">\r\n          <label>Song Title</label>\r\n          <input type=\"text\" [ngClass]=\"{'is-invalid': errorMessage}\" class=\"form-control mb-3\" formControlName=\"title\"/>\r\n          <label for=\"file\">Choose Song</label>\r\n          <input [ngClass]=\"{'is-invalid': errorMessage}\" type=\"file\" id=\"file\" (change)=\"handleFileInput($event.target.files)\"/>\r\n          <button class=\"btn btn-primary\" (click)=\"back()\">Back</button>\r\n          <button class=\"btn btn-primary\" (click)=\"uploadFileToActivity()\">Upload</button>\r\n          <div *ngIf ='errorMessage' class='invalid-feedback help-block'>{{ errorMessage }}</div>\r\n          <div *ngIf ='success' class='text-success'>{{ success }}</div>\r\n      </div>\r\n    </div>\r\n  </form>\r\n</div>"
 
 /***/ }),
 
@@ -315,22 +315,20 @@ var FileMgmtComponent = /** @class */ (function () {
     };
     FileMgmtComponent.prototype.handleFileInput = function (files) {
         this.fileToUpload = files.item(0);
-        console.log(this.fileToUpload);
     };
     FileMgmtComponent.prototype.addSong = function () {
         console.log(this.songForm.controls);
         return false;
     };
     FileMgmtComponent.prototype.uploadFileToActivity = function () {
-        console.log(this.songForm.controls['title'].value);
         if (this.songForm.invalid || !this.fileToUpload) {
             return this.errorMessage = 'Please include a song name and a song file.';
         }
-        console.log(this.fileToUpload);
-        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
-            'contentType': 'multipart/form-data'
-        });
-        this.http.post('/api/songs', { name: this.songForm.controls['title'].value, song: this.fileToUpload }, { headers: headers }).subscribe(function (data) {
+        var formData = new FormData();
+        formData.append('song', this.fileToUpload);
+        formData.append('name', this.songForm.controls['title'].value);
+        console.log(formData);
+        this.http.post('/api/songs', formData).subscribe(function (data) {
             console.log(data);
         });
         // this.fileUploadService.postFile(, this.fileToUpload).subscribe(data => {

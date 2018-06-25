@@ -17,6 +17,19 @@ MongoClient.connect(url, (err, client) => {
 
 // songList api/songs
 songRoute.get('/', (req, res) => {
+    let dbo; 
+    MongoClient.connect(url, (err, client) => {
+        console.log("Loading Songs!");
+        ;
+        dbo = client.db(dbName);
+       
+        const coll = dbo.collection('songs.files');
+        coll.find().toArray((err,result) => {
+            if (err) throw err;
+            console.log(result)
+            //dbo.close();
+        });
+    });
     res.json(songs);
 });
 
@@ -62,7 +75,6 @@ songRoute.post('/', (req, res) => {
         }
     });
     upload.single('song')(req, res, (err) => {
-        console.log(req.file);
         if(err) {
             return res.status(400).json({message: "Upload Request Validation Failed."});
         } else if (!req.body.name) {

@@ -31,7 +31,6 @@ export class FileMgmtComponent implements OnInit {
     }
     handleFileInput(files: FileList) {
         this.fileToUpload = files.item(0);
-        console.log(this.fileToUpload);
     }
     addSong(): boolean {
         console.log(this.songForm.controls);
@@ -39,17 +38,16 @@ export class FileMgmtComponent implements OnInit {
     }
 
     uploadFileToActivity() {
-        console.log(this.songForm.controls['title'].value);
         if (this.songForm.invalid || !this.fileToUpload) {
             return this.errorMessage = 'Please include a song name and a song file.';
         }
-        console.log(this.fileToUpload);
-        const headers = new HttpHeaders({
-                'contentType': 'multipart/form-data'
-            });
-        this.http.post('/api/songs', {name: this.songForm.controls['title'].value, song: this.fileToUpload}, {headers}).subscribe(data => {
-            console.log(data);
-        });
+        const formData = new FormData();
+        formData.append('song', this.fileToUpload);
+        formData.append('name', this.songForm.controls['title'].value);
+        console.log(formData);
+        this.http.post('/api/songs', formData).subscribe(data => {
+            this.success = data['message'];
+        }, err => this.errorMessage = 'Oops, something went wrong.');
         // this.fileUploadService.postFile(, this.fileToUpload).subscribe(data => {
         //   // do something, if upload success
         //   // this.success = 'Upload Success!';
