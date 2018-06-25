@@ -508,6 +508,9 @@ var MusicComponent = /** @class */ (function () {
             .subscribe(function (songs) {
             _this.filteredSongs = songs;
             _this.filteredSongs.forEach(function (song) {
+                if (_this.filteredSongs['uploadDate']) {
+                    _this.filteredSongs['uploadDate'] = new Date(_this.filteredSongs['uploadDate']).toLocaleDateString();
+                }
                 _this.keys = Object.keys(song);
             });
         }, function (error) { return _this.errorMessage = error; });

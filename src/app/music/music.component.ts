@@ -38,6 +38,10 @@ export class MusicComponent implements OnInit {
       songs => {
         this.filteredSongs = songs;
         this.filteredSongs.forEach((song) => {
+          if (this.filteredSongs['uploadDate']) {
+            // need to make work 
+            this.filteredSongs['uploadDate'] = new Date(this.filteredSongs['uploadDate']).toLocaleDateString();
+          }
         this.keys = Object.keys(song);
         });
       },
