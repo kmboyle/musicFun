@@ -10,17 +10,22 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
+import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
+import { authConfig } from './auth.config';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [MusicService]
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
-  showDate: any;
-  songs: any;
-  public musicComponent: MusicComponent;
+constructor(private oauthService: OAuthService) {
+  this.configureWithNewConfigApi();
+}
+private configureWithNewConfigApi() {
+  this.oauthService.configure(authConfig);
+  this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+  this.oauthService.loadDiscoveryDocumentAndTryLogin();
+}
 
 }

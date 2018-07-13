@@ -1,3 +1,5 @@
+// C:\Program Files\MongoDB\Server\3.6\bin
+// mongod.exe
 // Disabled mongoose connection
 // mongoose.connect(`${url}/${dbName}`);
 // const db = mongoose.connection;
@@ -44,3 +46,15 @@
     // form.on('end', () => {
     //     res.send(201, req.body);
     // });
+
+
+
+
+    // export const firebaseConfig = {
+//   apiKey: 'AIzaSyB6p3dOXyEWZDIwMSUOTEej-6cSaPlE8LI',
+//   authDomain: 'awesomeness-a47d9.firebaseapp.com',
+//   databaseURL: 'https://awesomeness-a47d9.firebaseio.com',
+//   projectId: 'awesomeness-a47d9',
+//   storageBucket: 'awesomeness-a47d9.appspot.com',
+//   messagingSenderId: '154832084236'
+// };

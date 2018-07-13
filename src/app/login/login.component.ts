@@ -1,3 +1,4 @@
+import { OAuthService } from 'angular-oauth2-oidc';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private oauthService: OAuthService) { }
 
   ngOnInit() {
   }
+  public login() {
+    this.oauthService.initImplicitFlow();
+}
+
+public logoff() {
+    this.oauthService.logOut();
+}
+
+public get name() {
+    const claims: any = this.oauthService.getIdentityClaims();
+    if (!claims) {
+      return null;
+    }
+    return claims.given_name;
+}
 
 }

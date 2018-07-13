@@ -1,9 +1,12 @@
+import { LoginComponent } from './login/login.component';
+import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ReactiveFormsModule } from '@angular/forms';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -23,14 +26,7 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import * as firebase from 'firebase/app';
 
 
-export const firebaseConfig = {
-  apiKey: 'AIzaSyB6p3dOXyEWZDIwMSUOTEej-6cSaPlE8LI',
-  authDomain: 'awesomeness-a47d9.firebaseapp.com',
-  databaseURL: 'https://awesomeness-a47d9.firebaseio.com',
-  projectId: 'awesomeness-a47d9',
-  storageBucket: 'awesomeness-a47d9.appspot.com',
-  messagingSenderId: '154832084236'
-};
+
 import { FileMgmtComponent } from './music/file-mgmt.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -42,18 +38,15 @@ import { environment } from '../environments/environment';
     BrowserModule,
     ReactiveFormsModule,
     HttpModule,
+    AppRoutingModule,
+    OAuthModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
     [Ng4LoadingSpinnerModule.forRoot()],
-    AngularFireModule.initializeApp(firebaseConfig),
+    // AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    RouterModule.forRoot([ {path: 'home', component: MusicComponent},
-    {path: 'music/:id', component: MusicPerformanceComponent},
-    {path: 'newSong', component: FileMgmtComponent},
-    {path: '', redirectTo: 'home', pathMatch: 'full'},
-    {path: '**', redirectTo: 'home', pathMatch: 'full'} ]),
     NgbModule.forRoot(),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
@@ -62,7 +55,8 @@ import { environment } from '../environments/environment';
     InitCapsPipe,
     MusicComponent,
     MusicPerformanceComponent,
-    FileMgmtComponent
+    FileMgmtComponent,
+    LoginComponent
   ],
   exports: [MaterialModule],
 

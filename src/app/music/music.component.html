@@ -44,7 +44,7 @@
         <table class='table' *ngIf='filteredSongs'>
             <tbody>
                 <tr *ngFor='let song of filteredSongs let i=index' (click)="routeToSongPage($event)">
-                    <td class="songName {{song._id}}">{{i+1}}</td>
+                    <td class="song ID {{song._id}}">{{i+1}}</td>
                     <td class="songName {{song.filename}}">{{song.filename}}</td>
                     <td>{{song.uploadDate}}</td>
                 </tr>

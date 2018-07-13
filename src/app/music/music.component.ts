@@ -12,7 +12,8 @@ import {MatMenuModule} from '@angular/material/menu';
 @Component({
   selector: 'app-music',
   templateUrl: './music.component.html',
-  styleUrls: ['./music.component.css']
+  styleUrls: ['./music.component.css'],
+  providers: [ MusicService]
 })
 export class MusicComponent implements OnInit {
     songs: ISong[];
@@ -39,7 +40,7 @@ export class MusicComponent implements OnInit {
         this.filteredSongs = songs;
         this.filteredSongs.forEach((song) => {
           if (this.filteredSongs['uploadDate']) {
-            // need to make work 
+            // need to make work
             this.filteredSongs['uploadDate'] = new Date(this.filteredSongs['uploadDate']).toLocaleDateString();
           }
         this.keys = Object.keys(song);
