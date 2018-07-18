@@ -6,11 +6,11 @@
     "ng": "ng",
     "start": "ng serve",
     "startProd": "node server.js",
-    "build": "ng build",
+    "build": "ng build --aot --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "devBuild": "ng build --aot --prod"
+    "devBuild": "ng build --aot --prod --watch"
   },
   "engines": {
     "node": "6.11.1",
