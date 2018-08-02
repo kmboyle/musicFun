@@ -14,8 +14,8 @@
     "postInstall": "ng build --output-path dist"
   },
   "engines": {
-    "node": "6.11.1",
-    "npm": "3.10.10"
+    "node": "8.9.3",
+    "npm": "5.5.1"
   },
   "private": true,
   "dependencies": {
