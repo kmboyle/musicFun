@@ -14,7 +14,6 @@ http = require('http'),
    dbName = 'SongDB';
 //    songs = require('../api/performances/music.json');
    const port = process.env.PORT || 8080;
-   let server = require(http).Server(app);
 
 const app = express();
 const path = require('path');
@@ -43,7 +42,7 @@ MongoClient.connect(url, (err, client) => {
 //     console.log('oidc-provider listening on port 3000, check http://localhost:3000/.well-known/openid-configuration');
 // });
 // Start the app by listening on the default local or Heroku port
-server.listen(port, () => {
+app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
 
