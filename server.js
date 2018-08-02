@@ -3,7 +3,7 @@ http = require('http'),
     //Install express server
     express = require('express'),
    // songRoute = require('./api/songRoutes');
-   Provider = require('oidc-provider');
+   // Provider = require('oidc-provider');
    songRoute = require('express').Router();
    ObjectID = require('mongodb').ObjectID;
    const {Readable} = require('stream');
@@ -20,7 +20,7 @@ const app = express();
 const path = require('path');
 app.use(express.static(path.join(__dirname + '/dist')));
 // app.use('/api/songs', songRoute);
-const oidc = new Provider('http://localhost:3000');
+// const oidc = new Provider('http://localhost:3000');
 
 
 let db;
@@ -44,7 +44,7 @@ MongoClient.connect(url, (err, client) => {
 // });
 // Start the app by listening on the default local or Heroku port
 server.listen(port, () => {
-    console.log(`Server started on port ${process.env.PORT || 8080}`);
+    console.log(`Server started on port ${port}`);
 });
 
 // songList api/songs
