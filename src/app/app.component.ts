@@ -20,7 +20,7 @@ import { authConfig } from './auth.config';
 })
 export class AppComponent {
 constructor(private oauthService: OAuthService) {
-  this.configureWithNewConfigApi();
+  // this.configureWithNewConfigApi();
 }
 private configureWithNewConfigApi() {
   this.oauthService.configure(authConfig);

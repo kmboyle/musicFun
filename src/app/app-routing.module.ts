@@ -5,7 +5,7 @@ import { NgModule } from '../../node_modules/@angular/core';
 
 
 const routes: Routes = [
-    {path: '', component: LoginComponent},
+    {path: '', component: MusicComponent},
     {path: 'home', component: MusicComponent},
 
 ];
