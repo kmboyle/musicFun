@@ -9,22 +9,20 @@ const app = express();
 const path = require('path');
 app.use(express.static(path.join(__dirname + '/dist')));
 app.use('/api/songs', songRoute);
-const oidc = new Provider('http://localhost:3000', {
-    formats: { default: 'opaque' },
-    // async findById(ctx, id) {
-    //     return {
-    //         accountId: id,
-    //         async claims(use, scope) { return { sub: id }; },
-    //     };
-    // }
-});
+const oidc = new Provider('http://localhost:3000');
 
-oidc.initialize({
-    clients: [{ client_id: 'foo', client_secret: 'bar', redirect_uris: ['http://localhost:8080/home'] }],
-}).then(() => {
-    oidc.listen(3000);
-    console.log('oidc-provider listening on port 3000, check http://localhost:3000/.well-known/openid-configuration');
-});
+// oidc.initialize({
+//     clients: [{ 
+//         client_id: 'foo',
+//         client_secret: 'bar',
+//         redirect_uris: ['http://localhost:8080/home'],
+//         response_types: ['id_token'],
+//         grant_types: ['implicit']
+//     }],
+// }).then(() => {
+//     oidc.listen(3000);
+//     console.log('oidc-provider listening on port 3000, check http://localhost:3000/.well-known/openid-configuration');
+// });
 // Start the app by listening on the default local or Heroku port
 app.listen(process.env.PORT || 8080, () => {
     console.log(`Server started on port ${process.env.PORT || 8080}`);

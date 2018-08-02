@@ -4,7 +4,7 @@ const {Readable} = require('stream');
 mongodb = require('mongodb');
 multer = require('multer');
 MongoClient = require('mongodb').MongoClient;
-url = 'mongodb://localhost:27017';
+url = process.env.MONGOLAB_URI || 'mongodb://localhost:27017';
 dbName = 'SongDB';
 songs = require('../api/performances/music.json');
 
