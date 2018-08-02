@@ -12,7 +12,7 @@ http = require('http'),
    MongoClient = require('mongodb').MongoClient;
    url = process.env.MONGODB_URI || 'mongodb://localhost:27017';
    dbName = 'SongDB';
-   songs = require('../api/performances/music.json');
+//    songs = require('../api/performances/music.json');
    const port = process.env.PORT || 8080;
    let server = require(http).Server(app);
 
