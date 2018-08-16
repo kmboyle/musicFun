@@ -26,7 +26,7 @@ let db;
 MongoClient.connect(url, (err, client) => {
     console.log("Connection to the database successful!");
     console.log(client);
-    // db = client.db(dbName);
+    db = client.db(dbName);
     // findDocuments(db,() => client.close());
 });
 
