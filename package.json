@@ -10,8 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "devBuild": "ng build --aot --prod --watch",
-    "postInstall": "ng build --output-path dist"
+    "devBuild": "ng build --aot --prod --watch"
   },
   "engines": {
     "node": "8.9.3",
