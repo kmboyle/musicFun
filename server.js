@@ -45,6 +45,9 @@ MongoClient.connect(url, (err, client) => {
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/build', 'index.html'));
+});
 
 // songList api/songs
 app.get('/api/songs', (req, res) => {
