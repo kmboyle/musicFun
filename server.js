@@ -49,7 +49,7 @@ app.listen(port, () => {
 // songList api/songs
 app.get('/api/songs', (req, res) => {
         console.log("Loading Songs!");
-        console.log(db);
+        console.log(db.collection);
         const coll = db.collection('songs.files');
         coll.find().toArray((err,result) => {
             if (err) throw err;
