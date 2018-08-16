@@ -25,7 +25,8 @@ app.use(express.static(path.join(__dirname + '/dist')));
 let db;
 MongoClient.connect(url, (err, client) => {
     console.log("Connection to the database successful!");
-    db = client.db(dbName);
+    console.log(client);
+    // db = client.db(dbName);
     // findDocuments(db,() => client.close());
 });
 
