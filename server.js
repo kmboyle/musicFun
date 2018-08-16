@@ -25,7 +25,6 @@ app.use(express.static(path.join(__dirname + '/dist')));
 let db;
 MongoClient.connect(url, (err, client) => {
     console.log("Connection to the database successful!");
-    console.log(client);
     db = client.db(dbName);
     // findDocuments(db,() => client.close());
 });
@@ -49,17 +48,15 @@ app.listen(port, () => {
 
 // songList api/songs
 app.get('/api/songs', (req, res) => {
-    let dbo; 
-    MongoClient.connect(url, (err, client) => {
         console.log("Loading Songs!");
-        dbo = client.db(dbName);
-        const coll = dbo.collection('songs.files');
+        console.log(db);
+        const coll = db.collection('songs.files');
         coll.find().toArray((err,result) => {
             if (err) throw err;
             // console.log(result);
             res.json(result);
         });
-    });
+    
 });
 
 
