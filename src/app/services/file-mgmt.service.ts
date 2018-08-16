@@ -13,7 +13,7 @@ import { RequestOptions } from '@angular/http';
 
 export class FileService {
     storageRef: any;
-    constructor(private http: HttpClient, private firebaseApp: FirebaseApp) {
+    constructor(private http: HttpClient) {
        // this.storageRef = firebaseApp.storage().ref();
     }
     test = true;
