@@ -45,9 +45,7 @@ MongoClient.connect(url, (err, client) => {
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/dist', 'index.html'));
-});
+
 
 // songList api/songs
 app.get('/api/songs', (req, res) => {
@@ -156,4 +154,8 @@ app.post('/api/songs', (req, res) => {
             return res.status(201).json({ message: `File of ObjectID: ${id} deleted successfully.` });
         });
     })
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/dist', 'index.html'));
 });
