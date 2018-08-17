@@ -11,7 +11,8 @@ mongodb = require('mongodb');
 multer = require('multer');
 MongoClient = require('mongodb').MongoClient;
 url = process.env.MONGODB_URI || 'mongodb://localhost:27017';
-dbName = 'SongDB';
+// dbName = 'SongDB';
+dnName = 'heroku_tc1nlhsd';
 //    songs = require('../api/performances/music.json');
 const port = process.env.PORT || 8080;
 
