@@ -2,18 +2,18 @@ http = require('http'),
     util = require('util'),
     //Install express server
     express = require('express'),
-   // songRoute = require('./api/songRoutes');
-   // Provider = require('oidc-provider');
-   songRoute = require('express').Router();
-   ObjectID = require('mongodb').ObjectID;
-   const {Readable} = require('stream');
-   mongodb = require('mongodb');
-   multer = require('multer');
-   MongoClient = require('mongodb').MongoClient;
-   url = process.env.MONGODB_URI || 'mongodb://localhost:27017';
-   dbName = 'SongDB';
+    // songRoute = require('./api/songRoutes');
+    // Provider = require('oidc-provider');
+    songRoute = require('express').Router();
+ObjectID = require('mongodb').ObjectID;
+const { Readable } = require('stream');
+mongodb = require('mongodb');
+multer = require('multer');
+MongoClient = require('mongodb').MongoClient;
+url = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+dbName = 'SongDB';
 //    songs = require('../api/performances/music.json');
-   const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
 const app = express();
 const path = require('path');
@@ -46,20 +46,20 @@ app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/build', 'index.html'));
+    res.sendFile(path.join(__dirname, '/dist', 'index.html'));
 });
 
 // songList api/songs
 app.get('/api/songs', (req, res) => {
-        console.log("Loading Songs!");
-        console.log(db.collection);
-        const coll = db.collection('songs.files');
-        coll.find().toArray((err,result) => {
-            if (err) throw err;
-            // console.log(result);
-            res.json(result);
-        });
-    
+    console.log("Loading Songs!");
+    console.log(db.collection);
+    const coll = db.collection('songs.files');
+    coll.find().toArray((err, result) => {
+        if (err) throw err;
+        // console.log(result);
+        res.json(result);
+    });
+
 });
 
 
@@ -68,13 +68,13 @@ app.get('/api/songs/:trackID', (req, res) => {
     let trackID;
     try {
         trackID = new ObjectID(req.params.trackID);
-    } catch(err) {
-        return res.status(400).json({ message: "Invalid trackID in URL parameter.  Must be a single String of 12 bytes or a string of 24 hex characters" }); 
+    } catch (err) {
+        return res.status(400).json({ message: "Invalid trackID in URL parameter.  Must be a single String of 12 bytes or a string of 24 hex characters" });
     }
     res.set('content-type', 'audio/mp3');
     res.set('accept-ranges', 'bytes');
 
-    let bucket = new mongodb.GridFSBucket(db,{
+    let bucket = new mongodb.GridFSBucket(db, {
         bucketName: 'songs'
     });
 
@@ -91,8 +91,8 @@ app.get('/api/songs/:trackID', (req, res) => {
     });
 });
 // POST to api/songs
-app.post('/api/songs', (req, res) => { 
-    
+app.post('/api/songs', (req, res) => {
+
     const storage = multer.memoryStorage();
     const upload = multer({
         storage: storage,
@@ -104,13 +104,13 @@ app.post('/api/songs', (req, res) => {
         }
     });
     upload.single('song')(req, res, (err) => {
-        if(err) {
-            return res.status(400).json({message: "Upload Request Validation Failed."});
+        if (err) {
+            return res.status(400).json({ message: "Upload Request Validation Failed." });
         } else if (!req.body.name) {
-            return res.status(400).json({message: "No song name in request body."});
+            return res.status(400).json({ message: "No song name in request body." });
         }
         let songName = req.body.name;
-        
+
         // convert buffer to Readable Stream
         const readableSongStream = new Readable();
         readableSongStream.push(req.file.buffer);
@@ -124,36 +124,36 @@ app.post('/api/songs', (req, res) => {
         readableSongStream.pipe(uploadStream);
 
         uploadStream.on('error', () => {
-            return res.status(500).json({message: "Error uploading file"});
+            return res.status(500).json({ message: "Error uploading file" });
         });
         uploadStream.on('finish', () => {
-            songs.push({name: songName, ojbectID: id});
-            return res.status(201).json({message: `File uploaded successfully, stored under Mongo ObjectID: ${id}`});
+            songs.push({ name: songName, ojbectID: id });
+            return res.status(201).json({ message: `File uploaded successfully, stored under Mongo ObjectID: ${id}` });
         })
     });
     //DELETE song /api/songs/:trackID
     app.delete('/api/songs/:trackID', (req, res) => {
         let trackID;
-    try {
-        trackID = new ObjectID(req.params.trackID);
-    } catch(err) {
-        return res.status(400).json({ message: "Invalid trackID in URL parameter.  Must be a single String of 12 bytes or a string of 24 hex characters" }); 
-    }
-    res.set('content-type', 'audio/mp3');
-    res.set('accept-ranges', 'bytes');
+        try {
+            trackID = new ObjectID(req.params.trackID);
+        } catch (err) {
+            return res.status(400).json({ message: "Invalid trackID in URL parameter.  Must be a single String of 12 bytes or a string of 24 hex characters" });
+        }
+        res.set('content-type', 'audio/mp3');
+        res.set('accept-ranges', 'bytes');
 
-    let bucket = new mongodb.GridFSBucket(db,{
-        bucketName: 'songs'
-    });
+        let bucket = new mongodb.GridFSBucket(db, {
+            bucketName: 'songs'
+        });
 
-    let deleteStream = bucket.delete(trackID);
-    deleteStream.on('error', () => {
-        return res.status(500).json({message: "Error deleting file"});
-    });
+        let deleteStream = bucket.delete(trackID);
+        deleteStream.on('error', () => {
+            return res.status(500).json({ message: "Error deleting file" });
+        });
 
-    deleteStream.on('finish', () => {
-        songs = songs.filter(song => song.objectID !== id);
-        return res.status(201).json({message: `File of ObjectID: ${id} deleted successfully.`});
-    });
+        deleteStream.on('finish', () => {
+            songs = songs.filter(song => song.objectID !== id);
+            return res.status(201).json({ message: `File of ObjectID: ${id} deleted successfully.` });
+        });
     })
 });
