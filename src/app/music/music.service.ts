@@ -8,17 +8,33 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import {ISong} from '../models/music-interface';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class MusicService {
     private _url = '/api/songs';
+    
+
     constructor(private _http: HttpClient) {}
+
     getSongs(): Observable<ISong[]> {
         return this._http.get<ISong[]>(this._url)
-        .do( data => {})
         .catch(this.handleError);
     }
-    getPerformance(id: string) {
+    getSong(id: string): Observable<any> {
+        const respType = {
+            responseType: 'arrayBuffer'
+        };
+    
+            return this._http.get(`${this._url}/${id}`, { responseType: 'arraybuffer',
+        observe: 'response'})
+            .pipe(
+                tap(
+                data => console.log(data)
+                ,
+                error => console.error(error)
+            )
+        );
     }
     private handleError(err: HttpErrorResponse) {
         console.log(err.message);

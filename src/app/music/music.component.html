@@ -13,11 +13,11 @@
             
         </button>
             <mat-menu #select="matMenu" class="dropdown-content">
-                    <a mat-menu-item class="dropdown-item" (click)='filterShow("ALL")'>My Uploads</a>
-                    <a mat-menu-item class="dropdown-item" (click)='filterShow("12.09.2017")'>Dec. 9, 2017</a>
-                    <a mat-menu-item class="dropdown-item" (click)='filterShow("12.23.2017")'>Dec. 23, 2017</a>
+                <a mat-menu-item class="dropdown-item" (click)='filterShow("ALL")'>My Uploads</a>
+                <a mat-menu-item class="dropdown-item" (click)='filterShow("12.09.2017")'>Dec. 9, 2017</a>
+                <a mat-menu-item class="dropdown-item" (click)='filterShow("12.23.2017")'>Dec. 23, 2017</a>
             </mat-menu>
-            </div>
+        </div>
         <div class="dropdown">
             <button mat-button [ngStyle]="{'color':'white'}" class="addSongBtn btn btn-lg" (click)='addSong()'>Add Song 
                 <!-- <i class="fa fa-caret-down"></i> -->
@@ -41,15 +41,24 @@
         </div>
     </div>
     <div *ngIf='errorMessage' [ngStyle]="{'color':'red'}">{{errorMessage}}</div>
-        <table class='table' *ngIf='filteredSongs'>
-            <tbody>
-                <tr *ngFor='let song of filteredSongs let i=index' (click)="routeToSongPage($event)">
-                    <td class="song ID {{song._id}}">{{i+1}}</td>
-                    <td class="songName {{song.filename}}">{{song.filename}}</td>
-                    <td>{{song.uploadDate}}</td>
-                </tr>
-            </tbody>
-        </table>
+    <table class='table'>
+        <th>
+
+        </th>
+        <th>
+            Song Title
+        </th>
+        <th>
+            Upload Date
+        </th>
+        <tbody>
+            <tr *ngFor='let song of filteredSongs let i=index' (click)="routeToSongPage($event)">
+                <td class="song ID {{song._id}}">{{i+1}}</td>
+                <td class="songName {{song.filename}}">{{song.filename}}</td>
+                <td>{{song.uploadDate | date: 'longDate'}}</td>
+            </tr>
+        </tbody>
+    </table>
     <!-- <div *ngFor='let item of items'>{{item}}</div> -->
     <ng-template #content let-c="close" let-d="dismiss">
         <div class="modal-header">

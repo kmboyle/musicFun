@@ -53,7 +53,6 @@ MongoClient.connect(url, (err, client) => {
     // songList api/songs
     app.get('/api/songs', (req, res) => {
         console.log("Loading Songs!");
-        console.log(db.collection);
         const coll = db.collection('songs.files');
         coll.find().toArray((err, result) => {
             if (err) throw err;
@@ -82,6 +81,7 @@ MongoClient.connect(url, (err, client) => {
         let downloadStream = bucket.openDownloadStream(trackID);
 
         downloadStream.on('data', (chunk) => {
+            console.log(chunk);
             res.write(chunk);
         });
         downloadStream.on('error', () => {
@@ -128,7 +128,7 @@ MongoClient.connect(url, (err, client) => {
                 return res.status(500).json({ message: "Error uploading file" });
             });
             uploadStream.on('finish', () => {
-                songs.push({ name: songName, ojbectID: id });
+                // songs.push({ name: songName, ojbectID: id });
                 return res.status(201).json({ message: `File uploaded successfully, stored under Mongo ObjectID: ${id}` });
             })
         });
