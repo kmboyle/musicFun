@@ -41,19 +41,10 @@ export class MusicPerformanceComponent implements OnInit {
   ngOnInit() {
   
   let songData: any;
-  this.arrayBuffer = this.audioContext.createBufferSource();
+  
 
   this.id = this._route.snapshot.paramMap.get('id');
-  this._musicService.getSong(this.id).subscribe(songChunks=>{
-    console.log(songChunks.body);
-    this.audioContext.decodeAudioData(songChunks.body, buffer => {
-      this.arrayBuffer.buffer = buffer;
-    })
-    songChunks.byteLength
-  }, error => this.errorMessage = <any>error,
-  ()=> {
-    console.log('finished');  
-  });
+
     // this.songSubsription = this._musicService.getSong(this.id).subscribe(data => this.song = data);
 
     }
@@ -66,8 +57,15 @@ export class MusicPerformanceComponent implements OnInit {
   //   });
   // }
 playSong() {
-  this.arrayBuffer.connect(this.audioContext.destination);
-  this.arrayBuffer.start();
+    this._musicService.getSong(this.id).subscribe(encodedSongArrayBuffer=>{
+      this.arrayBuffer = this.audioContext.createBufferSource();
+      this.audioContext.decodeAudioData(encodedSongArrayBuffer.body, buffer => {
+        this.arrayBuffer.buffer = buffer;
+        this.arrayBuffer.connect(this.audioContext.destination);
+        this.arrayBuffer.start();
+    })
+  });
+  
     
     //.subscribe(song => {
     //this.audioContext.decodeAudioData()

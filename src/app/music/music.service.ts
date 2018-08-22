@@ -14,30 +14,27 @@ import { tap } from 'rxjs/operators';
 export class MusicService {
     private _url = '/api/songs';
     
-
     constructor(private _http: HttpClient) {}
 
-    getSongs(): Observable<ISong[]> {
-        return this._http.get<ISong[]>(this._url)
-        .catch(this.handleError);
+      getSongs(): Observable<ISong[]> {
+          return this._http.get<ISong[]>(this._url)
+          .catch(this.handleError);
+      }
+      getSong(id: string): Observable<any> {
+        return this._http.get(`${this._url}/${id}`, { responseType: 'arraybuffer'})
+              .pipe(
+                  tap(
+                  data => console.log(data)
+                  ,
+                  error => console.error(error)
+              )
+          );
+      }
+      deleteSong(id: string): Observable<any> {
+        return this._http.delete(`${this._url}/${id}`).catch(this.handleError);
+      }
+      private handleError(err: HttpErrorResponse) {
+          console.log(err.message);
+          return Observable.throw(err.error.message);
+      }
     }
-    getSong(id: string): Observable<any> {
-        const respType = {
-            responseType: 'arrayBuffer'
-        };
-    
-            return this._http.get(`${this._url}/${id}`, { responseType: 'arraybuffer',
-        observe: 'response'})
-            .pipe(
-                tap(
-                data => console.log(data)
-                ,
-                error => console.error(error)
-            )
-        );
-    }
-    private handleError(err: HttpErrorResponse) {
-        console.log(err.message);
-        return Observable.throw(err.error.message);
-    }
-}

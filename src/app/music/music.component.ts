@@ -44,6 +44,7 @@ export class MusicComponent implements OnInit {
             this.filteredSongs['uploadDate'] = new Date(this.filteredSongs['uploadDate']).toLocaleDateString();
           }
         this.keys = Object.keys(song);
+        console.log(this.filteredSongs);
         });
       },
       error => this.errorMessage = <any>error);
@@ -87,6 +88,11 @@ export class MusicComponent implements OnInit {
       this.songName = this.filteredSongs.filter(song => song.filename === event.target.innerHTML);
       this._route.navigate(['music/', this.songName[0]._id]);
 
+    }
+    deleteSong(id){
+      this._musicService.deleteSong(id).subscribe(response => {
+        console.log(response);
+      })
     }
     addSong() {
       this._route.navigate(['newSong']);
