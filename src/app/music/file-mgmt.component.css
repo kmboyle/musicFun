@@ -1,4 +1,9 @@
-.bandImg{
+.bandImg {
     padding-bottom: 2rem;
     padding-top: 2rem;
+}
+
+button {
+    margin-top: 20px;
+    margin-right: 40px;
 }

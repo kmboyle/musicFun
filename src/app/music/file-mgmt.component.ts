@@ -47,6 +47,7 @@ export class FileMgmtComponent implements OnInit {
         console.log(formData);
         this.http.post('/api/songs', formData).subscribe(data => {
             this.success = data['message'];
+            this._router.navigate(['home']);
         }, err => this.errorMessage = 'Oops, something went wrong.');
         // this.fileUploadService.postFile(, this.fileToUpload).subscribe(data => {
         //   // do something, if upload success

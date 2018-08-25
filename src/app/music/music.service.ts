@@ -13,7 +13,6 @@ import { tap } from 'rxjs/operators';
 @Injectable()
 export class MusicService {
     private _url = '/api/songs';
-    
     constructor(private _http: HttpClient) {}
 
       getSongs(): Observable<ISong[]> {
@@ -23,12 +22,8 @@ export class MusicService {
       getSong(id: string): Observable<any> {
         return this._http.get(`${this._url}/${id}`, { responseType: 'arraybuffer'})
               .pipe(
-                  tap(
-                  data => console.log(data)
-                  ,
-                  error => console.error(error)
-              )
-          );
+                  tap( error => console.error(error))
+                );
       }
       deleteSong(id: string): Observable<any> {
         return this._http.delete(`${this._url}/${id}`).catch(this.handleError);

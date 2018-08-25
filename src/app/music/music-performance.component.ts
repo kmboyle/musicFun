@@ -30,50 +30,22 @@ export class MusicPerformanceComponent implements OnInit {
   constructor(private _route: ActivatedRoute,
               private _router: Router,
               private _musicService: MusicService) {
-  // this._musicService.getSongs()
-  //   .subscribe(songs => {
-  //     this.songTrack = songs.filter(song => song._id === this.id);
-  //     console.log(this.songTrack);
-  //     // this.pageTitle = `${this.songTrack[0].filename} ${this.songTrack[0].uploadDate}`;
-  //   }, error => this.errorMessage = <any>error);
+
 }
 
   ngOnInit() {
   
-  let songData: any;
-  
-
   this.id = this._route.snapshot.paramMap.get('id');
-
-    // this.songSubsription = this._musicService.getSong(this.id).subscribe(data => this.song = data);
-
     }
-  // getDownload(song: any) {
-  //   console.log(song.src.split('/')[song.src.split('/').length - 1]);
-  //   const songFileName = song.src.split('/')[song.src.split('/').length - 1];
-  //   this.fileService.downloadFile(songFileName).subscribe(url => {
-
-  //     this.linkSrc = url;
-  //   });
-  // }
 playSong() {
-    this._musicService.getSong(this.id).subscribe(encodedSongArrayBuffer=>{
+    this._musicService.getSong(this.id).subscribe((encodedSongArrayBuffer: ArrayBuffer)=>{
       this.arrayBuffer = this.audioContext.createBufferSource();
-      this.audioContext.decodeAudioData(encodedSongArrayBuffer.body, buffer => {
+      this.audioContext.decodeAudioData(encodedSongArrayBuffer, buffer => {
         this.arrayBuffer.buffer = buffer;
         this.arrayBuffer.connect(this.audioContext.destination);
         this.arrayBuffer.start();
     })
   });
-  
-    
-    //.subscribe(song => {
-    //this.audioContext.decodeAudioData()
-    // this.songTrack = song[0].filename;
-    // this.uploadDate = song[0].uploadDate;
-  // }, error => this.errorMessage = <any>error,
-  // ()=> console.log('finished') );
-
 }
 stopSong() {
   this.arrayBuffer.stop();

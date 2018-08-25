@@ -10,6 +10,7 @@ const { Readable } = require('stream');
 mongodb = require('mongodb');
 multer = require('multer');
 MongoClient = require('mongodb').MongoClient;
+fs = require('fs');
 url = process.env.MONGODB_URI || 'mongodb://localhost:27017';
 // dbName = 'SongDB';
 dbName = 'heroku_tc1nlhsd';
@@ -52,7 +53,6 @@ MongoClient.connect(url, (err, client) => {
 
     // songList api/songs
     app.get('/api/songs', (req, res) => {
-        console.log("Loading Songs!");
         const coll = db.collection('songs.files');
         coll.find().toArray((err, result) => {
             if (err) throw err;
@@ -81,7 +81,6 @@ MongoClient.connect(url, (err, client) => {
         let downloadStream = bucket.openDownloadStream(trackID);
 
         downloadStream.on('data', (chunk) => {
-            console.log(chunk);
             res.write(chunk);
         });
         downloadStream.on('error', () => {
@@ -128,34 +127,28 @@ MongoClient.connect(url, (err, client) => {
                 return res.status(500).json({ message: "Error uploading file" });
             });
             uploadStream.on('finish', () => {
-                // songs.push({ name: songName, ojbectID: id });
                 return res.status(201).json({ message: `File uploaded successfully, stored under Mongo ObjectID: ${id}` });
             })
         });
-        //DELETE song /api/songs/:trackID
-        app.delete('/api/songs/:trackID', (req, res) => {
-            let trackID;
-            try {
-                trackID = new ObjectID(req.params.trackID);
-            } catch (err) {
-                return res.status(400).json({ message: "Invalid trackID in URL parameter.  Must be a single String of 12 bytes or a string of 24 hex characters" });
+    });
+    //DELETE song /api/songs/:trackID
+    app.delete('/api/songs/:trackID', (req, res) => {
+        let trackID;
+        try {
+            trackID = new ObjectID(req.params.trackID);
+        } catch (err) {
+            return res.status(400).json({ message: "Invalid trackID in URL parameter.  Must be a single String of 12 bytes or a string of 24 hex characters" });
+        }
+
+        const bucket = new mongodb.GridFSBucket(db, {
+            bucketName: 'songs'
+        });
+
+        bucket.delete(trackID, err => {
+            if (err) {
+                return res.status(500).json({ message: `Error deleting file: ${err}` });
             }
-            res.set('content-type', 'audio/mp3');
-            res.set('accept-ranges', 'bytes');
-
-            let bucket = new mongodb.GridFSBucket(db, {
-                bucketName: 'songs'
-            });
-
-            let deleteStream = bucket.delete(trackID);
-            deleteStream.on('error', () => {
-                return res.status(500).json({ message: "Error deleting file" });
-            });
-
-            deleteStream.on('finish', () => {
-                songs = songs.filter(song => song.objectID !== id);
-                return res.status(201).json({ message: `File of ObjectID: ${id} deleted successfully.` });
-            });
-        })
+            return res.status(200).json({ message: `File of ObjectID: ${trackID} deleted successfully.` });
+        });
     });
 });

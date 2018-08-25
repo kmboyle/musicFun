@@ -89,10 +89,24 @@ export class MusicComponent implements OnInit {
       this._route.navigate(['music/', this.songName[0]._id]);
 
     }
-    deleteSong(id){
+    deleteSong(id: string) {
       this._musicService.deleteSong(id).subscribe(response => {
-        console.log(response);
-      })
+        console.log(response); // i.e "File of ObjectID: 8s898fe deleted successfully"
+        this._musicService.getSongs()
+        .subscribe(
+          songs => {
+            this.filteredSongs = songs;
+            this.filteredSongs.forEach((song) => {
+              if (this.filteredSongs['uploadDate']) {
+                // need to make work
+                this.filteredSongs['uploadDate'] = new Date(this.filteredSongs['uploadDate']).toLocaleDateString();
+              }
+            this.keys = Object.keys(song);
+            console.log(this.filteredSongs);
+            });
+          },
+          error => this.errorMessage = <any>error);
+      });
     }
     addSong() {
       this._route.navigate(['newSong']);

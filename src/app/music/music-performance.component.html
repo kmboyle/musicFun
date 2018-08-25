@@ -1,17 +1,23 @@
 <!-- <h1>{{ this.pageTitle }}</h1> -->
-<table>
-    <td>
-        <h1>Song: {{ this.songTrack }}</h1>
-        <h3>Upload date: {{ this.uploadDate | date: 'longDate' }}</h3>
-    </td>
-    <td>
-        <!-- <audio controls>
-        <source [src]="this.playSong()" type='audio/mp3'>
-        </audio> -->
-    </td>
-    <button (click)='this.playSong()'>Play</button>
-    <button (click)='this.stopSong()'>Stop</button>
-</table>
+<div class="containter">
+    <div class="row">
+        <div class="col-md 12">
+            <table>
+                <td>
+                    <h1>Song: {{ this.songTrack }}</h1>
+                    <h3>Upload date: {{ this.uploadDate | date: 'longDate' }}</h3>
+                </td>
+                <td>
+                    <!-- <audio controls>
+                    <source [src]="this.playSong()" type='audio/mp3'>
+                    </audio> -->
+                </td>
+                <button (click)='this.playSong()'>Play</button>
+                <button (click)='this.stopSong()'>Stop</button>
+            </table>
 
-<img *ngIf="linkSrc" src="{{linkSrc}}" id="myimg">
-<button class="" (click)='onBack()'>Back</button>
+            <img *ngIf="linkSrc" src="{{linkSrc}}" id="myimg">
+            <button class="" (click)='onBack()'>Back</button>
+        </div>
+    </div>
+</div>
