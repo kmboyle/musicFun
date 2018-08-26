@@ -34,17 +34,16 @@ export class MusicPerformanceComponent implements OnInit {
 }
 
   ngOnInit() {
-  
   this.id = this._route.snapshot.paramMap.get('id');
     }
 playSong() {
-    this._musicService.getSong(this.id).subscribe((encodedSongArrayBuffer: ArrayBuffer)=>{
+    this._musicService.getSong(this.id).subscribe((encodedSongArrayBuffer: ArrayBuffer) => {
       this.arrayBuffer = this.audioContext.createBufferSource();
       this.audioContext.decodeAudioData(encodedSongArrayBuffer, buffer => {
         this.arrayBuffer.buffer = buffer;
         this.arrayBuffer.connect(this.audioContext.destination);
         this.arrayBuffer.start();
-    })
+    });
   });
 }
 stopSong() {
