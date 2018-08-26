@@ -52,6 +52,9 @@ MongoClient.connect(url, (err, client) => {
     app.get('/', (req, res) => {
         res.sendFile(path.join(__dirname, '/dist', 'index.html'));
     });
+    app.get('/home', (req, res) => {
+        res.sendFile(path.join(__dirname, '/dist', 'index.html'));
+    });
 
     // songList api/songs
     app.get('/api/songs', (req, res) => {
