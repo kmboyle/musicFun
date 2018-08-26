@@ -15,7 +15,7 @@ url = process.env.MONGODB_URI || 'mongodb://localhost:27017';
 url = 'mongodb://GeneralPublic:JAjobetIdsEcte6@ds235785.mlab.com:35785/heroku_tc1nlhsd';
 // dbName = 'SongDB';
 // dbName = 'GeneralPublic';
-// dbName = 'heroku_tc1nlhsd';
+dbName = 'heroku_tc1nlhsd';
 //    songs = require('../api/performances/music.json');
 const port = process.env.PORT || 8080;
 
