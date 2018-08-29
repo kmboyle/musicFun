@@ -20,10 +20,7 @@ export class MusicService {
           .catch(this.handleError);
       }
       getSong(id: string): Observable<any> {
-        return this._http.get(`${this._url}/${id}`, { responseType: 'arraybuffer'})
-              .pipe(
-                  tap( error => console.error(error))
-                );
+        return this._http.get(`${this._url}/${id}`, { responseType: 'arraybuffer'});
       }
       deleteSong(id: string): Observable<any> {
         return this._http.delete(`${this._url}/${id}`).catch(this.handleError);

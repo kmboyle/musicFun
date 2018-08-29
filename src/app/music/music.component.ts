@@ -85,8 +85,8 @@ export class MusicComponent implements OnInit {
       });
     }
     routeToSongPage(event: any): void {
-      this.songName = this.filteredSongs.filter(song => song.filename === event.target.innerHTML);
-      this._route.navigate(['music/', this.songName[0]._id]);
+      this.songName = this.filteredSongs.filter(song => song.filename === event.target.innerHTML.trim());
+      this._route.navigate(['music', this.songName[0]._id]);
 
     }
     deleteSong(id: string) {

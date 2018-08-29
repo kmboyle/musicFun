@@ -3,18 +3,23 @@
     font-size: 18px;
     cursor: pointer;
 }
-.title{
-    text-align:center;
+
+.title {
+    text-align: center;
 }
-.title:hover{
+
+.title:hover {
+    background-color: black;
+    color: red;
+    text-align: center;
+}
+
+
+/* tr:hover{
     background-color: black;
     color:red;
-    text-align:center;
-}
-tr:hover{
-    background-color: black;
-    color:red;
-}
+} */
+
 
 /* Navbar container */
 
@@ -65,9 +70,11 @@ tr:hover{
 .dropdown:hover .dropbtn {
     background-color: red;
 }
+
 .navbar .addSongBtn {
     height: 4rem;
 }
+
 
 /* Dropdown content (hidden by default) */
 
@@ -106,6 +113,7 @@ tr:hover{
     display: block;
     cursor: pointer;
 }
+
 
 /* .searchBar {
     float: right;
