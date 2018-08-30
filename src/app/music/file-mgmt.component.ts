@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
-import {ISong} from '../models/music-interface';
-import {Song} from '../models/data-model';
-import { MusicService } from './music.service';
-import { FileService } from '../services/file-mgmt.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
     templateUrl: './file-mgmt.component.html',
-    styleUrls: ['./file-mgmt.component.css'],
-    providers: [FileService]
+    styleUrls: ['./file-mgmt.component.css']
 })
 export class FileMgmtComponent implements OnInit {
     songForm: FormGroup;
     errorMessage = '';
     success = '';
     fileToUpload: File = null;
-    constructor(private fileUploadService: FileService, private _router: Router, private fb: FormBuilder, private http: HttpClient) {
+    constructor(private spinner: Ng4LoadingSpinnerService,
+                private _router: Router,
+                private fb: FormBuilder,
+                private http: HttpClient) {
         this.createForm();
     }
     createForm() {
@@ -41,11 +39,13 @@ export class FileMgmtComponent implements OnInit {
         if (this.songForm.invalid || !this.fileToUpload) {
             return this.errorMessage = 'Please include a song name and a song file.';
         }
+        this.spinner.show();
         const formData = new FormData();
         formData.append('song', this.fileToUpload);
         formData.append('name', this.songForm.controls['title'].value);
         console.log(formData);
         this.http.post('/api/songs', formData).subscribe(data => {
+            this.spinner.hide();
             this.success = data['message'];
             this._router.navigate(['home']);
         }, err => this.errorMessage = 'Oops, something went wrong.');
