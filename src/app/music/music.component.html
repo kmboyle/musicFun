@@ -38,6 +38,7 @@
     <th></th>
     <th>Song Title</th>
     <th>Song Controls</th>
+    <th>Player</th>
     <th>Upload Date</th>
     <tbody>
       <tr *ngFor='let song of filteredSongs let i=index'>
@@ -49,6 +50,9 @@
           <button class="btn btn-danger" (click)="stopSong(song.filename)">Stop
           </button>
         </td>
+        <td><video controls name='media'>
+          <source src='{{getSrc(song._id)}}' type='audio/mp3'>
+        </video></td>
         <td>{{song.uploadDate | date: 'longDate'}}</td>
         <td><button class="btn btn-warning" (click)='deleteSong(song._id)'>Delete</button></td>
       </tr>

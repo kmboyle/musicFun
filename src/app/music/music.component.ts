@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class MusicComponent implements OnInit {
     constructor(private _route: Router,
                 private _musicService: MusicService,
                 private spinnerService: Ng4LoadingSpinnerService,
-                private modalService: NgbModal) {
+                private modalService: NgbModal,
+                private snackBar: MatSnackBar) {
                   // db.firestore.settings({timestampsInSnapshots:true});
                   // this.items = db.collection('items').valueChanges();
                   // console.log(this.items);
@@ -87,6 +89,7 @@ export class MusicComponent implements OnInit {
       });
     }
     playSong(songName: string): void {
+      this.snackBar.open(songName);
       this.songName = this.filteredSongs.find(song => song.filename === songName);
       this._musicService.getSong(this.songName._id).subscribe((encodedSongArrayBuffer: ArrayBuffer) => {
         this.arrayBuffer = this.audioContext.createBufferSource();
@@ -100,7 +103,11 @@ export class MusicComponent implements OnInit {
 
     }
     stopSong() {
+      this.snackBar.dismiss();
       this.arrayBuffer.stop();
+    }
+    getSrc(songId: string) {
+      return window.location.origin + '/api/songs/' + songId;
     }
     deleteSong(id: string) {
       this._musicService.deleteSong(id).subscribe(response => {
