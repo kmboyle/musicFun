@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 import {ISong} from '../models/music-interface';
-import { MusicService } from '../services/music.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatSnackBar } from '@angular/material';
+import { MusicService } from '../services/music.service';
 
 
 @Component({
