@@ -2,80 +2,75 @@
 
 <!--The content below is only a placeholder and can be replaced.-->
 <div class='container'>
-    <div class="title">
-        <h1>
-            Music Forever Reigns!
-        </h1>
-    </div>
-    <div class="navbar">
-        <div class="dropdown">
-            <button mat-button [matMenuTriggerFor]="select" [ngStyle]="{'color':'white'}" class="btn dropbtn dropdown-toggle">Select Folder
-            
-        </button>
-            <mat-menu #select="matMenu" class="dropdown-content">
-                <!-- <a mat-menu-item class="dropdown-item" (click)='filterShow("ALL")'>My Uploads</a>
-                <a mat-menu-item class="dropdown-item" (click)='filterShow("12.09.2017")'>Dec. 9, 2017</a>
-                <a mat-menu-item class="dropdown-item" (click)='filterShow("12.23.2017")'>Dec. 23, 2017</a> -->
-            </mat-menu>
-        </div>
-        <div class="dropdown">
-            <button mat-button [ngStyle]="{'color':'white'}" class="addSongBtn btn btn-lg" (click)='addSong()'>Add Song 
-                <!-- <i class="fa fa-caret-down"></i> -->
-              </button>
-            <!-- <div class="dropdown-content">
-                <mat-menu #add="matMenu" class="dropdown-content">
-                        <a  mat-menu-item class="dropdown-item" (click)='addSong()'>Add a Song</a>
-                </mat-menu>
-            </div> -->
-        </div>
-    </div>
-    <div class="row">
-        <div class='col-md-9'>
-            <h2>Song List</h2>
-        </div>
-        <div class="col-md-3 searchBar">
-            <i class="material-icons">search</i>
-            <mat-form-field>
-                <input matInput placeholder="Search" (keyup)="searchFilter($event)">
-            </mat-form-field>
-        </div>
-    </div>
-    <div *ngIf='errorMessage' [ngStyle]="{'color':'red'}">{{errorMessage}}</div>
-    <table class='table'>
-        <th>
-
-        </th>
-        <th>
-            Song Title
-        </th>
-        <th>
-            Upload Date
-        </th>
-        <tbody>
-            <tr *ngFor='let song of filteredSongs let i=index'>
-                <td class="song ID {{song._id}}">{{i+1}}</td>
-                <td class="songName {{song.filename}}">
-                    <button class="btn btn-success" (click)="routeToSongPage($event)">{{song.filename}}
-                    </button>
-                </td>
-                <td>{{song.uploadDate | date: 'longDate'}}</td>
-                <td><button class="btn btn-danger" (click)='deleteSong(song._id)'>Delete</button></td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- <div *ngFor='let item of items'>{{item}}</div> -->
-    <ng-template #content let-c="close" let-d="dismiss">
-        <div class="modal-header">
-            <h4 class="modal-title">Modal title</h4>
-            <button type="button" class="close" aria-label="Close" (click)="trigger(c)">
-        <span aria-hidden="true">&times;</span>
+  <div class="title">
+      <h1>
+          Music Forever Reigns!
+      </h1>
+  </div>
+  <div class="navbar">
+    <div class="dropdown">
+      <button mat-button [matMenuTriggerFor]="select" [ngStyle]="{'color':'white'}" class="btn dropbtn dropdown-toggle">
+        Select Folder
       </button>
-        </div>
-        <div class="modal-body">
-            <p>One fine body&hellip;</p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" (click)="trigger(c)">Close</button>
-        </div>
-    </ng-template>
+      <mat-menu #select="matMenu" class="dropdown-content">
+        <!-- <a mat-menu-item class="dropdown-item" (click)='filterShow("ALL")'>My Uploads</a> -->
+      </mat-menu>
+    </div>
+      <div class="dropdown">
+        <button mat-button [ngStyle]="{'color':'white'}" class="addSongBtn btn btn-lg" (click)='addSong()'>
+          Add Song 
+        </button>
+      </div>
+  </div>
+  <div class="row">
+    <div class='col-md-9'>
+      <h2>Song List</h2>
+    </div>
+    <div class="col-md-3 searchBar">
+      <i class="material-icons">search</i>
+      <mat-form-field>
+        <input matInput placeholder="Search" (keyup)="searchFilter($event)">
+      </mat-form-field>
+    </div>
+  </div>
+  <div *ngIf='errorMessage' [ngStyle]="{'color':'red'}">{{errorMessage}}</div>
+  <table class='table'>
+    <th></th>
+    <th>Song Title</th>
+    <th>Song Controls</th>
+    <th>Player</th>
+    <th>Upload Date</th>
+    <tbody>
+      <tr *ngFor='let song of filteredSongs let i=index'>
+        <td class="song ID {{song._id}}">{{i+1}}</td>
+        <td class="songName {{song.filename}}">{{song.filename}}</td>
+        <td>
+          <button class="btn btn-success" (click)="playSong(song.filename)">Play
+          </button>
+          <button class="btn btn-danger" (click)="stopSong(song.filename)">Stop
+          </button>
+        </td>
+        <td><video controls name='media'>
+          <source src='{{getSrc(song._id)}}' type='audio/mp3'>
+        </video></td>
+        <td>{{song.uploadDate | date: 'longDate'}}</td>
+        <td><button class="btn btn-warning" (click)='deleteSong(song._id)'>Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+    <!-- <div *ngFor='let item of items'>{{item}}</div> -->
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Modal title</h4>
+      <button type="button" class="close" aria-label="Close" (click)="trigger(c)">
+      <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="trigger(c)">Close</button>
+      </div>
+  </ng-template>
 </div>

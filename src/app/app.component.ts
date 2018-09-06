@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MusicService } from './music/music.service';
+import { MusicService } from './services/music.service';
 import { MusicComponent } from './music/music.component';
 import {ISong} from './models/music-interface';
 import { MatFormFieldControl  } from '@angular/material/form-field';

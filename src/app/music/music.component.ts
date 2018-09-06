@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router} from '@angular/router';
 import {ISong} from '../models/music-interface';
-import { MusicService } from './music.service';
+import { MusicService } from '../services/music.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
-import { MatFormFieldControl  } from '@angular/material/form-field';
+
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { NgbModal, NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
-import {MatMenuModule} from '@angular/material/menu';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatSnackBar } from '@angular/material';
+
 
 @Component({
   selector: 'app-music',
@@ -19,16 +20,19 @@ export class MusicComponent implements OnInit {
     songs: ISong[];
     errorMessage: string;
     keys: Array<string>;
-    songName: object;
+    songName: ISong;
     // songs: any;
     private id: any;
     filteredSongs: Array<ISong>;
     items: Observable<any[]>;
+    audioContext = new AudioContext();
+    arrayBuffer: any;
 
     constructor(private _route: Router,
                 private _musicService: MusicService,
                 private spinnerService: Ng4LoadingSpinnerService,
-                private modalService: NgbModal) {
+                private modalService: NgbModal,
+                private snackBar: MatSnackBar) {
                   // db.firestore.settings({timestampsInSnapshots:true});
                   // this.items = db.collection('items').valueChanges();
                   // console.log(this.items);
@@ -84,10 +88,26 @@ export class MusicComponent implements OnInit {
         // }
       });
     }
-    routeToSongPage(event: any): void {
-      this.songName = this.filteredSongs.filter(song => song.filename === event.target.innerHTML.trim());
-      this._route.navigate(['music', this.songName[0]._id]);
+    playSong(songName: string): void {
+      this.snackBar.open(songName);
+      this.songName = this.filteredSongs.find(song => song.filename === songName);
+      this._musicService.getSong(this.songName._id).subscribe((encodedSongArrayBuffer: ArrayBuffer) => {
+        this.arrayBuffer = this.audioContext.createBufferSource();
+        this.audioContext.decodeAudioData(encodedSongArrayBuffer, buffer => {
+          this.arrayBuffer.buffer = buffer;
+          this.arrayBuffer.connect(this.audioContext.destination);
+          this.arrayBuffer.start();
+      });
+    });
+      // this._route.navigate(['music', this.songName._id]);
 
+    }
+    stopSong() {
+      this.snackBar.dismiss();
+      this.arrayBuffer.stop();
+    }
+    getSrc(songId: string) {
+      return window.location.origin + '/api/songs/' + songId;
     }
     deleteSong(id: string) {
       this._musicService.deleteSong(id).subscribe(response => {
