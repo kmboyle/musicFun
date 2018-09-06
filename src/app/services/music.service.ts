@@ -14,7 +14,7 @@ export class MusicService {
     private _url = '/api/songs';
     constructor(private _http: HttpClient) {}
 
-      getSongs(): Observable<ISong[]> {
+      getSongList(): Observable<ISong[]> {
           return this._http.get<ISong[]>(this._url)
           .catch(this.handleError);
       }

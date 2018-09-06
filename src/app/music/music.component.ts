@@ -38,7 +38,7 @@ export class MusicComponent implements OnInit {
                   // console.log(this.items);
                 }
   ngOnInit(): void {
-    this._musicService.getSongs()
+    this._musicService.getSongList()
     .subscribe(
       songs => {
         this.filteredSongs = songs;
@@ -72,14 +72,14 @@ export class MusicComponent implements OnInit {
     }
     searchFilter(event: any) {
       this.errorMessage = '';
-      this._musicService.getSongs().subscribe(songs => {
+      this._musicService.getSongList().subscribe(songs => {
         this.songs = songs.filter(song => song.filename.toLowerCase().includes(event.target.value.toLowerCase()));
         this.filteredSongs = this.songs;
         this.myTimer();
       });
     }
     filterShow(id: string): void {
-      this._musicService.getSongs().subscribe(songs => {
+      this._musicService.getSongList().subscribe(songs => {
         // if (id === 'ALL') {
         //   return this.filteredSongs = songs;
         // } else {
@@ -112,7 +112,7 @@ export class MusicComponent implements OnInit {
     deleteSong(id: string) {
       this._musicService.deleteSong(id).subscribe(response => {
         console.log(response); // i.e "File of ObjectID: 8s898fe deleted successfully"
-        this._musicService.getSongs()
+        this._musicService.getSongList()
         .subscribe(
           songs => {
             this.filteredSongs = songs;
