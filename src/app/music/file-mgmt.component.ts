@@ -28,6 +28,8 @@ export class FileMgmtComponent implements OnInit {
     ngOnInit(): void {
     }
     handleFileInput(files: FileList) {
+        // drop breakpoint here to inspect for use of 'multiple'.
+        console.log(files);
         this.fileToUpload = files.item(0);
     }
     addSong(): boolean {
