@@ -55,7 +55,7 @@ export class MusicComponent implements OnInit {
           this.getSongs();
         }
       } else {
-        console.error('authentication failed');
+        this._route.navigate(['/']);
       }
     }
   }
