@@ -1,13 +1,15 @@
-<h1 *ngIf="!name">
-    Hallo
-</h1>
-<h1 *ngIf="name">
-    Hallo, {{name}}
-</h1>
+<div class='container'>
+  <div class="title">
+      <h1>
+          Music Forever Reigns!
+      </h1>
+  </div>
+  <button class="btn btn-default" (click)="login()">
+    Login
+  </button>
+</div>
 
-<button class="btn btn-default" (click)="login()">
-  Login
-</button>
-<button class="btn btn-default" (click)="logoff()">
+
+<!-- <button class="btn btn-default" (click)="logoff()">
   Logout
-</button>
+</button> -->

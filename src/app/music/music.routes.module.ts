@@ -7,7 +7,7 @@ import { FileMgmtComponent } from './file-mgmt.component';
 const routes: Routes = [
     {path: 'home', component: MusicComponent},
     {path: 'newSong', component: FileMgmtComponent},
-    {path: '**', redirectTo: 'home', pathMatch: 'full'}
+    {path: '**', redirectTo: '/', pathMatch: 'full'}
 ];
 
 @NgModule({

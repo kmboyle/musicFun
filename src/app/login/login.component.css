@@ -1,0 +1,22 @@
+.container {
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title, .btn {
+  text-align: center;
+  flex-grow: 1;
+}
+.btn {
+  width: 10rem;
+}
+.btn:focus{
+  box-shadow: none;
+}
+
+.title:hover, .btn:hover {
+  background-color: black;
+  color: red;
+  text-align: center;
+}

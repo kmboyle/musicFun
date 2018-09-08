@@ -13,11 +13,35 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
   public login() {
-    this.oauthService.initImplicitFlow();
+    // this.oauthService.initImplicitFlow();
+    this.oauthSignIn();
 }
 
 public logoff() {
     this.oauthService.logOut();
+}
+oauthSignIn() {
+  const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
+  const form = document.createElement('form');
+  form.setAttribute('method', 'GET');
+  form.setAttribute('action', oauth2Endpoint);
+  const params = {
+    'client_id': '154832084236-l6qvqp4od9ijgrhsc75i81netn48vuvo.apps.googleusercontent.com',
+    'redirect_uri': window.location.origin + '/home',
+    'response_type': 'token',
+    'scope': 'openid'
+  };
+  for (const p in params) {
+    if (p) {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'hidden');
+      input.setAttribute('name', p);
+      input.setAttribute('value', params[p]);
+      form.appendChild(input);
+    }
+  }
+  document.body.appendChild(form);
+  form.submit();
 }
 
 public get name() {

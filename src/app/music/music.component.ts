@@ -38,6 +38,28 @@ export class MusicComponent implements OnInit {
                   // console.log(this.items);
                 }
   ngOnInit(): void {
+    const fragmentString = location.hash.substring(1);
+    const params = {};
+    const regex = /([^&=]+)=([^&]*)/g;
+    let m: RegExpExecArray;
+    while (m = regex.exec(fragmentString)) {
+      params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+    }
+    if (Object.keys(params).length > 0) {
+      localStorage.setItem('oauth2-params', JSON.stringify(params));
+      this.getSongs();
+    } else {
+      if (localStorage.getItem('oauth2-params')) {
+        const user = JSON.parse(localStorage.getItem('oauth2-params'));
+        if (user.access_token) {
+          this.getSongs();
+        }
+      } else {
+        console.error('authentication failed');
+      }
+    }
+  }
+  getSongs() {
     this._musicService.getSongList()
     .subscribe(
       songs => {
