@@ -10,11 +10,11 @@
 }
 .btn {
   width: 10rem;
+  background-color: red;
+  color: black;
 }
 .btn:focus{
   box-shadow: none;
-  background-color: red;
-  color: black;
 }
 
 .title:hover, .btn:hover {
