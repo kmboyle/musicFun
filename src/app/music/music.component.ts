@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router} from '@angular/router';
+import { Router, Params} from '@angular/router';
 import {ISong} from '../models/music-interface';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -70,7 +70,6 @@ export class MusicComponent implements OnInit {
             this.filteredSongs['uploadDate'] = new Date(this.filteredSongs['uploadDate']).toLocaleDateString();
           }
         this.keys = Object.keys(song);
-        console.log(this.filteredSongs);
         });
       },
       error => this.errorMessage = <any>error);
@@ -152,6 +151,9 @@ export class MusicComponent implements OnInit {
     }
     addSong() {
       this._route.navigate(['newSong']);
+    }
+    routeToSong(songID: Params) {
+      this._route.navigate(['newSong'], {queryParams: songID});
     }
 }
 

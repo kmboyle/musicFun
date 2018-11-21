@@ -1,23 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { switchMap } from 'rxjs/operator/switchMap';
 
 @Component({
-    templateUrl: './file-mgmt.component.html',
-    styleUrls: ['./file-mgmt.component.css']
+    templateUrl: './newSong.component.html',
+    styleUrls: ['./newSong.component.css']
 })
-export class FileMgmtComponent implements OnInit {
+export class NewSongComponent implements OnInit {
     songForm: FormGroup;
     errorMessage = '';
     success = '';
+    existingSong = '';
     fileToUpload: File = null;
     constructor(private spinner: Ng4LoadingSpinnerService,
                 private _router: Router,
                 private fb: FormBuilder,
-                private http: HttpClient) {
+                private http: HttpClient,
+                private activatedRoute: ActivatedRoute) {
         this.createForm();
     }
     createForm() {
@@ -26,6 +29,13 @@ export class FileMgmtComponent implements OnInit {
         });
     }
     ngOnInit(): void {
+        if (this.activatedRoute.paramMap) {
+            // this.activatedRoute.paramMap.pipe(
+            //     switchMap((params: ParamMap) => {
+
+            //     }
+            //     )));
+        }
     }
     handleFileInput(files: FileList) {
         // drop breakpoint here to inspect for use of 'multiple'.

@@ -43,7 +43,7 @@
     <tbody>
       <tr *ngFor='let song of filteredSongs let i=index'>
         <td class="song ID {{song._id}}">{{i+1}}</td>
-        <td class="songName {{song.filename}}">{{song.filename}}</td>
+        <td class="songName {{song.filename}}" (click)="routeToSong(song._id)">{{song.filename}}</td>
         <td>
           <button class="btn btn-success" (click)="playSong(song.filename)">Play
           </button>
