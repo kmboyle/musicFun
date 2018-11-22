@@ -7,6 +7,7 @@ import { NewSongComponent } from './newSong.component';
 const routes: Routes = [
     {path: 'home', component: MusicComponent},
     {path: 'newSong', component: NewSongComponent},
+    {path: 'newSong/:songID', component: NewSongComponent},
     {path: '**', redirectTo: '/', pathMatch: 'full'}
 ];
 

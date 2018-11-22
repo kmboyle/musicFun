@@ -1,26 +1,33 @@
+import { MusicService } from './../services/music.service';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { switchMap } from 'rxjs/operator/switchMap';
+import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
+import { ISong } from '../models/music-interface';
 
 @Component({
     templateUrl: './newSong.component.html',
-    styleUrls: ['./newSong.component.css']
+    styleUrls: ['./newSong.component.css'],
+    providers: [MusicService]
 })
 export class NewSongComponent implements OnInit {
     songForm: FormGroup;
     errorMessage = '';
     success = '';
-    existingSong = '';
+    existingSong: ISong;
+    existingSongName = '';
+    songID: string;
     fileToUpload: File = null;
     constructor(private spinner: Ng4LoadingSpinnerService,
                 private _router: Router,
                 private fb: FormBuilder,
                 private http: HttpClient,
-                private activatedRoute: ActivatedRoute) {
+                private activatedRoute: ActivatedRoute,
+                private _musicService: MusicService) {
         this.createForm();
     }
     createForm() {
@@ -28,13 +35,14 @@ export class NewSongComponent implements OnInit {
             title: ['', Validators.required]
         });
     }
-    ngOnInit(): void {
-        if (this.activatedRoute.paramMap) {
-            // this.activatedRoute.paramMap.pipe(
-            //     switchMap((params: ParamMap) => {
-
-            //     }
-            //     )));
+    ngOnInit() {
+        if (this.activatedRoute.snapshot) {
+            this.songID = this.activatedRoute.snapshot.paramMap.get('songID');
+            this._musicService.getSongList().subscribe(songs => {
+                this.existingSong = songs.find(song => song._id === this.songID);
+                this.existingSongName = this.existingSong.filename;
+                this.songForm.controls.title.setValue(this.existingSongName);
+            });
         }
     }
     handleFileInput(files: FileList) {
@@ -45,6 +53,9 @@ export class NewSongComponent implements OnInit {
     addSong(): boolean {
         console.log(this.songForm.controls);
         return false;
+    }
+    saveChanges() {
+
     }
 
     uploadFileToActivity() {

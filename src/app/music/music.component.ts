@@ -153,7 +153,7 @@ export class MusicComponent implements OnInit {
       this._route.navigate(['newSong']);
     }
     routeToSong(songID: Params) {
-      this._route.navigate(['newSong'], {queryParams: songID});
+      this._route.navigate(['newSong', songID]);
     }
 }
 
