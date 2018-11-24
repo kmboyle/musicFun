@@ -2,6 +2,7 @@ http = require('http'),
     util = require('util'),
     //Install express server
     express = require('express'),
+    bodyParser = require('body-parser');
     // songRoute = require('./api/songRoutes');
     // Provider = require('oidc-provider');
     songRoute = require('express').Router();
@@ -20,6 +21,7 @@ const port = process.env.PORT || 8080;
 const app = express();
 const path = require('path');
 app.use(express.static(path.join(__dirname + '/dist')));
+app.use(bodyParser.json());
 // app.use('/api/songs', songRoute);
 // const oidc = new Provider('http://localhost:3000');
 
@@ -95,7 +97,6 @@ MongoClient.connect(url, (err, client) => {
     });
     // POST to api/songs
     app.post('/api/songs', (req, res) => {
-
         const storage = multer.memoryStorage();
         const upload = multer({
             storage: storage,
@@ -134,6 +135,29 @@ MongoClient.connect(url, (err, client) => {
             })
         });
     });
+    app.post('/api/songs/editSong/:trackID', (req, res) => {
+      let trackID;
+      try {
+          trackID = new ObjectID(req.params.trackID);
+      } catch (err) {
+          return res.status(400).json({ message: "Invalid trackID in URL parameter.  Must be a single String of 12 bytes or a string of 24 hex characters" });
+      }
+      if (!req.body.name) {
+        return res.status(400).json({ message: "No song name in request body." });
+    }
+    let songName = req.body.name;
+    let bucket = new mongodb.GridFSBucket(db, {
+        bucketName: 'songs'
+    });
+    let uploadStream = bucket.openUploadStream(songName);
+    let id = uploadStream.id;
+     bucket.rename(trackID, songName, err => {
+      if (err) {
+       return res.status(400).json({ message: "Rename failed"});
+      }
+      return res.status(201).json({ message: `File stored under Mongo ObjectID: ${id} Sucessfully renamed.` });
+    });
+  });
     //DELETE song /api/songs/:trackID
     app.delete('/api/songs/:trackID', (req, res) => {
         let trackID;

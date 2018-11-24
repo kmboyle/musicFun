@@ -24,6 +24,9 @@ export class MusicService {
       deleteSong(id: string): Observable<any> {
         return this._http.delete(`${this._url}/${id}`).catch(this.handleError);
       }
+      editSong(id: string, body: any): Observable<any> {
+        return this._http.post(`${this._url}/editSong/${id}`, body).catch(this.handleError);
+      }
       private handleError(err: HttpErrorResponse) {
           console.log(err.message);
           return Observable.throw(err.error.message);

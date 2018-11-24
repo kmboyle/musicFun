@@ -21,7 +21,7 @@
                             <div class="col-md-12">
                                 <button class="btn btn-primary" (click)="back()">Back</button>
                                 <button *ngIf="!songID" class="btn btn-success" (click)="uploadFileToActivity()">Upload</button>
-                                <button *ngIf="songID" class="btn btn-success" (click)="saveChanges()">Save</button>
+                                <button *ngIf="songID" class="btn btn-success" (click)="saveChanges(songID)">Save</button>
                                 
                             </div>
                         </div>

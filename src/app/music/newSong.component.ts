@@ -36,13 +36,13 @@ export class NewSongComponent implements OnInit {
         });
     }
     ngOnInit() {
-        if (this.activatedRoute.snapshot) {
-            this.songID = this.activatedRoute.snapshot.paramMap.get('songID');
-            this._musicService.getSongList().subscribe(songs => {
-                this.existingSong = songs.find(song => song._id === this.songID);
-                this.existingSongName = this.existingSong.filename;
-                this.songForm.controls.title.setValue(this.existingSongName);
-            });
+      this.songID = this.activatedRoute.snapshot.paramMap.get('songID');
+        if (this.songID) {
+          this._musicService.getSongList().subscribe(songs => {
+              this.existingSong = songs.find(song => song._id === this.songID);
+              this.existingSongName = this.existingSong.filename;
+              this.songForm.controls.title.setValue(this.existingSongName);
+          });
         }
     }
     handleFileInput(files: FileList) {
@@ -54,7 +54,16 @@ export class NewSongComponent implements OnInit {
         console.log(this.songForm.controls);
         return false;
     }
-    saveChanges() {
+    saveChanges(songID: any) {
+      this.spinner.show();
+      const body = {
+        'name': this.songForm.controls['title'].value
+      };
+      this._musicService.editSong(songID, body).subscribe(data => {
+        this.spinner.hide();
+        this.success = data['message'];
+        this._router.navigate(['home']);
+      });
 
     }
 
@@ -66,7 +75,6 @@ export class NewSongComponent implements OnInit {
         const formData = new FormData();
         formData.append('song', this.fileToUpload);
         formData.append('name', this.songForm.controls['title'].value);
-        console.log(formData);
         this.http.post('/api/songs', formData).subscribe(data => {
             this.spinner.hide();
             this.success = data['message'];
