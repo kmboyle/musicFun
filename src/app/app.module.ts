@@ -8,7 +8,6 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import { InitCapsPipe } from './shared/init-caps.pipe';
 import { MaterialModule } from './material.module';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { MusicModule } from './music/music.module';
@@ -34,7 +33,6 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   declarations: [
     AppComponent,
-    InitCapsPipe,
     LoginComponent
   ],
   exports: [MaterialModule],
