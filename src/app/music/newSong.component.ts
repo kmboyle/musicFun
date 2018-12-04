@@ -59,7 +59,7 @@ export class NewSongComponent implements OnInit {
       const body = {
         'name': this.songForm.controls['title'].value
       };
-      this._musicService.editSong(songID, body).subscribe(data => {
+      this._musicService.editSongName(songID, body).subscribe(data => {
         this.spinner.hide();
         this.success = data['message'];
         this._router.navigate(['home']);

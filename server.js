@@ -135,7 +135,7 @@ MongoClient.connect(url, (err, client) => {
             })
         });
     });
-    app.post('/api/songs/editSong/:trackID', (req, res) => {
+    app.post('/api/songs/editSongName/:trackID', (req, res) => {
       let trackID;
       try {
           trackID = new ObjectID(req.params.trackID);
