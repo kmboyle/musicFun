@@ -1,3 +1,4 @@
+import { Spotify } from '../services/spotify.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, Params} from '@angular/router';
 import {ISong} from '../models/music-interface';
@@ -14,7 +15,7 @@ import { MusicService } from '../services/music.service';
   selector: 'app-music',
   templateUrl: './music.component.html',
   styleUrls: ['./music.component.css'],
-  providers: [ MusicService]
+  providers: [ MusicService, Spotify]
 })
 export class MusicComponent implements OnInit {
     songs: ISong[];
@@ -32,7 +33,8 @@ export class MusicComponent implements OnInit {
                 private _musicService: MusicService,
                 private spinnerService: Ng4LoadingSpinnerService,
                 private modalService: NgbModal,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private spotify: Spotify) {
                   // db.firestore.settings({timestampsInSnapshots:true});
                   // this.items = db.collection('items').valueChanges();
                   // console.log(this.items);
@@ -93,10 +95,16 @@ export class MusicComponent implements OnInit {
     }
     searchFilter(event: any) {
       this.errorMessage = '';
-      this._musicService.getSongList().subscribe(songs => {
-        this.songs = songs.filter(song => song.filename.toLowerCase().includes(event.target.value.toLowerCase()));
-        this.filteredSongs = this.songs;
-        this.myTimer();
+      this.searchSpotify(event.target.value.toLowerCase());
+      // this._musicService.getSongList().subscribe(songs => {
+      //   this.songs = songs.filter(song => song.filename.toLowerCase().includes(event.target.value.toLowerCase()));
+      //   !this.songs ? this.searchSpotify(event.target.value.toLowerCase()) : this.filteredSongs = this.songs;
+      //   this.myTimer();
+      // });
+    }
+    searchSpotify(song) {
+      this.spotify.searchTrack(song).subscribe(res => {
+        console.log(res);
       });
     }
     filterShow(id: string): void {

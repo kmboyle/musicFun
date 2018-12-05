@@ -29,12 +29,12 @@
     <div class="col-md-3 searchBar">
       <i class="material-icons">search</i>
       <mat-form-field>
-        <input matInput placeholder="Search" (keyup)="searchFilter($event)">
+        <input matInput placeholder="Search" (keydown.enter)="searchFilter($event)">
       </mat-form-field>
     </div>
   </div>
   <div *ngIf='errorMessage' [ngStyle]="{'color':'red'}">{{errorMessage}}</div>
-  <table class='table'>
+  <table class='table' *ngIf="filteredSongs">
     <th></th>
     <th>Song Title</th>
     <th>Song Controls</th>
@@ -58,6 +58,7 @@
       </tr>
     </tbody>
   </table>
+
     <!-- <div *ngFor='let item of items'>{{item}}</div> -->
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
