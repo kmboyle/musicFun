@@ -29,7 +29,8 @@
     <div class="col-md-3 searchBar">
       <i class="material-icons">search</i>
       <mat-form-field>
-        <input matInput placeholder="Search" (keydown.enter)="searchFilter($event)">
+        <input matInput #newquery [value]="query" 
+        placeholder="Search" (keydown.enter)="searchFilter(newquery.value)">
       </mat-form-field>
     </div>
   </div>
@@ -58,6 +59,20 @@
       </tr>
     </tbody>
   </table>
+  <div class="row" *ngIf="spotifyResults.length">
+    <div class="col-sm-6 col-md-4" *ngFor="let t of spotifyResults">
+      <div class="thumbnail">
+        <div class="content">
+          <img src="{{ t.album.images[0].url }}" class="img-responsive">
+          <h3>
+            <a [routerLink]="['/artists', t.artists[0].id]">
+            {{ t.artists[0].name }}
+          </a>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <!-- <div *ngFor='let item of items'>{{item}}</div> -->
   <ng-template #content let-c="close" let-d="dismiss">

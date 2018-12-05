@@ -28,6 +28,8 @@ export class MusicComponent implements OnInit {
     items: Observable<any[]>;
     audioContext = new AudioContext();
     arrayBuffer: any;
+    query: string;
+    spotifyResults: any;
 
     constructor(private _route: Router,
                 private _musicService: MusicService,
