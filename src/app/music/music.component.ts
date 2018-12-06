@@ -58,7 +58,7 @@ export class MusicComponent implements OnInit {
       } else {
         // google auth
         localStorage.setItem('oauth2-params', JSON.stringify(params));
-        this.spotify.redirectToSpotify();
+        this.spotify.redirectToAuth();
       }
     } else {
       // get google token

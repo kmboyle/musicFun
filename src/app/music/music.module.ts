@@ -6,6 +6,7 @@ import { NewSongComponent } from './newSong.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { MaterialModule } from '../material.module';
+import { TrackComponent } from './track/track.component';
 
 @NgModule({
     imports : [
@@ -17,7 +18,8 @@ import { MaterialModule } from '../material.module';
     ],
     declarations: [
         NewSongComponent,
-        MusicComponent
+        MusicComponent,
+        TrackComponent
     ]
 })
 export class MusicModule { }
