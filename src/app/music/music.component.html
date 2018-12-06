@@ -9,12 +9,9 @@
   </div>
   <div class="navbar">
     <div class="dropdown">
-      <button mat-button [matMenuTriggerFor]="select" [ngStyle]="{'color':'white'}" class="btn dropbtn dropdown-toggle">
-        Select Folder
+      <button mat-button [ngStyle]="{'color':'white'}" class="addSongBtn btn btn-lg" (click)='getSongs()'>
+        My Songs
       </button>
-      <mat-menu #select="matMenu" class="dropdown-content">
-        <!-- <a mat-menu-item class="dropdown-item" (click)='filterShow("ALL")'>My Uploads</a> -->
-      </mat-menu>
     </div>
       <div class="dropdown">
         <button mat-button [ngStyle]="{'color':'white'}" class="addSongBtn btn btn-lg" (click)='addSong()'>
@@ -59,16 +56,24 @@
       </tr>
     </tbody>
   </table>
-  <div class="row" *ngIf="spotifyResults.length">
+  <div class="row" *ngIf="spotifyResults">
     <div class="col-sm-6 col-md-4" *ngFor="let t of spotifyResults">
       <div class="thumbnail">
         <div class="content">
-          <img src="{{ t.album.images[0].url }}" class="img-responsive">
+          <img src="{{ t.album.images[0].url }}" class="img-thumbnail img-responsive">
           <h3>
             <a [routerLink]="['/artists', t.artists[0].id]">
             {{ t.artists[0].name }}
           </a>
           </h3>
+          <p>
+            <a [routerLink]="['/tracks', t.id]">
+            {{ t.name }}
+            </a>
+          </p>
+          <a [routerLink]="['/albums', t.album.id]">
+            {{ t.album.name }}
+          </a>
         </div>
       </div>
     </div>

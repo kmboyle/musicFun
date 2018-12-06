@@ -1,6 +1,6 @@
 import { Spotify } from '../services/spotify.service';
 import { Component, OnInit } from '@angular/core';
-import { Router, Params} from '@angular/router';
+import { Router, Params, ActivatedRoute} from '@angular/router';
 import {ISong} from '../models/music-interface';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -31,7 +31,8 @@ export class MusicComponent implements OnInit {
     query: string;
     spotifyResults: any;
 
-    constructor(private _route: Router,
+    constructor(private router: Router,
+                private route: ActivatedRoute,
                 private _musicService: MusicService,
                 private spinnerService: Ng4LoadingSpinnerService,
                 private modalService: NgbModal,
@@ -40,6 +41,7 @@ export class MusicComponent implements OnInit {
                   // db.firestore.settings({timestampsInSnapshots:true});
                   // this.items = db.collection('items').valueChanges();
                   // console.log(this.items);
+                  this.route.queryParams.subscribe(searchParam => this.query = searchParam['query'] || '');
                 }
   ngOnInit(): void {
     const fragmentString = location.hash.substring(1);
@@ -50,16 +52,28 @@ export class MusicComponent implements OnInit {
       params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
     if (Object.keys(params).length > 0) {
-      localStorage.setItem('oauth2-params', JSON.stringify(params));
-      this.getSongs();
+      // spotify auth
+      if (params['token_type'] && params['state'] !== 'googleAuth') {
+        localStorage.setItem('spotify_auth', JSON.stringify(params));
+      } else {
+        // google auth
+        localStorage.setItem('oauth2-params', JSON.stringify(params));
+        this.spotify.redirectToSpotify();
+      }
     } else {
+      // get google token
       if (localStorage.getItem('oauth2-params')) {
         const user = JSON.parse(localStorage.getItem('oauth2-params'));
         if (user.access_token) {
-          this.getSongs();
+          if (localStorage.getItem('spotify_auth')) {
+            const spotifyUser = JSON.parse(localStorage.getItem('spotify_auth'));
+            if (spotifyUser.access_token) {
+              this.searchSpotify();
+            }
+          }
         }
       } else {
-        this._route.navigate(['/']);
+        this.router.navigate(['/']);
       }
     }
   }
@@ -95,19 +109,27 @@ export class MusicComponent implements OnInit {
         }, 3000);
       }
     }
-    searchFilter(event: any) {
+    searchFilter(query: string) {
       this.errorMessage = '';
-      this.searchSpotify(event.target.value.toLowerCase());
+      this.router.navigate(['home'], { queryParams: { query: query }})
+      .then(_ => this.searchSpotify());
       // this._musicService.getSongList().subscribe(songs => {
       //   this.songs = songs.filter(song => song.filename.toLowerCase().includes(event.target.value.toLowerCase()));
       //   !this.songs ? this.searchSpotify(event.target.value.toLowerCase()) : this.filteredSongs = this.songs;
       //   this.myTimer();
       // });
     }
-    searchSpotify(song) {
-      this.spotify.searchTrack(song).subscribe(res => {
-        console.log(res);
+    searchSpotify() {
+      if (!this.query) { this.getSongs(); }
+      this.spotify.searchTrack(this.query).subscribe(res => {
+        this.renderResults(res);
       });
+    }
+    renderResults(res: any): void {
+      this.spotifyResults = null;
+      if (res && res.tracks && res.tracks.items) {
+        this.spotifyResults = res.tracks.items;
+      }
     }
     filterShow(id: string): void {
       this._musicService.getSongList().subscribe(songs => {
@@ -130,7 +152,7 @@ export class MusicComponent implements OnInit {
           this.arrayBuffer.start();
       });
     });
-      // this._route.navigate(['music', this.songName._id]);
+      // this.router.navigate(['music', this.songName._id]);
 
     }
     stopSong() {
@@ -160,10 +182,11 @@ export class MusicComponent implements OnInit {
       });
     }
     addSong() {
-      this._route.navigate(['newSong']);
+      this.router.navigate(['newSong']);
     }
     routeToSong(songID: Params) {
-      this._route.navigate(['newSong', songID]);
+      this.router.navigate(['newSong', songID]);
     }
+
 }
 

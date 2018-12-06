@@ -29,7 +29,8 @@ oauthSignIn() {
     'client_id': '154832084236-l6qvqp4od9ijgrhsc75i81netn48vuvo.apps.googleusercontent.com',
     'redirect_uri': window.location.origin + '/home',
     'response_type': 'token',
-    'scope': 'openid'
+    'scope': 'openid',
+    'state': 'googleAuth'
   };
   for (const p in params) {
     if (p) {
