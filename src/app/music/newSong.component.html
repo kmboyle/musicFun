@@ -6,12 +6,6 @@
             <img class='bandImg' src='../../assets/band.jpeg' />
             <form [formGroup]='songForm'>
                 <div class='uploadElement'>
-
-                    <!-- 
-      <label>Source</label>
-      <input type="text" class="form-control" formControlName="src"/>
-      <label>Date</label>
-      <input type="text" class="form-control" formControlName="date"/> -->
                     <div class="form-group col-md-6">
                         <label>Song Title</label>
                         <input type="text" [ngClass]="{'is-invalid': errorMessage}" class="form-control mb-3" formControlName="title" />
