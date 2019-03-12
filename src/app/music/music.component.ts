@@ -9,6 +9,9 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatSnackBar } from '@angular/material';
 import { MusicService } from '../services/music.service';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { distinctUntilChanged, map, debounceTime, filter, switchMap } from 'rxjs/operators';
+import { from } from 'rxjs/observable/from';
 
 
 @Component({
@@ -30,6 +33,9 @@ export class MusicComponent implements OnInit {
     arrayBuffer: any;
     query: string;
     spotifyResults: any;
+    public searchBox: HTMLElement;
+    public searchResults: HTMLElement;
+    public input$: any;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -68,7 +74,7 @@ export class MusicComponent implements OnInit {
           if (localStorage.getItem('spotify_auth')) {
             const spotifyUser = JSON.parse(localStorage.getItem('spotify_auth'));
             if (spotifyUser.access_token) {
-              this.searchSpotify();
+              // this.searchSpotify();
             }
           }
         }
@@ -76,6 +82,15 @@ export class MusicComponent implements OnInit {
         this.router.navigate(['/']);
       }
     }
+    this.searchBox = document.getElementById('search');
+    this.searchResults = document.getElementById('searchResults');
+    this.input$ = fromEvent(this.searchBox, 'input').pipe(
+      map(e => (e as any).target.value),
+      debounceTime(250),
+      filter(query => query.length >= 2 || query.length === 0),
+      distinctUntilChanged(),
+      switchMap(value => value ? from(/*this.searchSpotify(value)*/) : from(Promise.resolve({items: []})))
+    );
   }
   getSongs() {
     this._musicService.getSongList()
@@ -111,17 +126,18 @@ export class MusicComponent implements OnInit {
     }
     searchFilter(query: string) {
       this.errorMessage = '';
-      this.router.navigate(['home'], { queryParams: { query: query }})
-      .then(_ => this.searchSpotify());
+      // this.router.navigate(['home'], { queryParams: { query: query }})
+      // .then(_ => this.searchSpotify());
       // this._musicService.getSongList().subscribe(songs => {
       //   this.songs = songs.filter(song => song.filename.toLowerCase().includes(event.target.value.toLowerCase()));
       //   !this.songs ? this.searchSpotify(event.target.value.toLowerCase()) : this.filteredSongs = this.songs;
       //   this.myTimer();
       // });
     }
-    searchSpotify() {
-      if (!this.query) { this.getSongs(); }
-      this.spotify.searchTrack(this.query).subscribe(res => {
+    searchSpotify(value) {
+      // if (!this.query) { this.getSongs(); }
+      this.spotify.searchTrack(value).subscribe(res => {
+        console.log(res);
         this.renderResults(res);
       });
     }

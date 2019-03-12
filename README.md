@@ -1,4 +1,10 @@
-# AngularHello
+# MusicFun
+
+To get started:
+
+1. run mongod.exe
+2. npm start
+3. ng serve
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.5.
 

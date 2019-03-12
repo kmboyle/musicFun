@@ -52,6 +52,5 @@ public get name() {
       return null;
     }
     return claims.given_name;
-}
-
+  }
 }
