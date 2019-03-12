@@ -1,5 +1,6 @@
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ oauthSignIn() {
   form.setAttribute('method', 'GET');
   form.setAttribute('action', oauth2Endpoint);
   const params = {
-    'client_id': '154832084236-l6qvqp4od9ijgrhsc75i81netn48vuvo.apps.googleusercontent.com',
+    'client_id': environment.clientId,
     'redirect_uri': window.location.origin + '/home',
     'response_type': 'token',
     'scope': 'openid',
