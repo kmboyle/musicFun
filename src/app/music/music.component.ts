@@ -59,38 +59,17 @@ export class MusicComponent implements OnInit {
     }
     if (Object.keys(params).length > 0) {
       // spotify auth
-      if (params['token_type'] && params['state'] !== 'googleAuth') {
+      if (params['token_type'] && params['state'] === 'spotify_auth') {
         localStorage.setItem('spotify_auth', JSON.stringify(params));
-      } else {
-        // google auth
-        localStorage.setItem('oauth2-params', JSON.stringify(params));
-        this.spotify.redirectToAuth();
+      } 
+    } else if (localStorage.getItem('spotify_auth')) {
+      const spotifyUser = JSON.parse(localStorage.getItem('spotify_auth'));
+      if (spotifyUser.access_token) {
+        return;
       }
     } else {
-      // get google token
-      if (localStorage.getItem('oauth2-params')) {
-        const user = JSON.parse(localStorage.getItem('oauth2-params'));
-        if (user.access_token) {
-          if (localStorage.getItem('spotify_auth')) {
-            const spotifyUser = JSON.parse(localStorage.getItem('spotify_auth'));
-            if (spotifyUser.access_token) {
-              // this.searchSpotify();
-            }
-          }
-        }
-      } else {
-        this.router.navigate(['/']);
-      }
+      this.spotify.redirectToAuth();
     }
-    this.searchBox = document.getElementById('search');
-    this.searchResults = document.getElementById('searchResults');
-    this.input$ = fromEvent(this.searchBox, 'input').pipe(
-      map(e => (e as any).target.value),
-      debounceTime(250),
-      filter(query => query.length >= 2 || query.length === 0),
-      distinctUntilChanged(),
-      switchMap(value => value ? from(/*this.searchSpotify(value)*/) : from(Promise.resolve({items: []})))
-    );
   }
   getSongs() {
     this._musicService.getSongList()
@@ -124,22 +103,15 @@ export class MusicComponent implements OnInit {
         }, 3000);
       }
     }
-    searchFilter(query: string) {
-      this.errorMessage = '';
-      // this.router.navigate(['home'], { queryParams: { query: query }})
-      // .then(_ => this.searchSpotify());
-      // this._musicService.getSongList().subscribe(songs => {
-      //   this.songs = songs.filter(song => song.filename.toLowerCase().includes(event.target.value.toLowerCase()));
-      //   !this.songs ? this.searchSpotify(event.target.value.toLowerCase()) : this.filteredSongs = this.songs;
-      //   this.myTimer();
-      // });
-    }
     searchSpotify(value) {
-      // if (!this.query) { this.getSongs(); }
-      this.spotify.searchTrack(value).subscribe(res => {
-        console.log(res);
-        this.renderResults(res);
-      });
+      this.errorMessage = '';
+      if (value.length === 0) {
+        this.spotifyResults = [];
+      } else {
+        this.spotify.searchTrack(value).subscribe(res => {
+          this.renderResults(res);
+        });
+      }
     }
     renderResults(res: any): void {
       this.spotifyResults = null;

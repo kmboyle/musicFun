@@ -107,33 +107,38 @@ MongoClient.connect(url, (err, client) => {
                 parts: 2
             }
         });
-        upload.single('song')(req, res, (err) => {
-            if (err) {
-                return res.status(400).json({ message: "Upload Request Validation Failed." });
-            } else if (!req.body.name) {
-                return res.status(400).json({ message: "No song name in request body." });
-            }
-            let songName = req.body.name;
-
-            // convert buffer to Readable Stream
-            const readableSongStream = new Readable();
-            readableSongStream.push(req.file.buffer);
-            readableSongStream.push(null);
-
-            let bucket = new mongodb.GridFSBucket(db, {
-                bucketName: 'songs'
+            upload.single('song')(req, res, (err) => {
+                if (err) {
+                    let message = "Upload Request Validation Failed.";
+                    if (req.headers["content-length"] > upload.limits["fileSize"]) {
+                        message = "File exceeds 6mb limit."
+                        return res.status(400).json({ message: message});
+                    }
+                    return res.status(400).json({ message: message });
+                } else if (!req.body.name) {
+                    return res.status(400).json({ message: "No song name in request body." });
+                }
+                let songName = req.body.name;
+    
+                // convert buffer to Readable Stream
+                const readableSongStream = new Readable();
+                readableSongStream.push(req.file.buffer);
+                readableSongStream.push(null);
+    
+                let bucket = new mongodb.GridFSBucket(db, {
+                    bucketName: 'songs'
+                });
+                let uploadStream = bucket.openUploadStream(songName);
+                let id = uploadStream.id;
+                readableSongStream.pipe(uploadStream);
+    
+                uploadStream.on('error', () => {
+                    return res.status(500).json({ message: "Error uploading file" });
+                });
+                uploadStream.on('finish', () => {
+                    return res.status(201).json({ message: `File uploaded successfully, stored under Mongo ObjectID: ${id}` });
+                })
             });
-            let uploadStream = bucket.openUploadStream(songName);
-            let id = uploadStream.id;
-            readableSongStream.pipe(uploadStream);
-
-            uploadStream.on('error', () => {
-                return res.status(500).json({ message: "Error uploading file" });
-            });
-            uploadStream.on('finish', () => {
-                return res.status(201).json({ message: `File uploaded successfully, stored under Mongo ObjectID: ${id}` });
-            })
-        });
     });
     app.post('/api/songs/editSongName/:trackID', (req, res) => {
       let trackID;

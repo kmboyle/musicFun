@@ -24,15 +24,13 @@
       <h2>Song List</h2>
     </div>
     <div class="col-md-3 searchBar">
-      <i class="material-icons">search</i>
       <mat-form-field>
         <input matInput #newquery [value]="query" 
         placeholder="Search" 
-        (keydown.enter)="searchFilter(newquery.value)"
-        id="search"
+        (keydown.enter)="searchSpotify(newquery.value)"
         >
       </mat-form-field>
-      <ul id="searchResults"></ul>
+      <ul *ngFor="let song of spotifyResults"></ul>
     </div>
   </div>
   <div *ngIf='errorMessage' [ngStyle]="{'color':'red'}">{{errorMessage}}</div>
