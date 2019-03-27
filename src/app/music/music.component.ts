@@ -9,9 +9,6 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatSnackBar } from '@angular/material';
 import { MusicService } from '../services/music.service';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import { distinctUntilChanged, map, debounceTime, filter, switchMap } from 'rxjs/operators';
-import { from } from 'rxjs/observable/from';
 
 
 @Component({
@@ -44,10 +41,6 @@ export class MusicComponent implements OnInit {
                 private modalService: NgbModal,
                 private snackBar: MatSnackBar,
                 private spotify: Spotify) {
-                  // db.firestore.settings({timestampsInSnapshots:true});
-                  // this.items = db.collection('items').valueChanges();
-                  // console.log(this.items);
-                  this.route.queryParams.subscribe(searchParam => this.query = searchParam['query'] || '');
                 }
   ngOnInit(): void {
     const fragmentString = location.hash.substring(1);
@@ -59,9 +52,9 @@ export class MusicComponent implements OnInit {
     }
     if (Object.keys(params).length > 0) {
       // spotify auth
-      if (params['token_type'] && params['state'] === 'spotify_auth') {
+      if (params['token_type'] && params['access_token']) {
         localStorage.setItem('spotify_auth', JSON.stringify(params));
-      } 
+      }
     } else if (localStorage.getItem('spotify_auth')) {
       const spotifyUser = JSON.parse(localStorage.getItem('spotify_auth'));
       if (spotifyUser.access_token) {
