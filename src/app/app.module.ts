@@ -13,6 +13,7 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { MusicModule } from './music/music.module';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
+import { DemoDirectiveDirective } from './directives/demo-directive.directive';
 
 
 
@@ -33,7 +34,8 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DemoDirectiveDirective
   ],
   bootstrap: [AppComponent]
 })
