@@ -1,13 +1,15 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
   selector: '[appDemoDirective]'
 })
-export class DemoDirectiveDirective {
+export class DemoDirective {
+  // tslint:disable-next-line:no-input-rename
+  @Input('appDemoDirective') highlightColor: string;
 
   constructor(private el: ElementRef) { }
   @HostListener('mouseenter') onMouseEnter() {
-    this.highlight('yellow');
+    this.highlight(this.highlightColor || 'red');
   }
   @HostListener('mouseleave') onmouseleave() {
     this.highlight(null);

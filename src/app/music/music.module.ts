@@ -1,3 +1,4 @@
+import { DemoDirective } from './../directives/demo.directive';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MusicComponent } from './music.component';
 import { NgModule } from '@angular/core';
@@ -19,7 +20,8 @@ import { TrackComponent } from './track/track.component';
     declarations: [
         NewSongComponent,
         MusicComponent,
-        TrackComponent
+        TrackComponent,
+        DemoDirective
     ]
 })
 export class MusicModule { }

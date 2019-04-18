@@ -36,6 +36,7 @@ export class MusicComponent implements OnInit {
     public input$: any;
     musicForm: FormGroup;
     darkTheme = false;
+    color = 'yellow';
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
