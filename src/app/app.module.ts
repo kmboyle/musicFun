@@ -8,7 +8,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './material/material.module';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { MusicModule } from './music/music.module';
 import { LoginComponent } from './login/login.component';
@@ -35,8 +35,6 @@ import { AppRoutingModule } from './app-routing.module';
     AppComponent,
     LoginComponent
   ],
-  exports: [MaterialModule],
-
   bootstrap: [AppComponent]
 })
 export class AppModule { }

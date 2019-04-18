@@ -9,6 +9,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatSnackBar } from '@angular/material';
 import { MusicService } from '../services/music.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -33,6 +34,8 @@ export class MusicComponent implements OnInit {
     public searchBox: HTMLElement;
     public searchResults: HTMLElement;
     public input$: any;
+    musicForm: FormGroup;
+    darkTheme = false;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -43,6 +46,9 @@ export class MusicComponent implements OnInit {
                 private spotify: Spotify) {
                 }
   ngOnInit(): void {
+    this.musicForm = new FormGroup({
+      theme: new FormControl('')
+    });
     const fragmentString = location.hash.substring(1);
     const params = {};
     const regex = /([^&=]+)=([^&]*)/g;
@@ -167,6 +173,14 @@ export class MusicComponent implements OnInit {
     }
     routeToSong(songID: Params) {
       this.router.navigate(['newSong', songID]);
+    }
+    toggleTheme() {
+      console.log(this.musicForm.controls['theme'].value);
+      if (this.musicForm.controls['theme'].value) {
+        this.darkTheme = true;
+      } else {
+        this.darkTheme = false;
+      }
     }
 
 }

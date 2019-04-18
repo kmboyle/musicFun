@@ -1,14 +1,20 @@
-<div class='container'>
+<mat-sidenav-container>
+  <!-- <mat-sidenav>Start</mat-sidenav> -->
+  <mat-sidenav-content>Get ready to rock</mat-sidenav-content>
+</mat-sidenav-container>
+<div class="container mt-5">
   <div class="title">
       <h1>
           Music Forever Reigns!
       </h1>
   </div>
-  <button class="btn btn-default" (click)="login()">
+  <button color="primary" mat-raised-button (click)="login()">
     Login
   </button>
+  <!-- <button class="mdc-button mdc-button--raised" (click)="login()">
+    Login
+  </button> -->
 </div>
-
 
 <!-- <button class="btn btn-default" (click)="logoff()">
   Logout

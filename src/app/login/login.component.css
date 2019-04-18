@@ -8,17 +8,3 @@
   text-align: center;
   flex-grow: 1;
 }
-.btn {
-  width: 10rem;
-  background-color: red;
-  color: black;
-}
-.btn:focus{
-  box-shadow: none;
-}
-
-.title:hover, .btn:hover {
-  background-color: black;
-  color: red;
-  text-align: center;
-}
