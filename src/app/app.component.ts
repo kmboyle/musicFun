@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
 import { authConfig } from './auth.config';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,15 @@ export class AppComponent implements OnInit {
     // use this to set correct theme class on app holder
   // eg: <div [class]="themeClass">...</div>
   themeClass: string;
+  darkTheme = false;
+  musicForm: FormGroup;
 constructor(private oauthService: OAuthService, private overlayContainer: OverlayContainer) {
   // this.configureWithNewConfigApi();
 }
 ngOnInit() {
+  this.musicForm = new FormGroup({
+    theme: new FormControl('')
+  });
     // subscribe to some source of theme change events, then...
     // this.themeClass = newThemeClass;
     // remove old theme class and add new theme class
@@ -33,5 +39,15 @@ private configureWithNewConfigApi() {
   this.oauthService.tokenValidationHandler = new JwksValidationHandler();
   this.oauthService.loadDiscoveryDocumentAndTryLogin();
 }
+toggleTheme() {
 
+  console.log(this.musicForm.controls['theme'].value);
+  if (this.musicForm.controls['theme'].value) {
+    this.darkTheme = true;
+    document.body.classList.add('unicorn-dark-theme');
+  } else {
+    this.darkTheme = false;
+    document.body.classList.remove('unicorn-dark-theme');
+  }
+}
 }

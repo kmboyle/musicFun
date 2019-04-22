@@ -34,8 +34,6 @@ export class MusicComponent implements OnInit {
     public searchBox: HTMLElement;
     public searchResults: HTMLElement;
     public input$: any;
-    musicForm: FormGroup;
-    darkTheme = false;
     color = 'yellow';
 
     constructor(private router: Router,
@@ -47,9 +45,6 @@ export class MusicComponent implements OnInit {
                 private spotify: Spotify) {
                 }
   ngOnInit(): void {
-    this.musicForm = new FormGroup({
-      theme: new FormControl('')
-    });
     const fragmentString = location.hash.substring(1);
     const params = {};
     const regex = /([^&=]+)=([^&]*)/g;
@@ -175,14 +170,5 @@ export class MusicComponent implements OnInit {
     routeToSong(songID: Params) {
       this.router.navigate(['newSong', songID]);
     }
-    toggleTheme() {
-      console.log(this.musicForm.controls['theme'].value);
-      if (this.musicForm.controls['theme'].value) {
-        this.darkTheme = true;
-      } else {
-        this.darkTheme = false;
-      }
-    }
-
 }
 

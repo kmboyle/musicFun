@@ -1,1 +1,6 @@
-<router-outlet></router-outlet>
+
+<router-outlet>
+    <form [formGroup]="this.musicForm">
+        <mat-slide-toggle formControlName="theme" (change)="toggleTheme()">Dark Theme</mat-slide-toggle>
+      </form>
+</router-outlet>
