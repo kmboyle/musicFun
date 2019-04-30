@@ -34,7 +34,7 @@ export class MusicComponent implements OnInit {
     public searchBox: HTMLElement;
     public searchResults: HTMLElement;
     public input$: any;
-    color = 'yellow';
+    color = 'orange';
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -105,6 +105,11 @@ export class MusicComponent implements OnInit {
       } else {
         this.spotify.searchTrack(value).subscribe(res => {
           this.renderResults(res);
+        },
+        (err) => {
+          if (err['status'] === 401) {
+            this.spotify.redirectToAuth();
+          }
         });
       }
     }

@@ -1,93 +1,94 @@
 <ng4-loading-spinner></ng4-loading-spinner>
 
 <!--The content below is only a placeholder and can be replaced.-->
-<div class='mat-app-background container'>
+<div class='mat-app-background'>
   <div class="title">
       <h1 [appDemoDirective]="color">
           Music Forever Reigns!
       </h1>
   </div>
-  <div class="navbar">
-    <div class="dropdown">
-      <button mat-raised-button color="primary" (click)='getSongs()'>
-        My Songs
-      </button>
-    </div>
+  <div class="container">
+    <div class="navbar">
       <div class="dropdown">
-        <button mat-raised-button color="primary" (click)='addSong()'>
-          Add Song 
+        <button mat-raised-button color="primary" (click)='getSongs()'>
+          My Songs
         </button>
       </div>
-  </div>
-  <div class="row">
-    <div class='col-md-9'>
-      <h2>Song List</h2>
-    </div>
-    <div class="col-md-3 searchBar">
-      <mat-form-field>
-        <input matInput #newquery 
-        placeholder="Search" 
-        (keydown.enter)="searchSpotify(newquery.value)"
-        >
-      </mat-form-field>
-      <ul *ngFor="let song of spotifyResults"></ul>
-    </div>
-  </div>
-  <div *ngIf='errorMessage' [ngStyle]="{'color':'red'}">{{errorMessage}}</div>
-  <table class='table' *ngIf="filteredSongs">
-    <th></th>
-    <th>Song Title</th>
-    <th>Song Controls</th>
-    <th>Player</th>
-    <th>Upload Date</th>
-    <tbody>
-      <tr *ngFor='let song of filteredSongs let i=index'>
-        <td class="song ID {{song._id}}">{{i+1}}</td>
-        <td class="songName {{song.filename}}" (click)="routeToSong(song._id)">{{song.filename}}</td>
-        <td>
-          <button class="btn btn-success" (click)="playSong(song.filename)">Play
+        <div class="dropdown">
+          <button mat-raised-button color="primary" (click)='addSong()'>
+            Add Song 
           </button>
-          <button class="btn btn-warning" (click)="stopSong(song.filename)">Stop
-          </button>
-        </td>
-        <!-- <td><video controls name='media'>
-          <source src='{{getSrc(song._id)}}' type='audio/mp3'>
-        </video></td> -->
-        <td>{{song.uploadDate | date: 'longDate'}}</td>
-        <td><button class="btn btn-danger" (click)='deleteSong(song._id)'>Delete</button></td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="row" *ngIf="spotifyResults">
-    <div class="col-sm-6 col-md-4" *ngFor="let t of spotifyResults">
-      <div class="thumbnail">
-        <div class="content">
-          <img src="{{ t.album.images[0].url }}" class="img-thumbnail img-responsive">
-          <div class="caption">
-            <h3>
-              <a [routerLink]="['/artists', t.artists[0].id]">
-              {{ t.artists[0].name }}
-            </a>
-            </h3>
-            <br>
-            <p>
-              <a [routerLink]="['/tracks', t.id]">
-              {{ t.name }}
+        </div>
+    </div>
+    <div class="row">
+      <div class='col-md-9'>
+        <h2>Song List</h2>
+      </div>
+      <div class="col-md-3 searchBar">
+        <mat-form-field>
+          <input matInput #newquery 
+          placeholder="Search Spotify" 
+          (keydown.enter)="searchSpotify(newquery.value)"
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf='errorMessage' [ngStyle]="{'color':'red'}">{{errorMessage}}</div>
+    <table class='table' *ngIf="filteredSongs">
+      <th></th>
+      <th>Song Title</th>
+      <th>Song Controls</th>
+      <th>Upload Date</th>
+      <th>Player</th>
+      <tbody>
+        <tr *ngFor='let song of filteredSongs let i=index'>
+          <td class="song ID {{song._id}}">{{i+1}}</td>
+          <td class="songName {{song.filename}}" (click)="routeToSong(song._id)">{{song.filename}}</td>
+          <td>
+            <button class="btn btn-success" (click)="playSong(song.filename)">Play
+            </button>
+            <button class="btn btn-warning" (click)="stopSong(song.filename)">Stop
+            </button>
+          </td>
+          <!-- <td><video controls name='media'>
+            <source src='{{getSrc(song._id)}}' type='audio/mp3'>
+          </video></td> -->
+          <td>{{song.uploadDate | date: 'longDate'}}</td>
+          <td><button class="btn btn-danger" (click)='deleteSong(song._id)'>Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="container">
+    <div class="row" *ngIf="spotifyResults">
+      <div class="col-sm-6 col-md-4" *ngFor="let t of spotifyResults">
+        <div class="thumbnail">
+          <div class="content">
+            <img src="{{ t.album.images[0].url }}" class="img-thumbnail img-responsive">
+            <div class="caption">
+              <h2>
+                <a [routerLink]="['/artists', t.artists[0].id]">
+                {{ t.artists[0].name }}
               </a>
-            </p>
-          </div>
-          <div class="attribution">
-            <h4>
-              <a [routerLink]="['/albums', t.album.id]">
-                {{ t.album.name }}
-              </a>
-            </h4>
+              </h2>
+              <p>
+                <a [routerLink]="['/tracks', t.id]">
+                {{ t.name }}
+                </a>
+              </p>
+            </div>
+            <div class="attribution">
+              <h4>
+                <a [routerLink]="['/albums', t.album.id]">
+                  {{ t.album.name }}
+                </a>
+              </h4>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
     <!-- <div *ngFor='let item of items'>{{item}}</div> -->
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
