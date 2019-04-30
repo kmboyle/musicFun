@@ -15,7 +15,7 @@ export class DemoDirective {
     this.highlight(null);
   }
   private highlight(color: string) {
-    this.el.nativeElement.style.backgroundColor = color;
+    this.el.nativeElement.style.color = color;
   }
 
 }
