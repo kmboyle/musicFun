@@ -80,18 +80,6 @@ export class NewSongComponent implements OnInit {
             this.success = data['message'];
             this._router.navigate(['home']);
         }, err => this.errorMessage = 'Oops, something went wrong.');
-        // this.fileUploadService.postFile(, this.fileToUpload).subscribe(data => {
-        //   // do something, if upload success
-        //   // this.success = 'Upload Success!';
-        //   if (data.Error) {
-        //       this.errorMessage = 'Sorry, Upload Failed.';
-        //   } else {
-        //     this.success = 'Upload Success!';
-        //   }
-        //   console.log(data);
-        //   }, error => {
-        //     console.log(error);
-        //   });
       }
       back() {
         this._router.navigate(['/home']);

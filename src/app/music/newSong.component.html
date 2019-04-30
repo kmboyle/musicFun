@@ -1,35 +1,30 @@
 <ng4-loading-spinner></ng4-loading-spinner>
 
-<div class="mat-app-background container">
-    <div class="row">
-        <div class="col-md-6 offset-md-4">
-            <img class='bandImg' src='../../assets/band.jpeg' />
-            <form [formGroup]='songForm'>
-                <div class='uploadElement'>
-
-                    <!-- 
-      <label>Source</label>
-      <input type="text" class="form-control" formControlName="src"/>
-      <label>Date</label>
-      <input type="text" class="form-control" formControlName="date"/> -->
-                    <div class="form-group col-md-6">
-                        <label>Song Title</label>
-                        <input type="text" [ngClass]="{'is-invalid': errorMessage}" class="form-control mb-3" formControlName="title" />
-                        <label *ngIf="!songID" for="file">Choose Song</label>
-                        <input *ngIf="!songID" [ngClass]="{'is-invalid': errorMessage}" type="file" id="file" multiple (change)="handleFileInput($event.target.files)" />
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button class="btn btn-primary" (click)="back()">Back</button>
-                                <button *ngIf="!songID" class="btn btn-success" (click)="uploadFileToActivity()">Upload</button>
-                                <button *ngIf="songID" class="btn btn-success" (click)="saveChanges(songID)">Save</button>
-                                
-                            </div>
-                        </div>
-                        <div *ngIf='errorMessage' class='invalid-feedback help-block'>{{ errorMessage }}</div>
-                        <div *ngIf='success' class='text-success'>{{ success }}</div>
-                    </div>
-                </div>
-            </form>
+<div class="mat-app-background">
+  <div class="row">
+    <div class="col-md-6 offset-md-4">
+      <h2 *ngIf="songID">Edit Song Name</h2>
+      <h2 *ngIf="!songID">Upload New Song</h2>
+      <img class='bandImg' src='../../assets/band.jpeg' />
+      <form [formGroup]='songForm'>
+        <div class='uploadElement'>
+          <div class="form-group col-md-6">
+            <label>Song Title</label>
+            <input type="text" [ngClass]="{'is-invalid': errorMessage}" class="form-control mb-3" formControlName="title" />
+            <label *ngIf="!songID" for="file">Choose Song</label>
+            <input *ngIf="!songID" [ngClass]="{'is-invalid': errorMessage}" type="file" id="file" multiple (change)="handleFileInput($event.target.files)" />
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-primary" (click)="back()">Back</button>
+                <button *ngIf="!songID" class="btn btn-success" (click)="uploadFileToActivity()">Upload</button>
+                <button *ngIf="songID" class="btn btn-success" (click)="saveChanges(songID)">Save</button>
+              </div>
+            </div>
+            <div *ngIf='errorMessage' class='invalid-feedback help-block'>{{ errorMessage }}</div>
+            <div *ngIf='success' class='text-success'>{{ success }}</div>
+          </div>
         </div>
+      </form>
     </div>
+  </div>
 </div>
