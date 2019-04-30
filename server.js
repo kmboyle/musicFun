@@ -30,21 +30,6 @@ let db;
 MongoClient.connect(url, (err, client) => {
     console.log("Connection to the database successful!");
     db = client.db(dbName);
-    // findDocuments(db,() => client.close());
-
-
-    // oidc.initialize({
-    //     clients: [{ 
-    //         client_id: 'foo',
-    //         client_secret: 'bar',
-    //         redirect_uris: ['http://localhost:8080/home'],
-    //         response_types: ['id_token'],
-    //         grant_types: ['implicit']
-    //     }],
-    // }).then(() => {
-    //     oidc.listen(3000);
-    //     console.log('oidc-provider listening on port 3000, check http://localhost:3000/.well-known/openid-configuration');
-    // });
     // Start the app by listening on the default local or Heroku port
     app.listen(port, () => {
         console.log(`Server started on port ${port}`);
