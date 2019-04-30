@@ -1,3 +1,12 @@
+.mat-app-background {
+    height: -webkit-fill-available;
+}
+.row .col-md-9 h2 {
+    padding-left: 15px;
+}
+.attribution {
+    padding-bottom: 3rem;
+}
 .songName {
     font-weight: bold;
     font-size: 18px;
