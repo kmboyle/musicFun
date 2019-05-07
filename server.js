@@ -13,7 +13,6 @@ multer = require('multer');
 MongoClient = require('mongodb').MongoClient;
 fs = require('fs');
 url = process.env.MONGODB_URI_ADMIN || 'mongodb://localhost:27017';
-// url = process.env.MONGODB_URI_ADMIN || 'mongodb://localhost:27017';
 // dbName = 'SongDB';
 dbName = 'heroku_tc1nlhsd';
 const port = process.env.PORT || 8080;

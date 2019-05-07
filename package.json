@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "devBuild": "ng build --aot --prod --watch"
+    "devBuild": "ng build --aot --prod --watch",
+    "heroku-post-build": "echo Skip build on Heroku"
   },
   "engines": {
     "node": "8.11.3",
