@@ -10,7 +10,7 @@ ObjectID = require('mongodb').ObjectID;
 const { Readable } = require('stream');
 mongodb = require('mongodb');
 multer = require('multer');
-MongoClient = require('mongodb').MongoClient;
+// MongoClient = require('mongodb').MongoClient;
 fs = require('fs');
 url = process.env.MONGODB_URI_ADMIN || 'mongodb://localhost:27017';
 // dbName = 'SongDB';
@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 
 
 let db;
-MongoClient.connect(url, (err, client) => {
+mongodb.MongoClient.connect(url, (err, client) => {
     if (err) { console.log(err); }
     console.log("Connection to the database successful!");
     db = client.db(dbName);
