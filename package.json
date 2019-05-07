@@ -14,8 +14,8 @@
     "heroku-postbuild": "echo Skip build on Heroku"
   },
   "engines": {
-    "node": "8.11.3",
-    "npm": "6.4.1"
+    "node": "8.9.3",
+    "npm": "5.5.1"
   },
   "private": true,
   "dependencies": {
