@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 
 let db;
 MongoClient.connect(url, (err, client) => {
+    if (err) { console.log(err); }
     console.log("Connection to the database successful!");
     db = client.db(dbName);
     // Start the app by listening on the default local or Heroku port
