@@ -1,6 +1,6 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { Spotify } from '../../services/spotify.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -14,7 +14,7 @@ export class TrackComponent implements OnInit {
   id: string;
   sanitizer: DomSanitizer;
 
-  constructor(private spotify: Spotify, private route: ActivatedRoute, public domSanitizer: DomSanitizer) {
+  constructor(private spotify: Spotify, private route: ActivatedRoute,  private _router: Router, public domSanitizer: DomSanitizer) {
     this.route.params.subscribe(searchParam => {
         this.id = searchParam['id'] || '';
       });
@@ -33,7 +33,7 @@ export class TrackComponent implements OnInit {
     }
   }
   back() {
-
+    this._router.navigate(['/home']);
   }
 
 }

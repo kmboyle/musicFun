@@ -1,10 +1,12 @@
-<div *ngIf="track">
-  <h1> {{track.name}}</h1>
+<div  class='mat-app-background' *ngIf="track">
+  <div class="container">
+      <h1> {{track.name}}</h1>
     <div class="col-sm-6 col-md-4">
       <img src="{{ track.album.images[0].url }}" class="img-thumbnail img-responsive">
     </div>
   <p>
     <audio controls [src]="this.domSanitizer.bypassSecurityTrustUrl(track.preview_url)"></audio>
   </p>
-  <p><a href (click)="back()">Back</a></p>
+  <p><button class="btn btn-primary" (click)="back()">Back</button></p>
+  </div>
 </div>
