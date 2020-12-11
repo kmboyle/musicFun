@@ -13,7 +13,8 @@ mongodb = require('mongodb');
 multer = require('multer');
 MongoClient = require('mongodb').MongoClient;
 fs = require('fs');
-url = process.env.MONGODB_URI_ADMIN || `mongodb+srv://${config.dbUserName}:${config.dbPw}@cluster0.eaxzk.mongodb.net/${config.dbName}?retryWrites=true&w=majority'`;
+dbName = 'heroku_tc1nlhsd';
+url = process.env.MONGODB_URI || `mongodb+srv://${config.dbUserName}:${config.dbPw}@cluster0.eaxzk.mongodb.net/${dbName}?retryWrites=true&w=majority'`;
 const client = new MongoClient(url, { useNewUrlParser: true });
 
 const port = process.env.PORT || 8080;
@@ -30,7 +31,7 @@ let db;
 client.connect(err => {
     if (err) { console.log(err); }
     console.log("Connection to the database successful!");
-    db = client.db(config.dbName);
+    db = client.db(dbName);
     // Start the app by listening on the default local or Heroku port
     app.listen(port, () => {
         console.log(`Server started on port ${port}`);
@@ -88,7 +89,7 @@ client.connect(err => {
             storage: storage,
             limits: {
                 fields: 1,
-                fileSize: 6000000,
+                fileSize: 10000000,
                 files: 1,
                 parts: 2
             }
