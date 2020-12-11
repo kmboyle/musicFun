@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 
 
 let db;
-client.connect(url, (err, client) => {
+client.connect(err) => {
     if (err) { console.log(err); }
     console.log("Connection to the database successful!");
     db = client.db(dbName);
