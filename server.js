@@ -13,6 +13,7 @@ multer = require('multer');
 MongoClient = require('mongodb').MongoClient;
 fs = require('fs');
 url = process.env.MONGODB_URI_ADMIN || 'mongodb://localhost:27017';
+const client = new MongoClient(url, { useNewUrlParser: true });
 // dbName = 'SongDB';
 dbName = 'heroku_tc1nlhsd';
 const port = process.env.PORT || 8080;
@@ -26,7 +27,7 @@ app.use(bodyParser.json());
 
 
 let db;
-MongoClient.connect(url, (err, client) => {
+client.connect(url, (err, client) => {
     if (err) { console.log(err); }
     console.log("Connection to the database successful!");
     db = client.db(dbName);
