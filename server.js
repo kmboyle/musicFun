@@ -1,3 +1,4 @@
+config = require('./db-config.js');
 http = require('http'),
     util = require('util'),
     //Install express server
@@ -12,10 +13,9 @@ mongodb = require('mongodb');
 multer = require('multer');
 MongoClient = require('mongodb').MongoClient;
 fs = require('fs');
-url = process.env.MONGODB_URI_ADMIN || 'mongodb://localhost:27017';
+url = process.env.MONGODB_URI_ADMIN || `mongodb+srv://${config.dbUserName}:${config.dbPw}@cluster0.eaxzk.mongodb.net/${config.dbName}?retryWrites=true&w=majority'`;
 const client = new MongoClient(url, { useNewUrlParser: true });
-// dbName = 'SongDB';
-dbName = 'heroku_tc1nlhsd';
+
 const port = process.env.PORT || 8080;
 
 const app = express();
@@ -30,7 +30,7 @@ let db;
 client.connect(err => {
     if (err) { console.log(err); }
     console.log("Connection to the database successful!");
-    db = client.db(dbName);
+    db = client.db(config.dbName);
     // Start the app by listening on the default local or Heroku port
     app.listen(port, () => {
         console.log(`Server started on port ${port}`);
