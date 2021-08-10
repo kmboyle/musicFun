@@ -56,10 +56,12 @@ export class MusicComponent implements OnInit {
       // spotify auth
       if (params['token_type'] && params['access_token']) {
         localStorage.setItem('spotify_auth', JSON.stringify(params));
+        this.getSongs();
       }
     } else if (localStorage.getItem('spotify_auth')) {
       const spotifyUser = JSON.parse(localStorage.getItem('spotify_auth'));
       if (spotifyUser.access_token) {
+        this.getSongs();
         return;
       }
     } else {

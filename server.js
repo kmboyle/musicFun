@@ -14,7 +14,7 @@ multer = require('multer');
 MongoClient = require('mongodb').MongoClient;
 fs = require('fs');
 dbName = 'heroku_tc1nlhsd';
-url = process.env.MONGODB_URI || `mongodb+srv://${config.dbUserName}:${config.dbPw}@cluster0.eaxzk.mongodb.net/${dbName}?retryWrites=true&w=majority'`;
+url = process.env.MONGODB_URI || `mongodb+srv://${config.dbUserName}:${config.dbPw}@cluster0.eaxzk.mongodb.net/${dbName}?retryWrites=true'`;
 const client = new MongoClient(url, { useNewUrlParser: true });
 
 const port = process.env.PORT || 8080;
@@ -89,7 +89,7 @@ client.connect(err => {
             storage: storage,
             limits: {
                 fields: 1,
-                fileSize: 10000000,
+                fileSize: 15000000,
                 files: 1,
                 parts: 2
             }
@@ -119,7 +119,8 @@ client.connect(err => {
                 let id = uploadStream.id;
                 readableSongStream.pipe(uploadStream);
     
-                uploadStream.on('error', () => {
+                uploadStream.on('error', (err) => {
+                    console.log(err);
                     return res.status(500).json({ message: "Error uploading file" });
                 });
                 uploadStream.on('finish', () => {

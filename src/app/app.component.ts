@@ -23,7 +23,6 @@ ngOnInit() {
   this.musicForm = new FormGroup({
     theme: new FormControl('')
   });
-  console.log(document);
   if (localStorage.getItem('theme')) {
     this.activateTheme(localStorage.getItem('theme'));
   } else {
