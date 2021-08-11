@@ -1,4 +1,4 @@
-config = require('./db-config.js') || '';
+// config = require('./db-config.js'); Needed to run locally
 http = require('http'),
     util = require('util'),
     //Install express server
