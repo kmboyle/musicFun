@@ -29,7 +29,7 @@ const app = express();
 const path = require('path');
 app.use(express.static(path.join(__dirname + '/dist')));
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 // app.use('/api/songs', songRoute);
 // const oidc = new Provider('http://localhost:3000');
 
