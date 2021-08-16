@@ -10,7 +10,8 @@ import {
   MatInputModule,
   MatSnackBarModule,
   MatSidenavModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatTableModule
 } from '@angular/material';
 
 @NgModule({
@@ -23,12 +24,14 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTableModule
   ],
   exports: [
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
+    MatTableModule,
     MatIconModule,
     MatCardModule,
     MatFormFieldModule,

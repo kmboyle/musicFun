@@ -1,12 +1,15 @@
-// config = require('./db-config.js'); Needed to run locally
+/***** Needed to run locally *****/
+// config = require('./db-config.js');
+/*********************************/
+cors = require('cors');
 http = require('http'),
-    util = require('util'),
-    //Install express server
-    express = require('express'),
-    bodyParser = require('body-parser');
-    // songRoute = require('./api/songRoutes');
-    // Provider = require('oidc-provider');
-    songRoute = require('express').Router();
+util = require('util'),
+//Install express server
+express = require('express'),
+bodyParser = require('body-parser');
+// songRoute = require('./api/songRoutes');
+// Provider = require('oidc-provider');
+songRoute = require('express').Router();
 ObjectID = require('mongodb').ObjectID;
 const { Readable } = require('stream');
 mongodb = require('mongodb');
@@ -16,6 +19,9 @@ fs = require('fs');
 dbName = 'heroku_tc1nlhsd';
 url = process.env.MONGODB_URI || `mongodb+srv://${config.dbUserName}:${config.dbPw}@cluster0.eaxzk.mongodb.net/${dbName}?retryWrites=true'`;
 const client = new MongoClient(url, { useNewUrlParser: true });
+var corsOptions = {
+    origin: 'http://localhost:4200'
+}
 
 const port = process.env.PORT || 8080;
 
@@ -23,6 +29,7 @@ const app = express();
 const path = require('path');
 app.use(express.static(path.join(__dirname + '/dist')));
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
 // app.use('/api/songs', songRoute);
 // const oidc = new Provider('http://localhost:3000');
 

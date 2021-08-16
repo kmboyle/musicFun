@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  clientId: '154832084236-l6qvqp4od9ijgrhsc75i81netn48vuvo.apps.googleusercontent.com'
+  clientId: '154832084236-l6qvqp4od9ijgrhsc75i81netn48vuvo.apps.googleusercontent.com',
+  baseUrl: 'http://localhost:8080'
 };

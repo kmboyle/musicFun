@@ -12,7 +12,7 @@ import { ISong } from '../models/music-interface';
 @Component({
     templateUrl: './newSong.component.html',
     styleUrls: ['./newSong.component.css'],
-    providers: [MusicService]
+    providers: []
 })
 export class NewSongComponent implements OnInit {
     songForm: FormGroup;
@@ -49,6 +49,7 @@ export class NewSongComponent implements OnInit {
         // drop breakpoint here to inspect for use of 'multiple'.
         console.log(files);
         this.fileToUpload = files.item(0);
+        this.songForm.get('title').setValue(this.fileToUpload.name);
     }
     addSong(): boolean {
         console.log(this.songForm.controls);

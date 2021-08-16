@@ -16,9 +16,10 @@ import { FormControl, FormGroup } from '@angular/forms';
   selector: 'app-music',
   templateUrl: './music.component.html',
   styleUrls: ['./music.component.css'],
-  providers: [ MusicService, Spotify]
+  providers: [ Spotify]
 })
 export class MusicComponent implements OnInit {
+    public displayedColumns = ['filename', 'songControls'];
     songs: ISong[];
     errorMessage: string;
     keys: Array<string>;
@@ -148,6 +149,9 @@ export class MusicComponent implements OnInit {
     stopSong() {
       this.snackBar.dismiss();
       this.arrayBuffer.stop();
+    }
+    setSongId(id) {
+      this._musicService.setSongId = id;
     }
     getSrc(songId: string) {
       return window.location.origin + '/api/songs/' + songId;

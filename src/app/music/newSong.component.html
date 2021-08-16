@@ -9,8 +9,6 @@
       <form [formGroup]='songForm'>
         <div class='uploadElement'>
           <div class="form-group col-md-6">
-            <label>Song Title</label>
-            <input type="text" [ngClass]="{'is-invalid': errorMessage}" class="form-control mb-3" formControlName="title" />
             <label *ngIf="!songID" for="file">Choose Song</label>
             <input *ngIf="!songID" [ngClass]="{'is-invalid': errorMessage}" type="file" id="file" multiple (change)="handleFileInput($event.target.files)" />
             <div class="row">
