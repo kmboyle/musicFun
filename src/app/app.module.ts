@@ -1,9 +1,11 @@
+import { AuthInterceptor } from './helpers/auth.interceptor';
+import { UserService } from './services/user.service';
+import { TokenStorageService } from './services/token-storage.service';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
-import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -13,28 +15,36 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { MusicModule } from './music/music.module';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthService } from './services/auth.service';
+import { RegisterComponent } from './login/register/register.component';
+import { HomeComponent } from './home/home.component';
+import { AuthGuard } from './helpers/auth.guard';
 
 
 
 @NgModule({
   imports: [
-    MusicModule,
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     AppRoutingModule,
     OAuthModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
     [Ng4LoadingSpinnerModule.forRoot()],
+    MusicModule,
     NgbModule.forRoot(),
     // ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   declarations: [
     AppComponent,
     LoginComponent,
+    RegisterComponent,
+    HomeComponent,
   ],
-  bootstrap: [AppComponent]
+  providers: [AuthService, TokenStorageService, UserService, AuthInterceptor, AuthGuard],
+  bootstrap: [AppComponent],
+  exports: [ MaterialModule ]
 })
 export class AppModule { }

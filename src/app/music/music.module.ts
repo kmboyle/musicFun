@@ -8,14 +8,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { MaterialModule } from '../material/material.module';
 import { TrackComponent } from './track/track.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     imports : [
-        MusicRoutesModule,
+        CommonModule,
         ReactiveFormsModule,
-        BrowserModule,
-        [Ng4LoadingSpinnerModule.forRoot()],
         MaterialModule,
+        MusicRoutesModule,
+        [Ng4LoadingSpinnerModule.forRoot()],
     ],
     declarations: [
         NewSongComponent,

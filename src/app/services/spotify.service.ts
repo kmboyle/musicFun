@@ -1,12 +1,12 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class Spotify {
   static BASE_URL = 'https://api.spotify.com/v1';
 
-  constructor(public http: Http) { }
+  constructor(public http: HttpClient) { }
   // 5ba58858ba034c77968e7e9de9bd8ef4
   redirectToAuth() {
     const spotifyAuth = 'https://accounts.spotify.com/authorize';
@@ -38,14 +38,14 @@ export class Spotify {
   }
   query(URL: string, params?: Array<string>): Observable<any[]> {
     const spotifyUser = JSON.parse(localStorage.getItem('spotify_auth'));
-    const headers = new Headers({
-      'Authorization': `Bearer ${spotifyUser.access_token}`
-    });
+    const httpOptions = {
+      headers: new HttpHeaders({'Authorization': `Bearer ${spotifyUser.access_token}`})
+    };
     let queryURL = `${Spotify.BASE_URL}${URL}`;
     if (params) {
       queryURL = `${queryURL}?${params.join('&')}`;
     }
-    return this.http.request(queryURL, {headers: headers}).map((res: any) => res.json());
+    return this.http.get(queryURL, httpOptions).map((res: any) => res.json());
   }
   search(query: string, type: string): Observable<any[]> {
     return this.query(`/search`, [

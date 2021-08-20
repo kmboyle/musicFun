@@ -4,9 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { NewSongComponent } from './newSong.component';
 import { TrackComponent } from './track/track.component';
+import { AuthGuard } from '../helpers/auth.guard';
 
 const routes: Routes = [
-    {path: 'home', component: MusicComponent},
+    {path: '', component: MusicComponent},
     {path: 'newSong', component: NewSongComponent},
     {path: 'newSong/:songID', component: NewSongComponent},
     {path: 'tracks/:id', component: TrackComponent},

@@ -9,7 +9,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatSnackBar } from '@angular/material';
 import { MusicService } from '../services/music.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -39,6 +39,7 @@ export class MusicComponent implements OnInit {
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
+                private authService: AuthService,
                 private _musicService: MusicService,
                 private spinnerService: Ng4LoadingSpinnerService,
                 private modalService: NgbModal,
@@ -54,20 +55,24 @@ export class MusicComponent implements OnInit {
       params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
     if (Object.keys(params).length > 0) {
+      console.log(params);
+      console.log(this.authService.name);
+      console.log(this.authService.userEmail);
       // spotify auth
-      if (params['token_type'] && params['access_token']) {
-        localStorage.setItem('spotify_auth', JSON.stringify(params));
-        this.getSongs();
-      }
-    } else if (localStorage.getItem('spotify_auth')) {
-      const spotifyUser = JSON.parse(localStorage.getItem('spotify_auth'));
-      if (spotifyUser.access_token) {
-        this.getSongs();
-        return;
-      }
-    } else {
-      this.spotify.redirectToAuth();
-    }
+      // if (params['token_type'] && params['access_token']) {
+      //   localStorage.setItem('spotify_auth', JSON.stringify(params));
+      //   this.getSongs();
+      // }
+    } 
+    // else if (localStorage.getItem('spotify_auth')) {
+    //   const spotifyUser = JSON.parse(localStorage.getItem('spotify_auth'));
+    //   if (spotifyUser.access_token) {
+    //     this.getSongs();
+    //     return;
+    //   }
+    // } else {
+    //   this.spotify.redirectToAuth();
+    // }
   }
   getSongs() {
     this._musicService.getSongList()
