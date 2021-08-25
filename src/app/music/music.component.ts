@@ -135,7 +135,7 @@ export class MusicComponent implements OnInit {
       });
     }
     playSong(songName: string): void {
-     
+      this.spinnerService.show();
       this.songName = this.filteredSongs.find(song => song.filename === songName);
       this._musicService.getSong(this.songName._id).subscribe((encodedSongArrayBuffer: ArrayBuffer) => {
         this.arrayBuffer = this.audioContext.createBufferSource();
@@ -143,6 +143,7 @@ export class MusicComponent implements OnInit {
           this.arrayBuffer.buffer = buffer;
           this.arrayBuffer.connect(this.audioContext.destination);
           this.arrayBuffer.start();
+          this.spinnerService.hide();
           this.snackBar.open(songName);
       });
     });

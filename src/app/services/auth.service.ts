@@ -18,18 +18,23 @@ export class AuthService {
 
   constructor(private router: Router, private http: HttpClient, private tokenService: TokenStorageService) {}
 
-  public login(credentials): Observable<any> {
+  public login(credentials) {
     return this.http.post(AUTH_API + 'signin', {
       username: credentials.username,
       password: credentials.password
     }, httpOptions);
   }
 
-  public register(user): Observable<any> {
+  public register(user) {
     return this.http.post(AUTH_API + 'signup', {
       username: user.username,
       email: user.email,
       password: user.password
+    }, httpOptions);
+  }
+  public refreshToken(token: string) {
+    return this.http.post(AUTH_API + 'refreshToken', {
+      refreshToken: token
     }, httpOptions);
   }
 
