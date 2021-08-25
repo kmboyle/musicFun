@@ -11,7 +11,7 @@ Song = require('./schema/song-schema.js');
 // songRoute = require('./api/songRoutes');
 // Provider = require('oidc-provider');
 songRoute = require('express').Router();
-ObjectID = require('mongodb').ObjectID;
+
 const { Readable } = require('stream');
 mongodb = require('mongodb');
 multer = require('multer');
@@ -21,8 +21,8 @@ fs = require('fs');
 // url = process.env.MONGODB_URI || `mongodb+srv://${config.dbUserName}:${config.dbPw}@cluster0.eaxzk.mongodb.net/${dbName}?retryWrites=true'`;
 // const client = new MongoClient(url, { useNewUrlParser: true });
 var corsOptions = {
-    // origin: 'http://localhost:4200'
-    origin: 'http:/localhost:8080'
+    origin: 'http://localhost:4200'
+    // origin: 'http:/localhost:8080'
 }
 
 const app = express();
@@ -45,7 +45,7 @@ app.get('/home', (req, res) => {
 const db = require('./server/models');
 const Role = db.role;
 // let db;
-db.mongoose.connect(`mongodb://${config.HOST}:${config.PORT}/${config.DB}`, {
+db.mongoose.connect(config.uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
     }).then(() => {
@@ -95,6 +95,7 @@ function initial() {
 
     require('./server/routes/auth.routes')(app);
     require('./server/routes/user.routes')(app);
+    require('./server/routes/music.routes')(app);
 
     const port = process.env.PORT || 8080;
     app.listen(port, () => {
