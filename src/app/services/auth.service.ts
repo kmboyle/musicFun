@@ -3,7 +3,8 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 const AUTH_API = 'http://localhost:8080/api/auth/';
 
@@ -13,8 +14,9 @@ const httpOptions = {
 
 @Injectable()
 export class AuthService {
+  loggedIn$ = new BehaviorSubject(false);
 
-  constructor(private oauthService: OAuthService, private http: HttpClient, private tokenService: TokenStorageService) {}
+  constructor(private router: Router, private http: HttpClient, private tokenService: TokenStorageService) {}
 
   public login(credentials): Observable<any> {
     return this.http.post(AUTH_API + 'signin', {
@@ -64,20 +66,23 @@ export class AuthService {
     }
 
   public logOut() {
-    this.oauthService.logOut();
+    // this.oauthService.logOut();
+    this.tokenService.signOut();
+    this.loggedIn$.next(false);
+    this.router.navigate(['/home']);
   }
-  public get name() {
-      const claims: any = this.oauthService.getIdentityClaims();
-      if (!claims) {
-        return null;
-      }
-      return claims.given_name;
-    }
-  public get userEmail() {
-    const claims: any = this.oauthService.getIdentityClaims();
-    if (!claims) {
-      return null;
-    }
-    return claims.email;
-  }
+  // public get name() {
+  //     const claims: any = this.oauthService.getIdentityClaims();
+  //     if (!claims) {
+  //       return null;
+  //     }
+  //     return claims.given_name;
+  //   }
+  // public get userEmail() {
+  //   const claims: any = this.oauthService.getIdentityClaims();
+  //   if (!claims) {
+  //     return null;
+  //   }
+  //   return claims.email;
+  // }
 }

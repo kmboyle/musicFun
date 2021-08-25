@@ -80,16 +80,19 @@
         </div>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-block">Sign Up</button>
+        <button color="primary" mat-raised-button>Sign Up</button>
       </div>
 
       <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
         Signup failed!<br />{{ errorMessage }}
       </div>
     </form>
-
-    <div class="alert alert-success" *ngIf="isSuccessful">
-      Your registration is successful!
+    <div style="text-align:center;">
+      <div class="alert alert-success" *ngIf="isSuccessful">
+        Your registration is successful!
+        <div><a [routerLink]="['/login']">Login</a></div>
+      </div>
     </div>
+
   </div>
 </div>

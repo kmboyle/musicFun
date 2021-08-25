@@ -63,7 +63,7 @@ export class NewSongComponent implements OnInit {
       this._musicService.editSongName(songID, body).subscribe(data => {
         this.spinner.hide();
         this.success = data['message'];
-        this._router.navigate(['home']);
+        this._router.navigate(['music']);
       });
 
     }
@@ -79,11 +79,11 @@ export class NewSongComponent implements OnInit {
         this.http.post('/api/songs', formData).subscribe(data => {
             this.spinner.hide();
             this.success = data['message'];
-            this._router.navigate(['home']);
+            this._router.navigate(['music']);
         }, err => this.errorMessage = 'Oops, something went wrong.');
       }
       back() {
-        this._router.navigate(['/home']);
+        this._router.navigate(['music']);
       }
 
 }

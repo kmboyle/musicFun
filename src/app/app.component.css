@@ -1,0 +1,4 @@
+.shell {
+    display: flex;
+    justify-content: space-between;
+}

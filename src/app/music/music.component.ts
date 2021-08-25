@@ -26,7 +26,7 @@ export class MusicComponent implements OnInit {
     songName: ISong;
     // songs: any;
     private id: any;
-    filteredSongs: Array<ISong>;
+    filteredSongs: Array<ISong> = [];
     items: Observable<any[]>;
     audioContext = new AudioContext();
     arrayBuffer: any;
@@ -55,9 +55,6 @@ export class MusicComponent implements OnInit {
       params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
     if (Object.keys(params).length > 0) {
-      console.log(params);
-      console.log(this.authService.name);
-      console.log(this.authService.userEmail);
       // spotify auth
       // if (params['token_type'] && params['access_token']) {
       //   localStorage.setItem('spotify_auth', JSON.stringify(params));
@@ -138,7 +135,7 @@ export class MusicComponent implements OnInit {
       });
     }
     playSong(songName: string): void {
-      this.snackBar.open(songName);
+     
       this.songName = this.filteredSongs.find(song => song.filename === songName);
       this._musicService.getSong(this.songName._id).subscribe((encodedSongArrayBuffer: ArrayBuffer) => {
         this.arrayBuffer = this.audioContext.createBufferSource();
@@ -146,6 +143,7 @@ export class MusicComponent implements OnInit {
           this.arrayBuffer.buffer = buffer;
           this.arrayBuffer.connect(this.audioContext.destination);
           this.arrayBuffer.start();
+          this.snackBar.open(songName);
       });
     });
       // this.router.navigate(['music', this.songName._id]);

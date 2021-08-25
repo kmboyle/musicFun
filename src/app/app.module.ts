@@ -1,4 +1,4 @@
-import { AuthInterceptor } from './helpers/auth.interceptor';
+import { AuthInterceptor, authInterceptorProviders } from './helpers/auth.interceptor';
 import { UserService } from './services/user.service';
 import { TokenStorageService } from './services/token-storage.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,7 +43,7 @@ import { AuthGuard } from './helpers/auth.guard';
     RegisterComponent,
     HomeComponent,
   ],
-  providers: [AuthService, TokenStorageService, UserService, AuthInterceptor, AuthGuard],
+  providers: [AuthService, TokenStorageService, UserService, authInterceptorProviders, AuthGuard],
   bootstrap: [AppComponent],
   exports: [ MaterialModule ]
 })

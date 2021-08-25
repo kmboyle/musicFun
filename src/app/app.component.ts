@@ -6,6 +6,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -22,11 +23,13 @@ export class AppComponent implements OnInit {
   darkTheme = false;
   musicForm: FormGroup;
   src$ = new BehaviorSubject('');
+  loggedIn$ = new BehaviorSubject(null);
 constructor(
-  private oauthService: OAuthService,
+  private authService: AuthService,
   private overlayContainer: OverlayContainer,
   private musicService: MusicService) {
   // this.configureWithNewConfigApi();
+  this.loggedIn$ = this.authService.loggedIn$;
 }
 
 songSrc$ = this.musicService.songIdSrc$.pipe(
@@ -35,6 +38,9 @@ songSrc$ = this.musicService.songIdSrc$.pipe(
   )
 )
 ngOnInit() {
+  if (this.authService.isLoggedIn()) {
+    this.loggedIn$.next(true);
+  }
   this.musicForm = new FormGroup({
     theme: new FormControl('')
   });
@@ -56,11 +62,11 @@ ngOnInit() {
     // overlayContainerClasses.add(newThemeClass);
   }
 
-private configureWithNewConfigApi() {
-  this.oauthService.configure(authConfig);
-  this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-  this.oauthService.loadDiscoveryDocumentAndTryLogin();
-}
+// private configureWithNewConfigApi() {
+//   this.oauthService.configure(authConfig);
+//   this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+//   this.oauthService.loadDiscoveryDocumentAndTryLogin();
+// }
 activateTheme(themeStyle) {
   if (themeStyle === 'dark') {
     this.darkTheme = true;
@@ -87,5 +93,9 @@ toggleTheme() {
     this.htmlEl.classList.remove('unicorn-dark-theme');
     localStorage.setItem('theme', 'light');
   }
+}
+
+public logoff() {
+  this.authService.logOut();
 }
 }

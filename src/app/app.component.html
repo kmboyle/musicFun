@@ -1,9 +1,8 @@
-
-<router-outlet>
-    <form [formGroup]="this.musicForm">
-        <mat-slide-toggle formControlName="theme" (change)="toggleTheme()">Dark Theme</mat-slide-toggle>
-      </form>
-</router-outlet>
+<form class="shell" [formGroup]="this.musicForm">
+  <mat-slide-toggle formControlName="theme" (change)="toggleTheme()">Dark Theme</mat-slide-toggle>
+  <button color="primary" *ngIf="(loggedIn$ | async)" mat-raised-button (click)="logoff()">Logout</button>
+</form>
+<router-outlet></router-outlet>
 <!-- <div *ngIf="songSrc$ | async">
   <audio #audioComponent
   controls
