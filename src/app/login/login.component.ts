@@ -1,5 +1,4 @@
 import { TokenStorageService } from './../services/token-storage.service';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { Component, OnInit } from '@angular/core';
 import { Spotify } from '../services/spotify.service';
 import { Router } from '@angular/router';

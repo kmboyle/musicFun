@@ -1,6 +1,5 @@
-import { AuthConfig } from 'angular-oauth2-oidc';
 
-export const authConfig: AuthConfig = {
+export const authConfig = {
 
   // Url of the Identity Provider
   // issuer: 'https://steyer-identity-server.azurewebsites.net/identity',

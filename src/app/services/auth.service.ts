@@ -1,5 +1,4 @@
 import { TokenStorageService } from './token-storage.service';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders } from '@angular/common/http';

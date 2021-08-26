@@ -6,7 +6,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OAuthModule } from 'angular-oauth2-oidc';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
@@ -28,7 +27,6 @@ import { AuthGuard } from './helpers/auth.guard';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    OAuthModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,

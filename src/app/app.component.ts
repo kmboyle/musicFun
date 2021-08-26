@@ -1,7 +1,5 @@
 import { MusicService } from './services/music.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
-import { authConfig } from './auth.config';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -17,7 +15,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent implements OnInit {
     // use this to set correct theme class on app holder
   // eg: <div [class]="themeClass">...</div>
-  @ViewChild('audioComponent') audioComponent: HTMLAudioElement;
+  @ViewChild('audioComponent', { static: false }) audioComponent: HTMLAudioElement;
   themeClass: string;
   htmlEl = document.getElementsByTagName('html')[0];
   darkTheme = false;
