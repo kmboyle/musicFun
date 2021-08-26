@@ -34,14 +34,14 @@
     </div>
     <div *ngIf='errorMessage' [ngStyle]="{'color':'red'}">{{errorMessage}}</div>
     
-    <ng-container *ngIf="filteredSongs && filteredSongs.length === 0">
+    <ng-container *ngIf="songList && songList.length === 0">
       <div style="text-align: center;">
         <h2 >No Songs in your list.  Add a song.</h2>
       </div>   
     </ng-container>
 
-    <div *ngIf="filteredSongs">
-      <mat-table [dataSource]="filteredSongs">
+    <div *ngIf="songList">
+      <mat-table [dataSource]="songList">
         <th></th>
         <ng-container matColumnDef="filename">
           <mat-header-cell *matHeaderCellDef>Song Title</mat-header-cell>

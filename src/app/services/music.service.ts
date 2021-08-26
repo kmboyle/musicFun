@@ -27,19 +27,15 @@ export class MusicService {
 
       getSongList(): Observable<ISong[]> {
           return this._http.get<ISong[]>(`${this.baseUrl}/${this._url}`)
-          .catch(this.handleError);
+          ;
       }
       getSong(id: string): Observable<any> {
         return this._http.get(`${this.baseUrl}/${this._url}/${id}`, { responseType: 'arraybuffer'});
       }
       deleteSong(id: string): Observable<any> {
-        return this._http.delete(`${this.baseUrl}/${this._url}/${id}`).catch(this.handleError);
+        return this._http.delete(`${this.baseUrl}/${this._url}/${id}`);
       }
       editSongName(id: string, body: any): Observable<any> {
-        return this._http.post(`${this.baseUrl}/${this._url}/editSongName/${id}`, body).catch(this.handleError);
-      }
-      private handleError(err: HttpErrorResponse) {
-          console.log(err.message);
-          return Observable.throw(err.error.message);
+        return this._http.post(`${this.baseUrl}/${this._url}/editSongName/${id}`, body);
       }
     }

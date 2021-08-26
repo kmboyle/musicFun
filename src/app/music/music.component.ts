@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatSnackBar } from '@angular/material';
 import { MusicService } from '../services/music.service';
 import { AuthService } from '../services/auth.service';
+import { map, catchError } from 'rxjs/operators';
 
 
 @Component({
@@ -20,13 +21,12 @@ import { AuthService } from '../services/auth.service';
 })
 export class MusicComponent implements OnInit {
     public displayedColumns = ['filename', 'songControls'];
-    songs: ISong[];
     errorMessage: string;
     keys: Array<string>;
     songName: ISong;
     // songs: any;
     private id: any;
-    filteredSongs: Array<ISong> = [];
+    songList: Array<ISong> = [];
     items: Observable<any[]>;
     audioContext = new AudioContext();
     arrayBuffer: any;
@@ -47,6 +47,7 @@ export class MusicComponent implements OnInit {
                 private spotify: Spotify) {
                 }
   ngOnInit(): void {
+    this.getSongs();
     const fragmentString = location.hash.substring(1);
     const params = {};
     const regex = /([^&=]+)=([^&]*)/g;
@@ -75,16 +76,21 @@ export class MusicComponent implements OnInit {
     this._musicService.getSongList()
     .subscribe(
       songs => {
-        this.filteredSongs = songs;
-        this.filteredSongs.forEach((song) => {
-          if (this.filteredSongs['uploadDate']) {
+        this.songList = songs;
+        this.songList.forEach((song) => {
+          if (this.songList['uploadDate']) {
             // need to make work
-            this.filteredSongs['uploadDate'] = new Date(this.filteredSongs['uploadDate']).toLocaleDateString();
+            this.songList['uploadDate'] = new Date(this.songList['uploadDate']).toLocaleDateString();
           }
         this.keys = Object.keys(song);
         });
       },
-      error => this.errorMessage = <any>error);
+      err => {
+        this.errorMessage = err.error.message || err.error || err.message;
+        if (err.status === 403) {
+          this.router.navigate(['login'])
+        }
+      });
   }
   // resovling ng-template error [Angular] Member function is not callable
   trigger(callback: any, ...args: any[]) {
@@ -95,7 +101,7 @@ export class MusicComponent implements OnInit {
     this.modalService.open(content);
   }
     myTimer() {
-      if (this.filteredSongs['length'] === 0) {
+      if (this.songList['length'] === 0) {
         this.spinnerService.show();
         setTimeout(() => {
           this.spinnerService.hide();
@@ -127,16 +133,16 @@ export class MusicComponent implements OnInit {
     filterShow(id: string): void {
       this._musicService.getSongList().subscribe(songs => {
         // if (id === 'ALL') {
-        //   return this.filteredSongs = songs;
+        //   return this.songList = songs;
         // } else {
         //   this.songs = songs.filter(song => song.date === id);
-        // this.filteredSongs = this.songs;
+        // this.songList = this.songs;
         // }
       });
     }
     playSong(songName: string): void {
       this.spinnerService.show();
-      this.songName = this.filteredSongs.find(song => song.filename === songName);
+      this.songName = this.songList.find(song => song.filename === songName);
       this._musicService.getSong(this.songName._id).subscribe((encodedSongArrayBuffer: ArrayBuffer) => {
         this.arrayBuffer = this.audioContext.createBufferSource();
         this.audioContext.decodeAudioData(encodedSongArrayBuffer, buffer => {
@@ -146,7 +152,12 @@ export class MusicComponent implements OnInit {
           this.spinnerService.hide();
           this.snackBar.open(songName);
       });
-    });
+    }, (err => {
+      this.errorMessage = err.error.message || err.error || err.message;
+      if (err.status === 403) {
+        this.router.navigate(['login'])
+      }
+    }));
       // this.router.navigate(['music', this.songName._id]);
 
     }
@@ -166,17 +177,22 @@ export class MusicComponent implements OnInit {
         this._musicService.getSongList()
         .subscribe(
           songs => {
-            this.filteredSongs = songs;
-            this.filteredSongs.forEach((song) => {
-              if (this.filteredSongs['uploadDate']) {
+            this.songList = songs;
+            this.songList.forEach((song) => {
+              if (this.songList['uploadDate']) {
                 // need to make work
-                this.filteredSongs['uploadDate'] = new Date(this.filteredSongs['uploadDate']).toLocaleDateString();
+                this.songList['uploadDate'] = new Date(this.songList['uploadDate']).toLocaleDateString();
               }
             this.keys = Object.keys(song);
-            console.log(this.filteredSongs);
+            console.log(this.songList);
             });
           },
-          error => this.errorMessage = <any>error);
+          err => {
+            this.errorMessage = err.error.message || err.error || err.message;
+            if (err.status === 403) {
+              this.router.navigate(['login'])
+            }
+          });
       });
     }
     addSong() {

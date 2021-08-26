@@ -42,6 +42,11 @@ export class NewSongComponent implements OnInit {
               this.existingSong = songs.find(song => song._id === this.songID);
               this.existingSongName = this.existingSong.filename;
               this.songForm.controls.title.setValue(this.existingSongName);
+          }, err => {
+            this.errorMessage = err.error.message || err.error || err.message;
+            if (err.status === 403) {
+              this._router.navigate(['login']);
+            }
           });
         }
     }
@@ -64,6 +69,11 @@ export class NewSongComponent implements OnInit {
         this.spinner.hide();
         this.success = data['message'];
         this._router.navigate(['music']);
+      }, err => {
+        this.errorMessage = err.error.message || err.error || err.message;
+        if (err.status === 403) {
+          this._router.navigate(['login'])
+        }
       });
 
     }
@@ -80,7 +90,12 @@ export class NewSongComponent implements OnInit {
             this.spinner.hide();
             this.success = data['message'];
             this._router.navigate(['music']);
-        }, err => this.errorMessage = 'Oops, something went wrong.');
+        }, err => {
+          this.errorMessage = err.error.message || err.error || err.message;
+          if (err.status === 403) {
+            this._router.navigate(['login'])
+          }
+        });
       }
       back() {
         this._router.navigate(['music']);
