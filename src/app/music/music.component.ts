@@ -88,7 +88,7 @@ export class MusicComponent implements OnInit {
       err => {
         this.errorMessage = err.error.message || err.error || err.message;
         if (err.status === 403) {
-          this.router.navigate(['login'])
+          this.authService.logOut();
         }
       });
   }
@@ -155,7 +155,7 @@ export class MusicComponent implements OnInit {
     }, (err => {
       this.errorMessage = err.error.message || err.error || err.message;
       if (err.status === 403) {
-        this.router.navigate(['login'])
+        this.authService.logOut();
       }
     }));
       // this.router.navigate(['music', this.songName._id]);
@@ -190,7 +190,7 @@ export class MusicComponent implements OnInit {
           err => {
             this.errorMessage = err.error.message || err.error || err.message;
             if (err.status === 403) {
-              this.router.navigate(['login'])
+              this.authService.logOut();
             }
           });
       });

@@ -8,6 +8,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { ISong } from '../models/music-interface';
+import { AuthService } from '../services/auth.service';
 
 @Component({
     templateUrl: './newSong.component.html',
@@ -27,6 +28,7 @@ export class NewSongComponent implements OnInit {
                 private fb: FormBuilder,
                 private http: HttpClient,
                 private activatedRoute: ActivatedRoute,
+                private authService: AuthService,
                 private _musicService: MusicService) {
         this.createForm();
     }
@@ -45,7 +47,7 @@ export class NewSongComponent implements OnInit {
           }, err => {
             this.errorMessage = err.error.message || err.error || err.message;
             if (err.status === 403) {
-              this._router.navigate(['login']);
+              this.authService.logOut();
             }
           });
         }
@@ -72,7 +74,7 @@ export class NewSongComponent implements OnInit {
       }, err => {
         this.errorMessage = err.error.message || err.error || err.message;
         if (err.status === 403) {
-          this._router.navigate(['login'])
+          this.authService.logOut();
         }
       });
 
@@ -93,7 +95,7 @@ export class NewSongComponent implements OnInit {
         }, err => {
           this.errorMessage = err.error.message || err.error || err.message;
           if (err.status === 403) {
-            this._router.navigate(['login'])
+            this.authService.logOut();
           }
         });
       }

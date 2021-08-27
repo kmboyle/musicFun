@@ -12,11 +12,11 @@ Song = require('./schema/song-schema.js');
 // Provider = require('oidc-provider');
 songRoute = require('express').Router();
 
-const { Readable } = require('stream');
+
 mongodb = require('mongodb');
-multer = require('multer');
+
 MongoClient = require('mongodb').MongoClient;
-fs = require('fs');
+
 // dbName = 'heroku_tc1nlhsd';
 // url = process.env.MONGODB_URI || `mongodb+srv://${config.dbUserName}:${config.dbPw}@cluster0.eaxzk.mongodb.net/${dbName}?retryWrites=true'`;
 // const client = new MongoClient(url, { useNewUrlParser: true });
