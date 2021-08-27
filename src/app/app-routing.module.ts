@@ -15,7 +15,7 @@ const routes: Routes = [
     {
         path: 'music',
         canActivate: [AuthGuard],
-        loadChildren: () => MusicModule
+        loadChildren: () => import('./music/music.module').then(m => m.MusicModule)
     },
     {path: '', redirectTo: 'home', pathMatch:'full'}
 
