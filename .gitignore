@@ -35,7 +35,7 @@ testem.log
 /typings
 not-used.js
 db-config.js
-auth.config.js
+auth-config.js
 .env
 
 # e2e

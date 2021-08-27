@@ -1,4 +1,3 @@
-require('dotenv').config({path: __dirname + '/.env'});
 cors = require('cors');
 http = require('http'),
 util = require('util'),
@@ -6,8 +5,9 @@ util = require('util'),
 express = require('express'),
 bodyParser = require('body-parser');
 
-MongoClient = require('mongodb').MongoClient;
-
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config({path: __dirname + '/.env'});
+}
 uri = process.env.MONGODB_URI;
 var corsOptions = {
     origin: 'http://localhost:4200'
