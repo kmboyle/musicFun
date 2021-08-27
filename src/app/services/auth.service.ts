@@ -5,7 +5,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 
-const AUTH_API = 'http://localhost:8080/api/auth/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,26 +12,27 @@ const httpOptions = {
 
 @Injectable()
 export class AuthService {
+  private baseUrl = environment.baseUrl;
   loggedIn$ = new BehaviorSubject(false);
 
   constructor(private router: Router, private http: HttpClient, private tokenService: TokenStorageService) {}
 
   public login(credentials) {
-    return this.http.post(AUTH_API + 'signin', {
+    return this.http.post(this.baseUrl + '/api/auth/signin', {
       username: credentials.username,
       password: credentials.password
     }, httpOptions);
   }
 
   public register(user) {
-    return this.http.post(AUTH_API + 'signup', {
+    return this.http.post(this.baseUrl + '/api/auth/signup', {
       username: user.username,
       email: user.email,
       password: user.password
     }, httpOptions);
   }
   public refreshToken(token: string) {
-    return this.http.post(AUTH_API + 'refreshToken', {
+    return this.http.post(this.baseUrl + '/api/auth/refreshToken', {
       refreshToken: token
     }, httpOptions);
   }

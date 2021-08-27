@@ -1,5 +1,5 @@
 module.exports = {
-    secret: "music-fun-dev-secret-key",
+    secret: "music_fun_dev_secret_key",
     jwtExpiration: 3600,
     jwtRefreshExpiration: 86400,
 

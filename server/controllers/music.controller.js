@@ -111,7 +111,7 @@ exports.deleteSong = (req, res) => {
    
     let trackID;
     try {
-        trackID = new ObjectID(req.params.trackID);
+        trackID = new ObjectId(req.params.trackID);
     } catch (err) {
         return res.status(400).json({ message: "Invalid trackID in URL parameter.  Must be a single String of 12 bytes or a string of 24 hex characters" });
     }

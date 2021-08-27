@@ -90,8 +90,8 @@ exports.signin = (req, res) => {
         });
       }
 
-      let token = jwt.sign({ id: user.id }, config.secret, {
-        expiresIn: config.jwtExpiration
+      let token = jwt.sign({ id: user.id }, process.env.JWTSECRET, {
+        expiresIn: process.env.JWTEXP
       });
 
       let refreshToken = await RefreshToken.createToken(user);
@@ -136,8 +136,8 @@ exports.signin = (req, res) => {
         return;
       }
   
-      let newAccessToken = jwt.sign({ id: refreshToken.user._id }, config.secret, {
-        expiresIn: config.jwtExpiration,
+      let newAccessToken = jwt.sign({ id: refreshToken.user._id }, process.env.JWTSECRET, {
+        expiresIn: process.env.JWTEXP,
       });
   
       return res.status(200).json({
