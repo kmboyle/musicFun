@@ -32,7 +32,7 @@ import { AuthGuard } from './helpers/auth.guard';
     MaterialModule,
     [Ng4LoadingSpinnerModule.forRoot()],
     MusicModule,
-    NgbModule.forRoot(),
+    NgbModule,
     // ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   declarations: [
